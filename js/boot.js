@@ -55,17 +55,17 @@
   { pct: 82,  text: 'ATMOSPHERIC PRESSURE SHIFTING' },
   { pct: 83,  text: 'TEMPORAL PRECIPITATION DETECTED' },
   { pct: 84,  text: 'CHRONO-STORM IMMINENT' },
-  { pct: 85,  text: 'WARNING: THE RAIN REVERSING' },
-  { pct: 91,  text: 'WARNING: THE RAIN REVERSING' },
-  { pct: 92,  text: 'WARNING: THE RAIN REVERSING'},
-  { pct: 93,  text: 'WARNING: THE RAIN REVERSING' },
-  { pct: 94,  text: 'WARNING: THE RAIN REVERSING' },
-  { pct: 95,  text: 'RECONNECTING SIGNAL...' },
-  { pct: 96,  text: 'RECONNECTING SIGNAL...' },
-  { pct: 97,  text: 'RECONNECTING SIGNAL...' },
-  { pct: 98,  text: 'RECONNECTING SIGNAL...' },
-  { pct: 99,  text: 'RECONNECTING SIGNAL...' },
-  { pct: 100, text: 'WELCOME BACK, TIMEKEEPER.' }
+  { pct: 85,  text: 'Warning: The Rain Reversing' },
+  { pct: 91,  text: 'Warning: The Rain Reversing' },
+  { pct: 92,  text: 'Warning: The Rain Reversing'},
+  { pct: 93,  text: 'Warning: The Rain Reversing' },
+  { pct: 94,  text: 'Warning: The Rain Reversing' },
+  { pct: 95,  text: 'Reconnecting Signal...' },
+  { pct: 96,  text: 'Reconnecting Signal...' },
+  { pct: 97,  text: 'Reconnecting Signal...' },
+  { pct: 98,  text: 'Reconnecting Signal...' },
+  { pct: 99,  text: 'Reconnecting Signal...' },
+  { pct: 100, text: 'Welcome Back, Architect.' }
 ];
     let i = 0;
     let timeoutId = null;
@@ -204,7 +204,7 @@
       status.classList.remove('status-fade');
       void status.offsetWidth;
       status.classList.add('status-fade');
-      status.textContent = 'WELCOME BACK, TIMEKEEPER.';
+      status.textContent = 'Welcome Back, Architect.';
       value.textContent = '100%';
       bar.style.width = '100%';
 
