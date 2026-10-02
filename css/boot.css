@@ -1,0 +1,578 @@
+/* ===== BOOT SEQUENCE ===== */
+.boot {
+  position:fixed; inset:0; z-index:9999;
+  background:#050505; display:flex;
+  align-items:center; justify-content:center;
+  cursor:pointer;
+  overflow:hidden;
+  transition:background-color 1.4s ease, opacity .8s ease, visibility .8s, transform .8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.boot::before {
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.01) 50%,
+    rgba(255,255,255,0.03)
+  );
+  background-size:100% 6px;
+  opacity:.35;
+  pointer-events:none;
+}
+.boot::after {
+  content:"";
+  position:absolute; inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02),
+    rgba(255,255,255,0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity:.3;
+  pointer-events:none;
+}
+
+/* Storm approaching effect: background flicker & color shift */
+.boot.storm-approaching::before {
+  opacity: .5;
+  animation: storm-flicker var(--glitch-speed, .1s) infinite;
+}
+.boot.storm-approaching::after {
+  animation: storm-glitch var(--glitch-speed, .1s) infinite;
+}
+.boot.storm-approaching {
+  background-color: #62676b;
+}
+.boot-rain {
+  position:absolute; inset:0; z-index:0; overflow:hidden;
+  opacity:0; pointer-events:none;
+  transition:opacity .3s ease;
+}
+.boot.storm-approaching .boot-rain {
+  opacity:.75;
+}
+.boot-rain span {
+  position:absolute; top:100%; left:var(--left);
+  width:var(--width, 1px); height:var(--height);
+  opacity:calc(var(--opacity, .3) * var(--rain-amount, 0));
+  background:linear-gradient(to top, rgba(125,157,179,.08), rgba(150,181,202,.42) 72%, rgba(192,214,228,.76));
+  filter:drop-shadow(0 0 2px rgba(164,190,207,.3));
+  transform-origin:top center;
+  transition:opacity .35s ease;
+  animation:rain-rise calc(var(--glitch-speed, .1s) * var(--fall-speed, 12)) linear var(--delay) infinite;
+}
+.boot-rain span::before {
+  content:"";
+  position:absolute; top:0; left:50%;
+  width:1px; height:3px;
+  border-radius:50%;
+  background:rgba(203,222,234,.88);
+  box-shadow:0 0 3px rgba(190,214,229,.42);
+  transform:translateX(-50%);
+}
+.boot-rain .rain-spark {
+  position:absolute; left:var(--left); top:var(--top); z-index:1;
+  width:4px; height:4px;
+  opacity:0;
+  background:rgba(237,218,166,.92);
+  clip-path:polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  filter:drop-shadow(0 0 4px rgba(219,197,145,.72));
+  animation:reverse-time-spark 1.3s ease-out var(--spark-delay) both;
+}
+@keyframes reverse-time-spark {
+  0% { opacity:0; transform:translate3d(0,0,0) scale(.15) rotate(-18deg); }
+  18% { opacity:.92; transform:translate3d(0,-2px,0) scale(1) rotate(28deg); }
+  52% {
+    width:2px; height:9px; opacity:.74;
+    background:rgba(206,225,235,.76);
+    clip-path:ellipse(35% 50%);
+    filter:drop-shadow(0 0 2px rgba(185,211,226,.46));
+    transform:translate3d(var(--spark-drift),-22px,0) scale(.8) rotate(60deg);
+  }
+  100% {
+    width:1px; height:20px; opacity:0;
+    background:rgba(174,201,217,.25);
+    clip-path:ellipse(32% 50%);
+    filter:none;
+    transform:translate3d(calc(var(--spark-drift) * 1.6),-66px,0) scale(.25) rotate(82deg);
+  }
+}
+@keyframes rain-rise {
+  from { transform:translate3d(0,0,0) rotate(var(--slant, 0deg)); }
+  to { transform:translate3d(var(--drift, 0px),-110vh,0) rotate(var(--slant, 0deg)); }
+}
+@keyframes storm-flicker {
+  0%, 100% { opacity:.5; background-color: rgba(0,0,0,0); }
+  50% { opacity:.7; background-color: rgba(200, 50, 50, 0.16); }
+}
+@keyframes storm-glitch {
+  0%, 100% { opacity:.2; }
+  50% { opacity:.4; background-color: rgba(139, 0, 0, 0.08); }
+}
+
+/* Exit sequence: zoom + fade */
+.boot.exit-sequence {
+  animation: boot-exit-zoom .8s ease-in forwards;
+  animation-delay: .6s;
+}
+@keyframes boot-exit-zoom {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+.boot.done { 
+  opacity:0; 
+  visibility:hidden; 
+  pointer-events:none;
+  transform: scale(1.05);
+}
+
+.boot-corner {
+  position:absolute; width:40px; height:40px;
+  border:1px solid rgba(255,255,255,0.5);
+  opacity:.7;
+  box-shadow:0 0 6px rgba(255,255,255,0.2);
+  transition: opacity .3s ease, box-shadow .3s ease;
+}
+.boot.storm-approaching .boot-corner {
+  opacity: .5;
+  box-shadow: 0 0 12px rgba(200, 50, 50, 0.4), inset 0 0 6px rgba(200, 50, 50, 0.2);
+  animation: corner-pulse var(--glitch-speed, .1s) infinite;
+}
+@keyframes corner-pulse {
+  0%, 100% { opacity: .5; }
+  50% { opacity: .8; }
+}
+
+.boot-corner.tl { top:24px; left:24px; border-right:0; border-bottom:0; }
+.boot-corner.tr { top:24px; right:24px; border-left:0; border-bottom:0; }
+.boot-corner.bl { bottom:24px; left:24px; border-right:0; border-top:0; }
+.boot-corner.br { bottom:24px; right:24px; border-left:0; border-top:0; }
+.boot-home-shortcut {
+  z-index:3;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  padding:0 5px 5px 0;
+  color:var(--accent);
+  background:transparent;
+  font:700 9px/1 Arial, sans-serif;
+  letter-spacing:.4px;
+  cursor:pointer;
+}
+.boot-home-shortcut::before {
+  content:"";
+  position:absolute;
+  right:5px;
+  bottom:6px;
+  width:0;
+  height:0;
+  border-top:4px solid transparent;
+  border-bottom:4px solid transparent;
+  border-left:5px solid currentColor;
+  animation:skip-triangle-nudge .9s ease-in-out infinite alternate;
+}
+.boot-home-shortcut::after {
+  content:"SKIP";
+  position:absolute;
+  right:12px;
+  bottom:5px;
+}
+@keyframes skip-triangle-nudge {
+  from { transform:translateX(0); }
+  to { transform:translateX(3px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .boot-home-shortcut::before { animation:none; }
+}
+.boot-home-shortcut:hover { opacity:1; }
+.boot-home-shortcut:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+.boot-hud {
+  position:absolute; top:32px; left:0; right:0; z-index:2;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 32px;
+  pointer-events:none;
+}
+
+/* ===== HEADER FLOAT ANIMATION ===== */
+@keyframes floatHeader {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+
+/* First label floats left-right, second label floats right-left */
+.boot-side-label {
+  display:inline-block; color:rgba(255,255,255,0.5);
+  font-size:10px; letter-spacing:2px;
+  text-transform:uppercase;
+  transition: color .3s ease, text-shadow .3s ease;
+  animation: floatHeader 4s ease-in-out infinite;
+}
+
+.boot-side-label:first-of-type {
+  animation: floatHeader 4s ease-in-out infinite;
+}
+
+.boot-side-label:last-of-type {
+  animation: floatHeader 4s ease-in-out infinite reverse;
+}
+
+/* ===== GLITCH HEADER ANIMATION ===== */
+@keyframes glitchHeader {
+  0% {
+    transform: translateX(-2px);
+    text-shadow: -2px 0 rgba(255, 51, 68, 0.8), 2px 0 rgba(51, 150, 200, 0.5), 0 0 10px rgba(200, 50, 50, 0.6);
+    clip-path: inset(0 0 60% 0);
+  }
+  10% {
+    transform: translateX(3px);
+    text-shadow: 2px 0 rgba(255, 51, 68, 0.9), -2px 0 rgba(51, 150, 200, 0.4), 0 0 8px rgba(200, 50, 50, 0.7);
+    clip-path: inset(0 0 40% 0);
+  }
+  20% {
+    transform: translateX(-3px);
+    text-shadow: -2px 0 rgba(255, 51, 68, 0.7), 2px 0 rgba(51, 150, 200, 0.6), 0 0 12px rgba(200, 50, 50, 0.5);
+    clip-path: inset(0 0 70% 0);
+  }
+  30% {
+    transform: translateX(2px);
+    text-shadow: 2px 0 rgba(255, 51, 68, 0.8), -2px 0 rgba(51, 150, 200, 0.5), 0 0 9px rgba(200, 50, 50, 0.6);
+    clip-path: inset(0 0 50% 0);
+  }
+  40% {
+    transform: translateX(-2px);
+    text-shadow: -2px 0 rgba(255, 51, 68, 0.9), 2px 0 rgba(51, 150, 200, 0.4), 0 0 11px rgba(200, 50, 50, 0.7);
+    clip-path: inset(0 0 30% 0);
+  }
+  50% {
+    transform: translateX(4px);
+    text-shadow: 3px 0 rgba(255, 51, 68, 0.8), -3px 0 rgba(51, 150, 200, 0.5), 0 0 10px rgba(200, 50, 50, 0.5);
+    clip-path: inset(0);
+  }
+  60% {
+    transform: translateX(-3px);
+    text-shadow: -2px 0 rgba(255, 51, 68, 0.8), 2px 0 rgba(51, 150, 200, 0.6), 0 0 12px rgba(200, 50, 50, 0.6);
+    clip-path: inset(0 0 45% 0);
+  }
+  70% {
+    transform: translateX(2px);
+    text-shadow: 2px 0 rgba(255, 51, 68, 0.7), -2px 0 rgba(51, 150, 200, 0.5), 0 0 8px rgba(200, 50, 50, 0.5);
+    clip-path: inset(0 0 55% 0);
+  }
+  80% {
+    transform: translateX(-4px);
+    text-shadow: -3px 0 rgba(255, 51, 68, 0.9), 3px 0 rgba(51, 150, 200, 0.4), 0 0 13px rgba(200, 50, 50, 0.7);
+    clip-path: inset(0 0 35% 0);
+  }
+  90% {
+    transform: translateX(3px);
+    text-shadow: 2px 0 rgba(255, 51, 68, 0.8), -2px 0 rgba(51, 150, 200, 0.5), 0 0 9px rgba(200, 50, 50, 0.6);
+    clip-path: inset(0);
+  }
+  100% {
+    transform: translateX(-2px);
+    text-shadow: -2px 0 rgba(255, 51, 68, 0.8), 2px 0 rgba(51, 150, 200, 0.5), 0 0 10px rgba(200, 50, 50, 0.5);
+    clip-path: inset(0 0 60% 0);
+  }
+}
+
+.boot.storm-approaching .boot-side-label {
+  color: #ff3344;
+  animation: glitchHeader var(--glitch-speed, .1s) infinite;
+}
+
+.boot-panel { 
+  text-align:center; 
+  position:relative; 
+  z-index:1;
+  transition: text-shadow .3s ease;
+}
+.boot.storm-approaching .boot-panel {
+  text-shadow: 0 0 12px rgba(200, 50, 50, 0.3);
+}
+
+#boot-status {
+  display:inline-block;
+  min-height:1.2em;
+  transition:opacity .15s ease, transform .15s ease, filter .15s ease, text-shadow .15s ease;
+  position: relative;
+}
+#boot-status.status-fade {
+  animation: boot-status-fade .35s ease;
+}
+@keyframes boot-status-fade {
+  0% { opacity:0; transform:translateY(6px); filter:blur(.5px); }
+  25% { opacity:1; }
+  100% { opacity:1; transform:translateY(0); filter:blur(0); }
+}
+@keyframes status-glitch {
+  0%, 100% { transform:translateX(-3px); text-shadow:-3px 0 rgba(255,24,48,1), 3px 0 rgba(56,190,255,.45), 0 0 14px rgba(255,24,48,.95); clip-path:inset(0 0 45% 0); }
+  25% { transform:translateX(4px); text-shadow:4px 0 rgba(255,24,48,1), -3px 0 rgba(56,190,255,.4), 0 0 14px rgba(255,24,48,.95); clip-path:inset(35% 0 20% 0); }
+  50% { transform:translateX(-5px); text-shadow:-4px 0 rgba(56,190,255,.45), 4px 0 rgba(255,24,48,1), 0 0 12px rgba(255,24,48,.85); clip-path:inset(15% 0 55% 0); }
+  75% { transform:translateX(3px); text-shadow:3px 0 rgba(255,24,48,.95), -2px 0 rgba(56,190,255,.4), 0 0 12px rgba(255,24,48,.85); clip-path:inset(55% 0 10% 0); }
+}
+
+.boot-kicker {
+  color:#666; font-size:11px; letter-spacing:2px; margin-bottom:16px;
+  transition: color .3s ease;
+}
+.boot.storm-approaching .boot-kicker {
+  color: rgba(200, 100, 100, 0.7);
+  animation: kicker-flicker var(--glitch-speed, .1s) infinite;
+}
+@keyframes kicker-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .6; }
+}
+
+.boot-heading strong {
+  display:block; font-size:48px; font-weight:700;
+  letter-spacing:4px; color:#fff;
+  text-shadow:0 0 18px rgba(255,255,255,0.28), 0 0 36px rgba(110,205,245,0.18);
+  transition: text-shadow .3s ease;
+}
+.boot.storm-approaching .boot-heading strong {
+  text-shadow: 0 0 20px rgba(200, 50, 50, 0.5), 0 0 40px rgba(110,205,245,0.25);
+  animation: heading-flicker var(--glitch-speed, .1s) infinite;
+}
+@keyframes heading-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .9; }
+}
+
+.boot-subtitle {
+  display:block; color:rgba(255,255,255,0.72); font-size:11px;
+  letter-spacing:3px; margin-top:10px; text-transform:uppercase;
+  text-shadow:0 0 10px rgba(255,255,255,0.12);
+  transition: color .3s ease, text-shadow .3s ease;
+}
+.boot.storm-approaching .boot-subtitle {
+  color: rgba(255, 150, 150, 0.8);
+  text-shadow: 0 0 12px rgba(200, 50, 50, 0.4);
+}
+
+.boot-heading span {
+  display:block; color:#555; font-size:12px; letter-spacing:6px;
+  margin-top:4px;
+  transition: color .3s ease;
+}
+.boot.storm-approaching .boot-heading span {
+  color: rgba(200, 100, 100, 0.6);
+}
+
+.boot-track {
+  width:280px; height:2px; background:#222;
+  margin:32px auto 12px; position:relative; overflow:hidden;
+  transition: box-shadow .3s ease;
+}
+.boot.storm-approaching .boot-track {
+  box-shadow: 0 0 12px rgba(200, 50, 50, 0.3), inset 0 0 8px rgba(200, 50, 50, 0.2);
+}
+
+.boot-track i {
+  display:block; height:100%; width:0%;
+  background:linear-gradient(90deg,#f2f2f2,#666);
+  transition:width .1s linear;
+}
+.boot.storm-approaching .boot-track i {
+  background: linear-gradient(90deg, #ff6b6b, #ff9999, #f2f2f2);
+  box-shadow: 0 0 8px rgba(200, 50, 50, 0.6);
+}
+
+.boot-readout {
+  display:flex; justify-content:space-between;
+  width:280px; margin:0 auto;
+  color:#666; font-size:11px;
+  transition: color .3s ease;
+}
+.boot.storm-approaching .boot-readout {
+  color: rgba(200, 100, 100, 0.7);
+  text-shadow: 0 0 6px rgba(200, 50, 50, 0.3);
+}
+
+.boot-coord {
+  position:absolute; bottom:24px; left:50%;
+  translate:-50% 0;
+  color:#444; font-size:11px; letter-spacing:1px;
+  transition: color .3s ease;
+}
+.boot.storm-approaching .boot-coord {
+  color: rgba(200, 100, 100, 0.5);
+}
+
+.boot.storm-approaching .boot-panel :is(p, span, strong, output),
+.boot.storm-approaching .boot-side-label,
+.boot.storm-approaching .boot-coord {
+  color: #fff;
+  text-shadow: -3px 0 rgba(255, 24, 48, 1), 3px 0 rgba(56, 190, 255, 0.45), 0 0 14px rgba(255, 24, 48, 0.95);
+  animation: status-glitch var(--glitch-speed, .1s) steps(2, end) infinite;
+}
+.boot.storm-approaching #boot-status {
+  animation: status-glitch var(--glitch-speed, .1s) steps(2, end) infinite;
+}
+
+/* ===== RESOLUTION PHASE ===== */
+/* Transition from storm chaos to calm resolution */
+.boot.resolution-phase {
+  background-color:#050505;
+  transition:background-color 1.8s ease, opacity .8s ease, visibility .8s, transform .8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.boot.resolution-flash {
+  animation:resolution-flash 1.4s ease-in-out 5;
+}
+@keyframes resolution-flash {
+  0%, 100% { filter:brightness(1); }
+  50% { filter:brightness(1.18); }
+}
+.boot.resolution-still {
+  animation:none;
+  filter:none;
+  transition:none;
+}
+.boot.resolution-still * {
+  animation:none !important;
+}
+.boot.resolution-phase * {
+  transition:none !important;
+}
+.boot.resolution-phase .boot-rain {
+  opacity:0;
+}
+
+/* Subtitle for resolution phase */
+.boot-subtext {
+  position: relative;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 16px;
+  opacity: 0;
+  text-shadow: 0 0 8px rgba(110, 205, 245, 0.2);
+  transition: opacity .6s ease, text-shadow .6s ease;
+}
+
+.boot-subtext.fade-in-resolution {
+  animation: subtext-fade-in .8s ease forwards;
+  animation-delay: .1s;
+}
+
+@keyframes subtext-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Remove storm elements during resolution */
+.boot.resolution-phase::before,
+.boot.resolution-phase::after {
+  animation: none !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.01) 50%,
+    rgba(255,255,255,0.03)
+  );
+  opacity: .35;
+  background-color: transparent;
+}
+
+/* Clean up corner styling during resolution */
+.boot.resolution-phase .boot-corner {
+  animation: none !important;
+  opacity: .7;
+  box-shadow: 0 0 6px rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* Resolution text styling - calm and welcoming */
+.boot.resolution-phase #boot-status {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(110, 205, 245, 0.3), 0 0 24px rgba(110, 205, 245, 0.15);
+  animation: resolution-text-glow .8s ease infinite;
+}
+
+@keyframes resolution-text-glow {
+  0%, 100% {
+    text-shadow: 0 0 12px rgba(110, 205, 245, 0.3), 0 0 24px rgba(110, 205, 245, 0.15);
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(110, 205, 245, 0.4), 0 0 32px rgba(110, 205, 245, 0.2);
+  }
+}
+
+/* Clean progress bar during resolution */
+.boot.resolution-phase .boot-track {
+  box-shadow: 0 0 8px rgba(110, 205, 245, 0.2);
+}
+
+.boot.resolution-phase .boot-track i {
+  background: linear-gradient(90deg, #76ffd9, #6ecdf5, #f2f2f2);
+  box-shadow: 0 0 6px rgba(110, 205, 245, 0.4);
+}
+
+/* Readout during resolution */
+.boot.resolution-phase .boot-readout {
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 6px rgba(110, 205, 245, 0.2);
+}
+
+/* Restore calm aesthetics for all text elements */
+.boot.resolution-phase .boot-side-label {
+  color: rgba(255,255,255,0.5);
+  animation: floatHeader 4s ease-in-out infinite;
+  text-shadow: none;
+  transition: all .6s ease;
+}
+
+.boot.resolution-phase .boot-side-label:first-of-type {
+  animation: floatHeader 4s ease-in-out infinite;
+}
+
+.boot.resolution-phase .boot-side-label:last-of-type {
+  animation: floatHeader 4s ease-in-out infinite reverse;
+}
+
+.boot.resolution-phase .boot-kicker,
+.boot.resolution-phase .boot-heading strong,
+.boot.resolution-phase .boot-subtitle,
+.boot.resolution-phase .boot-heading span,
+.boot.resolution-phase .boot-coord {
+  color: inherit;
+  animation: none !important;
+  text-shadow: none;
+  transition: all .6s ease;
+}
+
+.boot.resolution-phase .boot-heading strong {
+  text-shadow: 0 0 18px rgba(255,255,255,0.28), 0 0 36px rgba(110,205,245,0.18);
+}
+
+.boot.resolution-phase .boot-subtitle {
+  color: rgba(255,255,255,0.72);
+  text-shadow: 0 0 10px rgba(255,255,255,0.12);
+}
+
+/* Fade out entire loader at the end */
+.boot {
+  opacity: 1;
+  transition: opacity .8s ease-in;
+}
+

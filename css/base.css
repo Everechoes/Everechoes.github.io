@@ -1,0 +1,35 @@
+:root { /* ===== COLORS ===== */
+  --bg-0: #03070d;
+  --bg-1: #071722;
+  --bg-2: #0e2233;
+  --bg-3: #163a4d;
+  --panel: rgba(10, 18, 24, 0.7);
+  --panel-strong: rgba(8, 14, 20, 0.88);
+  --line: rgba(255, 255, 255, 0.12);
+  --text: #edf7ff;
+  --muted: #a4bfd0;
+  --muted-2: #7b98ab;
+  --accent: #6ecdf5;
+  --accent-2: #76ffd9;
+  --accent-3: #8bbcff;
+  --glow: rgba(110, 205, 245, 0.35);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background:radial-gradient(circle at top, var(--bg-2), var(--bg-0) 45%);
+  color:var(--text);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
+}
+
+/* ===== UTILITIES ===== */
+.mono { font-family:'JetBrains Mono', monospace; }
+
