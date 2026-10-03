@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Everechoes</title>
-<meta name="description" content="Personal sandbox diorama">
+<meta name="description" content="Fu*k you Rockstar Games.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:wght@500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/visual-settings.css">
+<link rel="stylesheet" href="css/interaction-guard.css">
 </head>
 <body>
 
@@ -93,40 +95,59 @@
       <a href="#contact">03 CONTACT</a>
       <span class="clock" id="clock">--:--:--</span>
       <div class="sound-settings">
-        <button class="sound-settings-toggle" id="sound-settings-toggle" type="button" aria-label="Open sound settings" aria-expanded="false" aria-controls="sound-panel" title="Sound settings">
+        <button class="sound-settings-toggle" id="sound-settings-toggle" type="button" aria-label="Open system settings" aria-expanded="false" aria-controls="sound-panel" title="System settings">
           <span class="sound-gear" aria-hidden="true">
             <span class="gear-mark">&#9881;</span>
             <span class="gear-particles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
           </span>
         </button>
-        <section class="sound-panel" id="sound-panel" aria-label="Sound settings" hidden>
+        <section class="sound-panel" id="sound-panel" aria-label="System settings" hidden>
           <div class="sound-panel-heading mono">
-            <span>Sound Settings</span>
+            <span>System Settings</span>
             <strong id="sound-current-name">Settings</strong>
           </div>
-          <p class="sound-status mono" id="sound-status" aria-live="polite">SOUND OFF</p>
-          <ul class="sound-list">
-            <li class="sound-choice" data-name="SOUND 01" data-file="assets/sound1.mp4">
-              <button class="sound-choice-select mono" type="button" aria-pressed="true"><span>Polymerized Dreams</span><small>assets/sound1.mp4</small></button>
-              <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 01" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-            </li>
-            <li class="sound-choice" data-name="SOUND 02" data-file="assets/sound2.mp4">
-              <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Temporal Scale</span><small>assets/sound2.mp4</small></button>
-              <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 02" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-            </li>
-            <li class="sound-choice" data-name="SOUND 03" data-file="assets/sound3.mp4">
-              <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>The Road Not Taken</span><small>assets/sound3.mp4</small></button>
-              <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 03" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-            </li>
-            <li class="sound-choice" data-name="SOUND 04" data-file="assets/sound4.mp4">
-              <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Assassin's Creed 2</span><small>assets/sound4.mp4</small></button>
-              <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 04" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-            </li>
-            <li class="sound-choice" data-name="SOUND 05" data-file="assets/sound5.mp4">
-              <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Siren Song(2023)</span><small>assets/sound5.mp4</small></button>
-              <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 05" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
-            </li>
-          </ul>
+          <div class="settings-tabs" role="tablist" aria-label="Settings categories">
+            <button class="settings-tab mono" id="sound-tab" type="button" role="tab" aria-selected="true" aria-controls="sound-tab-panel">Sound</button>
+            <button class="settings-tab mono" id="visual-tab" type="button" role="tab" aria-selected="false" aria-controls="visual-tab-panel" tabindex="-1">Visual</button>
+          </div>
+          <section class="settings-tab-panel" id="sound-tab-panel" role="tabpanel" aria-labelledby="sound-tab">
+            <p class="sound-status mono" id="sound-status" aria-live="polite">SOUND OFF</p>
+            <ul class="sound-list">
+              <li class="sound-choice" data-name="SOUND 01" data-file="assets/sound1.mp4">
+                <button class="sound-choice-select mono" type="button" aria-pressed="true"><span>Polymerized Dreams</span><small>assets/sound1.mp4</small></button>
+                <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 01" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+              <li class="sound-choice" data-name="SOUND 02" data-file="assets/sound2.mp4">
+                <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Temporal Scale</span><small>assets/sound2.mp4</small></button>
+                <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 02" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+              <li class="sound-choice" data-name="SOUND 03" data-file="assets/sound3.mp4">
+                <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>The Road Not Taken</span><small>assets/sound3.mp4</small></button>
+                <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 03" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+              <li class="sound-choice" data-name="SOUND 04" data-file="assets/sound4.mp4">
+                <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Assassin's Creed 2</span><small>assets/sound4.mp4</small></button>
+                <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 04" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+              <li class="sound-choice" data-name="SOUND 05" data-file="assets/sound5.mp4">
+                <button class="sound-choice-select mono" type="button" aria-pressed="false"><span>Siren Song(2023)</span><small>assets/sound5.mp4</small></button>
+                <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 05" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+            </ul>
+          </section>
+          <section class="settings-tab-panel" id="visual-tab-panel" role="tabpanel" aria-labelledby="visual-tab" hidden>
+            <p class="sound-status mono" id="visual-settings-status" aria-live="polite">ARCHITECTURAL / ON</p>
+            <ul class="sound-list visual-list">
+              <li class="sound-choice visual-choice" data-visual-mode="draft">
+                <button class="sound-choice-select visual-choice-select mono" type="button" aria-pressed="true"><span>Architectural</span><small>Default Visual</small></button>
+                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Architectural ON" aria-pressed="true"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+              <li class="sound-choice visual-choice" data-visual-mode="video">
+                <button class="sound-choice-select visual-choice-select mono" type="button" aria-pressed="false"><span>Pa Ŵr yw'r Porthor?</span><small>Ancient Visual</small></button>
+                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Video OFF" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+              </li>
+            </ul>
+          </section>
         </section>
       </div>
     </nav>
@@ -136,9 +157,12 @@
     <!-- HERO / SANDBOX -->
     <section id="sandbox" class="sandbox">
       <div id="scene" class="scene"></div>
+      <video class="architecture-video" id="architecture-video" muted loop playsinline preload="none" draggable="false" aria-label="Architectural video study" hidden>
+        <source src="assets/Videos.webm" type="video/webm">
+      </video>
 
       <div class="masthead">
-        <p class="mini"><span>1.2 In Other Side</span><i></i><span>1.3 Coming in November</span></p>
+        <p class="mini"><span>1.3 Another World</span><i></i><span>1.4 Coming in November</span></p>
         <div class="hero-sketch blueprint-area">
           <!-- Legacy architectural elevation removed.
           <svg class="architect-sketch" viewBox="0 0 760 336" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
@@ -182,7 +206,7 @@
             <text class="sketch-note sketch-title" x="70" y="198">ST. PAVLOV / ARCHITECTURAL STUDY</text>
           </svg>
           -->
-            <svg class="architect-sketch" viewBox="0 0 1420 500" preserveAspectRatio="xMidYMax meet" role="img" aria-labelledby="architecture-title architecture-description">
+            <svg class="architect-sketch" id="architect-sketch" viewBox="0 0 1420 500" preserveAspectRatio="xMidYMax meet" role="img" aria-labelledby="architecture-title architecture-description">
               <title id="architecture-title">Architectural study: Nova Miedź</title>
               <desc id="architecture-description">A hand-drafted axonometric study of six buildings with measured elevations, softened graphite shading, and inked technical details.</desc>
               <defs>
@@ -272,7 +296,7 @@
               </g>
             </svg>
         </div>
-        <p class="role"><span>Temporal</span><i class="sep"></i><span>Anomaly</span></p>
+        <p class="role"><span></span><i class="sep"></i><span></span></p>
       </div>
 
       <a class="scroll-cue" href="#about">
@@ -419,7 +443,7 @@
     </div>
 
     <div class="footer-center mono">
-      <span></span>Version 1.2</span>
+      <span></span>Version 1.3</span>
     </div>
 
     <div class="footer-right">
@@ -441,5 +465,7 @@
 <script src="js/site.js"></script>
 <script src="js/boot.js"></script>
 <script src="js/music.js"></script>
+<script src="js/visual-settings.js"></script>
+<script src="js/interaction-guard.js"></script>
 </body>
 </html>
