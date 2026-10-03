@@ -60,7 +60,7 @@
   { pct: 92,  text: 'Warning: The Rain Reversing'},
   { pct: 93,  text: 'Warning: The Rain Reversing' },
   { pct: 94,  text: 'Warning: The Rain Reversing' },
-  { pct: 95,  text: 'Reconnecting Signal...' },
+  { pct: 95,  text: 'Warning: The Rain Reversing' },
   { pct: 96,  text: 'Reconnecting Signal...' },
   { pct: 97,  text: 'Reconnecting Signal...' },
   { pct: 98,  text: 'Reconnecting Signal...' },
@@ -178,7 +178,7 @@
           boot.style.setProperty('--glitch-speed', '0.5s');
           setRainDensity(0);
           boot.classList.remove('storm-gathering');
-          boot.classList.add('storm-approaching');
+          boot.classList.add('storm-approaching', 'storm-text-lift');
           createRainSparks();
           stormInterval = setInterval(updateStormSpeed, 100);
         }
@@ -198,6 +198,7 @@
       if (rainClearInterval) finishRainClearing();
       const wasStorming = boot.classList.contains('storm-approaching');
       stopStorm();
+      boot.classList.remove('storm-text-lift');
       if (wasStorming) boot.classList.add('storm-clearing');
 
       // 2. Change main text and percentage

@@ -54,35 +54,43 @@
 
   // Render Projects
   const grid = document.getElementById('archive-grid');
-  function renderTag(tag, link) {
-    if (tag.toLowerCase() === 'link' && link) {
-      return `<a href="${link}" target="_blank" rel="noopener noreferrer" class="tag-link">${tag}</a>`;
-    }
-    return `<span>${tag}</span>`;
+  function projectSketch(type) {
+    const drawings = {
+      data: '<path d="M17 19h46M17 31h46M17 43h46M17 55h46M17 19v36M31 19v36M45 19v36M63 19v36"/><path d="M17 15h46M17 59h46M68 23h14M68 31h10M68 39h16M68 47h12M68 55h8"/>',
+      layout: '<path d="M15 16h68v43H15zM15 27h68M37 27v32M60 27v32M15 42h22M37 42h23M60 47h23"/><path d="M20 21h22M44 21h18M66 21h12M21 33h10M43 33h12M66 33h11M20 50h11M43 51h12M66 54h11"/>',
+      interaction: '<path d="M15 51h18V33h18V18h20M58 18h13v13"/><circle cx="15" cy="51" r="3"/><circle cx="33" cy="33" r="3"/><circle cx="51" cy="18" r="3"/><circle cx="71" cy="18" r="3"/><path d="M19 63h55M75 59v8M19 59v8"/>'
+    };
+    return `<svg class="project-sketch" viewBox="0 0 96 76" aria-hidden="true" focusable="false"><path class="sketch-frame" d="M7 8h82v60H7z"/><g class="sketch-drawing">${drawings[type] || drawings.data}</g><path class="sketch-cross" d="M3 38h5M88 38h5M48 4v5M48 67v5"/></svg>`;
   }
 
   PROJECTS.forEach((p, idx) => {
-    const card = document.createElement('div');
+    const card = document.createElement('article');
     card.className = 'project-card';
     card.innerHTML = `
-      <div class="card-idx mono">0${idx + 1}</div>
-      <div class="card-title">${p.title}</div>
-      <div class="card-desc">${p.desc}</div>
-      <div class="card-tags">
-        ${p.tags.map(t => renderTag(t, p.link)).join('')}
+      <button class="project-card-main" type="button" aria-label="View ${p.title} project notes">
+        <div class="project-preview">
+          ${projectSketch(p.visual)}
+          <span class="preview-label mono">FIG. 0${idx + 1}</span>
+          <span class="preview-scale mono">STUDY / 0${idx + 1}</span>
+        </div>
+        <div class="project-card-copy">
+          <div class="project-card-meta">
+            <span class="card-idx mono">0${idx + 1} / PROJECT</span>
+            <span class="project-status mono">${p.status}</span>
+          </div>
+          <h3 class="card-title">${p.title}</h3>
+          <p class="card-desc">${p.desc}</p>
+        </div>
+      </button>
+      <div class="project-card-footer">
+        <div class="card-tags">${p.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+        ${p.link
+          ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-link">Repository <span aria-hidden="true">↗</span></a>`
+          : '<span class="project-link project-link-pending">Preview pending <span aria-hidden="true">—</span></span>'}
       </div>
     `;
 
-    card.addEventListener('click', (event) => {
-      const linkEl = event.target.closest('.tag-link');
-      if (linkEl) {
-        event.preventDefault();
-        event.stopPropagation();
-        window.open(linkEl.href, '_blank', 'noopener,noreferrer');
-        return;
-      }
-      openCard(p);
-    });
+    card.querySelector('.project-card-main').addEventListener('click', () => openCard(p));
 
     grid.appendChild(card);
   });
@@ -93,21 +101,23 @@
   const cardInner = document.getElementById('card-inner');
 
   function openCard(p) {
-    const tagMarkup = p.tags.map(t => {
-      const tag = String(t).toLowerCase();
-      if (tag === 'link' && p.link) {
-        return `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="tag-link">${t}</a>`;
-      }
-      return `<span>${t}</span>`;
-    }).join('');
+    const tagMarkup = p.tags.map(tag => `<span>${tag}</span>`).join('');
 
     cardInner.innerHTML = `
-      <button class="card-close" id="card-close">&times;</button>
-      <div class="card-idx mono">PROJECT 0${p.id}</div>
-      <h2 style="margin:12px 0 16px; color:#fff;">${p.title}</h2>
-      <p style="color:#aaa; line-height:1.8;">${p.detail}</p>
-      <div class="card-tags" style="margin-top:24px;">
-        ${tagMarkup}
+      <div class="project-modal-head">
+        <span class="card-idx mono">PROJECT FILE <i> / </i> 0${p.id}</span>
+        <button class="card-close" id="card-close" type="button" aria-label="Close project details">&times;</button>
+      </div>
+      <h2 class="project-modal-title">${p.title}</h2>
+      <p class="project-modal-status mono">${p.status}</p>
+      <div class="project-modal-rule" aria-hidden="true"></div>
+      <p class="project-modal-detail">${p.detail}</p>
+      <div class="project-modal-footer">
+        <div class="project-modal-stack">
+          <span class="project-modal-label mono">BUILT WITH</span>
+          <div class="card-tags project-modal-tags">${tagMarkup}</div>
+        </div>
+        ${p.link ? `<a class="project-modal-link" href="${p.link}" target="_blank" rel="noopener noreferrer">Open repository <span aria-hidden="true">↗</span></a>` : '<span class="project-modal-pending mono">PREVIEW IN DEVELOPMENT</span>'}
       </div>
     `;
     backdrop.classList.add('open');
@@ -126,45 +136,6 @@
   });
 })();
 
-// Video color sampler: samples the first frame of the hero video and updates CSS variables
-(function() {
-  const launch = document.getElementById('projects-launch');
-  const transition = document.getElementById('project-transition');
-  const archive = document.getElementById('project');
-  if (!launch || !transition || !archive) return;
-
-  launch.addEventListener('click', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      archive.scrollIntoView({ behavior: 'auto' });
-      return;
-    }
-
-    transition.replaceChildren();
-    transition.classList.add('is-active');
-    for (let index = 0; index < 28; index++) {
-      const square = document.createElement('span');
-      const size = 22 + Math.random() * 74;
-      square.className = 'transition-square';
-      square.style.setProperty('--size', `${size}px`);
-      square.style.setProperty('--left', `${Math.random() * 100}%`);
-      square.style.setProperty('--top', `${Math.random() * 100}%`);
-      square.style.setProperty('--from-x', `${Math.random() * 160 - 80}px`);
-      square.style.setProperty('--from-y', `${Math.random() * 160 - 80}px`);
-      square.style.setProperty('--to-x', `${Math.random() * 220 - 110}px`);
-      square.style.setProperty('--to-y', `${Math.random() * 220 - 110}px`);
-      square.style.setProperty('--delay', `${Math.random() * 180}ms`);
-      transition.appendChild(square);
-    }
-
-    window.setTimeout(() => {
-      transition.classList.remove('is-active');
-      transition.replaceChildren();
-      archive.scrollIntoView({ behavior: 'smooth' });
-    }, 900);
-  });
-})();
-
-
 // Interactive 3D Book Controller (About Section)
 (function() {
   const book = document.getElementById('book-3d');
@@ -174,9 +145,11 @@
   const sideBooks = stage ? [...stage.querySelectorAll('.book-side-book')] : [];
   const bookNavigation = stage ? [...stage.querySelectorAll('.book-nav-button')] : [];
   const centerCover = book?.querySelector('.book-cover-img');
+  const centerCoverFrame = book?.querySelector('.book-cover');
   const closedCover = book?.querySelector('.book-closed');
   const arcTarget = book?.closest('.book-hover-target');
   const bookCaption = stage?.querySelector('#book-caption');
+  const lockNotice = stage?.parentElement?.querySelector('.book-lock-notice');
 
   if (!book) return;
   const bookCaptions = {
@@ -184,6 +157,12 @@
     'Paradise Regained': 'My Education',
     'The Prisoner in the Cave': 'My Skill'
   };
+  const lockedBookMessages = {
+    'Paradise Regained': 'Will be Unlocked in 1.5',
+    'The Prisoner in the Cave': 'Will be Unlocked in 1.7'
+  };
+  let lockNoticeTimeout;
+  let lockNoticeHideTimeout;
   const bookContents = {
     'Pa Gur Yw Y Porthaur': {
       chapter: 'Chapter 1: Pa Gur yv y Porthaur?',
@@ -431,12 +410,65 @@
   let suppressOpenClick = false;
 
   renderBookContents(centerCover?.alt);
+  syncLockedState();
   if (bookCaption && centerCover) {
     bookCaption.textContent = bookCaptions[centerCover.alt] || '';
   }
 
+  function syncLockedState() {
+    const isCenterLocked = Object.hasOwn(lockedBookMessages, centerCover?.alt);
+    book.classList.toggle('is-locked', isCenterLocked);
+    centerCoverFrame?.classList.toggle('is-locked', isCenterLocked);
+    book.setAttribute('aria-disabled', String(isCenterLocked));
+    book.setAttribute('aria-label', isCenterLocked ? `${centerCover.alt}, Locked` : `Buka ${centerCover?.alt || 'buku'}`);
+
+    sideBooks.forEach(sideBook => {
+      const image = sideBook.querySelector('img');
+      const isLocked = Object.hasOwn(lockedBookMessages, image?.alt);
+      sideBook.classList.toggle('is-locked', isLocked);
+      sideBook.setAttribute('aria-label', `Pilih ${image?.alt || 'buku'}${isLocked ? ', Locked' : ''}`);
+    });
+  }
+
+  function showLockedNotice(title = centerCover?.alt) {
+    if (!lockNotice) return;
+    const message = lockedBookMessages[title];
+    if (!message) return;
+    window.clearTimeout(lockNoticeTimeout);
+    window.clearTimeout(lockNoticeHideTimeout);
+    lockNotice.textContent = message;
+    lockNotice.classList.remove('is-visible');
+    lockNotice.hidden = true;
+    void lockNotice.offsetWidth;
+    lockNotice.hidden = false;
+    lockNotice.classList.add('is-visible');
+    lockNoticeTimeout = window.setTimeout(() => {
+      if (!closedCover?.matches(':hover')) hideLockedNotice();
+    }, 2800);
+  }
+
+  function hideLockedNotice() {
+    if (!lockNotice) return;
+    window.clearTimeout(lockNoticeTimeout);
+    window.clearTimeout(lockNoticeHideTimeout);
+    lockNotice.classList.remove('is-visible');
+    lockNoticeHideTimeout = window.setTimeout(() => {
+      lockNotice.hidden = true;
+    }, 240);
+  }
+
+  closedCover?.addEventListener('pointerenter', () => {
+    if (!lockNotice || lockNotice.hidden) return;
+    window.clearTimeout(lockNoticeTimeout);
+    window.clearTimeout(lockNoticeHideTimeout);
+    lockNotice.classList.add('is-visible');
+  });
+
+  closedCover?.addEventListener('pointerleave', hideLockedNotice);
+
   function selectBook(sideBook) {
     if (!sideBook || isSelecting || book.classList.contains('is-open')) return;
+    hideLockedNotice();
     const leftBook = sideBooks.find(item => item.dataset.slot === 'left');
     const rightBook = sideBooks.find(item => item.dataset.slot === 'right');
     const leftCover = leftBook?.querySelector('img');
@@ -468,10 +500,7 @@
         setCover(centerCover, previousLeft);
         setCover(rightCover, previousCenter);
       }
-      sideBooks.forEach(item => {
-        item.setAttribute('aria-label', `Pilih ${item.querySelector('img').alt}`);
-      });
-      book.setAttribute('aria-label', `Buka ${incoming.title}`);
+      syncLockedState();
       renderBookContents(incoming.title);
       if (bookCaption) {
         bookCaption.textContent = bookCaptions[incoming.title] || '';
@@ -483,6 +512,7 @@
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       swapCovers();
+      showLockedNotice(centerCover.alt);
       isSelecting = false;
       return;
     }
@@ -516,15 +546,21 @@
         arcTarget?.style.removeProperty('--arc-sweep-start');
         arcTarget?.style.removeProperty('--arc-sweep-end');
         isSelecting = false;
+        showLockedNotice(centerCover.alt);
       };
     };
   }
 
   function selectAdjacentBook(slot) {
-    selectBook(sideBooks.find(sideBook => sideBook.dataset.slot === slot));
+    const sideBook = sideBooks.find(item => item.dataset.slot === slot);
+    selectBook(sideBook);
   }
 
   function openBook() {
+    if (book.classList.contains('is-locked')) {
+      showLockedNotice(centerCover?.alt);
+      return;
+    }
     if (isSelecting) return;
     book.classList.add('is-open');
     book.setAttribute('aria-expanded', 'true');
@@ -554,7 +590,7 @@
   }
 
   sideBooks.forEach(sideBook => {
-    sideBook.addEventListener('click', () => selectBook(sideBook));
+    sideBook.addEventListener('click', () => selectAdjacentBook(sideBook.dataset.slot));
   });
 
   bookNavigation.forEach(button => {
