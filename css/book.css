@@ -181,6 +181,105 @@
   object-fit: cover;
 }
 
+.book-side-book.is-locked img,
+.book-cover.is-locked .book-cover-img {
+  filter: grayscale(1) brightness(.38) contrast(.78) blur(1.5px);
+}
+
+.book-lock-overlay {
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:grid;
+  place-items:center;
+  color:rgba(244,236,220,.9);
+  background:linear-gradient(180deg, rgba(17,17,16,.16), rgba(17,17,16,.48));
+  font-family:'Lora', Georgia, serif;
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:.02em;
+  text-shadow:0 1px 8px rgba(0,0,0,.8);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+}
+
+.book-lock-overlay::before,
+.book-lock-overlay::after {
+  position:absolute;
+  top:calc(50% - 2px);
+  width:calc(50% - 48px);
+  height:4px;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(244,236,220,.78) 0 4px,
+    transparent 4px 9px
+  );
+  content:"";
+}
+
+.book-lock-overlay::before { left:8px; }
+.book-lock-overlay::after { right:8px; }
+
+.book-side-book.is-locked .book-lock-overlay,
+.book-cover.is-locked .book-lock-overlay {
+  opacity:1;
+}
+
+.book-cover.is-locked .book-lock-overlay {
+  font-size:16px;
+}
+
+.book-side-book.is-locked .book-lock-overlay {
+  font-size:12px;
+}
+
+.book-side-book.is-locked:hover { opacity:.92; }
+.book-3d.is-locked .book-closed { cursor:not-allowed; }
+.book-3d.is-locked .book-cover-sheen { opacity:.45; }
+
+.book-lock-notice {
+  position:absolute;
+  top:50%;
+  left:50%;
+  z-index:6;
+  width:max-content;
+  max-width:calc(100% - 24px);
+  padding:13px 16px;
+  color:#f3ead6;
+  background:rgba(37,35,30,.92);
+  border:1px solid rgba(213,194,151,.62);
+  box-shadow:0 8px 24px rgba(0,0,0,.38), inset 0 0 0 1px rgba(244,236,220,.08);
+  backdrop-filter:blur(5px);
+  font-family:'JetBrains Mono', monospace;
+  font-size:clamp(9px, 1.15vw, 12px);
+  letter-spacing:.035em;
+  line-height:1.5;
+  opacity:0;
+  pointer-events:none;
+  text-align:center;
+  text-shadow:0 1px 5px rgba(0,0,0,.55);
+  transform:translate(-50%,-44%) scale(.96);
+  transition:opacity .24s ease, transform .24s cubic-bezier(.2,.7,.25,1);
+}
+
+.book-lock-notice[hidden] { display:none; }
+.book-lock-notice.is-visible {
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  animation:book-lock-notice-arrive .34s cubic-bezier(.2,.8,.25,1) both;
+}
+
+@keyframes book-lock-notice-arrive {
+  from { opacity:0; transform:translate(-50%,-42%) scale(.94); filter:blur(4px); }
+  to { opacity:1; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .book-lock-notice,
+  .book-lock-notice.is-visible { animation:none; transition:none; }
+}
+
 .book-side-book,
 .book-side-book img,
 .book-cover-img {

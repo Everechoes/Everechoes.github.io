@@ -1,0 +1,166 @@
+.hero-sketch {
+  position:absolute;
+  z-index:1;
+  top:max(0px, calc(72% - min(31.64vw, 435px) - 12px));
+  left:50%;
+  bottom:auto;
+  width:min(96vw, 1420px);
+  height:auto;
+  margin:0;
+  aspect-ratio:1420 / 500;
+  transform:translateX(-50%);
+}
+
+.blueprint-area::before {
+  position:absolute;
+  inset:12% 2% 8%;
+  background-image:
+    linear-gradient(rgba(76,78,70,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,78,70,.035) 1px, transparent 1px);
+  background-size:24px 24px;
+  content:"";
+  mask-image:radial-gradient(ellipse, #000 0, rgba(0,0,0,.68) 64%, transparent 86%);
+  pointer-events:none;
+}
+
+.architect-sketch {
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  transform:translateX(2.5%);
+  transform-origin:center bottom;
+  transition:filter .35s ease, transform .35s ease;
+}
+
+.architect-sketch path { fill:none; stroke-linecap:square; stroke-linejoin:round; }
+.architecture-pencil-hatch {
+  fill:url(#architectural-hatch) !important;
+  stroke:none !important;
+  opacity:.24;
+}
+.architecture-pencil-crosshatch {
+  fill:url(#architectural-crosshatch) !important;
+  stroke:none !important;
+  opacity:.22;
+}
+.architecture-pencil-echo {
+  fill:none !important;
+  stroke:#77746c !important;
+  stroke-width:1 !important;
+  stroke-dasharray:3 2;
+  opacity:.32;
+}
+
+.architecture-line {
+  fill:none;
+  stroke:#373630;
+  stroke-width:1.35;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  opacity:0;
+}
+.page.ready .architecture-line { animation:architecture-line-in 2.35s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+.architecture-line-strong { stroke-width:1.5; }
+.architecture-edge { fill:none; stroke:rgba(73,71,65,.34); stroke-width:1; stroke-dasharray:3 3; opacity:0; }
+.page.ready .architecture-edge { animation:architecture-line-in 1.5s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+.architect-sketch path.architecture-glass { fill:none; stroke:#45443e; stroke-width:1; opacity:.94; }
+
+.architecture-detail {
+  fill:none;
+  stroke:rgba(57,56,51,.78);
+  stroke-width:1;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  opacity:0;
+}
+.page.ready .architecture-detail { animation:architecture-line-in 1.8s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+
+.architecture-hatch,
+.architecture-guides {
+  fill:none;
+  stroke:rgba(70,68,62,.56);
+  stroke-width:1;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  opacity:0;
+}
+.architecture-guides { stroke-dasharray:1 .012; stroke-width:1; }
+.architecture-measure { fill:none; stroke:rgba(48,47,42,.76); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
+.page.ready .architecture-measure { animation:architecture-line-in 1.2s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+
+.architecture-accent {
+  fill:none;
+  stroke:#4b4943;
+  stroke-width:1.2;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  opacity:0;
+}
+.page.ready .architecture-hatch,
+.page.ready .architecture-guides { animation:architecture-line-in 1.45s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+.page.ready .architecture-accent { animation:architecture-line-in 1.2s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
+
+.architecture-notes {
+  fill:#625e53;
+  font:400 9px 'JetBrains Mono', monospace;
+  letter-spacing:1px;
+  opacity:0;
+}
+.page.ready .architecture-notes { animation:architecture-note-in .8s ease-out 3.8s both; }
+.architecture-notes text:nth-child(2) { fill:#4b4943; font-size:9px; }
+.architecture-glints { fill:none; stroke:#4b4943; stroke-width:1; opacity:0; pointer-events:none; }
+.page.ready .architecture-glints { animation:architecture-glint-in .8s ease-out 4.2s both; }
+.architecture-glints rect { fill:none; stroke-dasharray:2 3; }
+
+.architecture-pencil-echo { stroke-dasharray:2 2; opacity:.22; }
+.architecture-pencil-hatch { opacity:.2; }
+.architecture-pencil-crosshatch { opacity:.18; }
+
+@media (hover:hover) and (pointer:fine) {
+  .hero-sketch:hover .architect-sketch {
+    filter:contrast(1.12);
+    transform:translateX(2.5%) scale(1.012);
+  }
+  .hero-sketch:hover .architecture-measure {
+    stroke:#292823;
+    stroke-width:1.2;
+  }
+}
+
+@keyframes architecture-line-in {
+  0% { stroke-dashoffset:1; opacity:0; }
+  12% { opacity:.96; }
+  100% { stroke-dashoffset:0; opacity:.96; }
+}
+@keyframes architecture-note-in {
+  from { opacity:0; }
+  to { opacity:.92; }
+}
+@keyframes architecture-glint-in {
+  0% { opacity:0; }
+  45% { opacity:.5; }
+  100% { opacity:.26; }
+}
+
+@media (max-width:768px) {
+  .hero-sketch { width:96vw; }
+}
+
+@media (max-width:480px) {
+  .hero-sketch { width:96vw; }
+  .architecture-notes { font-size:24px; letter-spacing:.25px; }
+  .architecture-notes text:nth-child(2) { font-size:24px; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .architecture-line,
+  .architecture-detail,
+  .architecture-accent { animation:none; stroke-dashoffset:0; opacity:.96; }
+  .architecture-edge { animation:none; stroke-dashoffset:0; opacity:.72; }
+  .architecture-hatch,
+  .architecture-guides { animation:none; stroke-dashoffset:0; opacity:.42; }
+  .architecture-measure { animation:none; stroke-dashoffset:0; opacity:.82; }
+  .architecture-notes,
+  .architecture-glints { animation:none; opacity:.5; }
+}

@@ -61,7 +61,6 @@
     text-align:center;
     transform:translateX(-50%);
   }
-  .projects-launch { top:74%; }
   .scroll-cue { bottom:10px; }
   .boot-hud { top:24px; gap:12px; padding:0 20px; }
   .boot-side-label { font-size:8px; letter-spacing:1px; }
@@ -178,4 +177,3 @@
   .topnav > .nav-brand { animation:none; }
   .nav-brand-sketch path { animation:none; stroke-dashoffset:0; opacity:.7; }
 }
-
