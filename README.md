@@ -1,100 +1,90 @@
-# Asset Guide
+Will Updated in 1.4
 
-This folder contains images and audio used by the portfolio page. Asset paths are written relative to the project root, for example, `assets/book-cover.png`. Keep filenames and capitalization exactly as listed below; Linux-based hosting environments are case-sensitive.
 
-## Asset Inventory
 
-### Book Covers
+# The Temporal Scale
 
-| File | Usage |
-| --- | --- |
-| `book-cover.png` | Center book cover for the profile section. |
-| `cover-left.png` | Left-side book: *The Prisoner in the Cave* (Skills). |
-| `cover-right.png` | Right-side book: *Paradise Regained* (Education). |
-| `cover-right2.webp` | Available in the folder, but not currently referenced by the page or scripts. |
+A single-page personal portfolio by Everechoes, presented as a cinematic, architectural interface. The site combines a fictional St. Pavlov Foundation boot sequence with interactive portfolio content.
 
-Book order and content are configured in `js/site.js`; the initial cover markup is in `index.html`.
+## Features
 
-### Profile and Education Photos
+- Responsive single-page layout with About, Project, and Contact sections
+- Animated boot sequence with options to skip to the home page
+- Live date and time display
+- Interactive 3D-style book for profile, education, and skills content
+- Project cards with detail dialogs and external project links
+- Animated transition from the hero section to the project archive
+- Sound settings panel with five selectable looping audio tracks
+- Ambient particles and pointer effects, with reduced-motion preferences respected
+- No frontend framework or build step required
 
-| File | Usage |
-| --- | --- |
-| `profile-pic.png` | Profile photo in the interactive profile book. |
-| `school-pic1.webp` | Education gallery: SDN 1 Guntung Payung Banjarbaru. |
-| `school-pic2.jpg` | Education gallery: SMP Negeri 9 Banjarbaru. |
-| `school-pic3.jpg` | Education gallery: SMK Telkom Banjarbaru. |
+## Project Structure
 
-The education photo list, captions, and profile photo path are defined in `js/site.js`.
+```text
+.
+├── index.html
+├── server.js              # Optional Node.js static server on port 8000
+├── favicon.svg
+├── css/
+│   ├── style.css          # CSS entry point; imports the styles below
+│   ├── base.css           # Theme variables, reset, and shared utilities
+│   ├── boot.css           # Boot sequence
+│   ├── layout.css         # Page layout and responsive rules
+│   ├── foundation.css     # St. Pavlov Foundation visual theme
+│   ├── refinements.css    # Interaction and responsive refinements
+│   └── book.css           # Interactive book
+├── js/
+│   ├── project.js         # Project card data
+│   ├── site.js            # Clock, project cards, transitions, and book content
+│   ├── boot.js            # Boot sequence behavior
+│   ├── music.js           # Sound panel and audio playback
+│   └── sandbox.js         # Optional Three.js scene; not loaded by index.html
+└── assets/
+    ├── README.md          # Asset notes
+    ├── hero.webm          # Available video asset; not currently used by index.html
+    ├── sound1.mp4 ... sound5.mp4
+    ├── book-cover.png, cover-left.png, cover-right.png
+    ├── profile-pic.png, school-pic1.webp ... school-pic3.jpg
+    ├── Skill-*.png, Skill-*.webp, Skills-*.png
+    └── logo-discord.webp, logo-github.webp, logo-spotify.png
+```
 
-### Skill and Tool Icons
+## Run Locally
 
-These icons appear on the Skills page inside the interactive book. Their labels and groups can be changed in `skillGroups` in `js/site.js`.
+You can open `index.html` directly, but using a local HTTP server is recommended for consistent media loading.
 
-| File | Current label |
-| --- | --- |
-| `Skill-1.png` | HTML |
-| `Skill-2.png` | CSS |
-| `Skills-10.png` | JavaScript |
-| `Skills-3.png` | PHP |
-| `Skill-4.webp` | Laragon |
-| `Skill-5.png` | Figma |
-| `Skill-6.webp` | MySQL |
-| `Skill-7.png` | VS Code |
-| `Skill-9.webp` | GitHub |
-| `Skill-8.png` | Git |
+### Node.js
 
-### Contact Logos
-
-| File | Usage |
-| --- | --- |
-| `logo-discord.webp` | Logo on the Discord contact card. |
-| `logo-github.webp` | Logo on the GitHub contact card. |
-| `logo-spotify.png` | Logo on the Spotify contact card. |
-
-Logo sources and contact links are defined in `index.html`. The Discord and GitHub markup also lists `.png` and `.jpg` fallback sources, but those fallback files are not currently present in this folder. To support browsers without WebP, add fallback files with those names or update the markup.
-
-### Audio
-
-The Sound Settings panel in `index.html` offers five tracks. `js/music.js` loads the selected file when a visitor presses Play and loops it until playback is stopped or another track is selected.
-
-| File | Name in the panel |
-| --- | --- |
-| `sound1.mp4` | Polymerized Dreams |
-| `sound2.mp4` | Temporal Scale |
-| `sound3.mp4` | The Road Not Taken |
-| `sound4.mp4` | Assassin's Creed 2 |
-| `sound5.mp4` | Siren Song (2023) |
-
-To replace a track, keep its filename or update the matching `data-file` attribute on the `.sound-choice` item in `index.html`. Playback starts after user interaction. If a file is missing or cannot be played, the panel displays the path that needs to be checked.
-
-### Optional Hero Video
-
-`hero.webm` is available in this folder, but it is not currently used by `index.html`. Adding the file alone will not display it. To use it as a hero background, add a `<video>` element to the markup, style it with CSS, and configure video loading and playback behavior as needed.
-
-## Replacing or Adding Assets
-
-1. Place the file in the `assets/` folder.
-2. Use a path relative to the project root, such as `assets/filename.webp`.
-3. Update the relevant reference:
-   - Markup, audio sources, and contact links: `index.html`
-   - Profile photo, education gallery, skill icons, and book content: `js/site.js`
-4. Make sure the extension in the path matches the file's actual format.
-5. Run the site through a local server and check the browser DevTools for 404 errors or media decoding failures.
-
-Optimize images and audio/video before publishing to keep loading times reasonable. Do not change a file's extension without converting it to the corresponding format.
-
-## Running the Site Locally
-
-Run one of the following commands from the project root (the folder containing `index.html`):
+The included server uses only Node.js built-in modules; no package installation is needed:
 
 ```bash
 node server.js
 ```
 
-Or use Python's built-in server:
+Then visit <http://localhost:8000/>.
+
+### Python
+
+Alternatively, run Python's built-in server from the project directory:
 
 ```bash
 python -m http.server 8000
 ```
 
-Open <http://localhost:8000/>. The included Node.js server uses port `8000`; if that port is already in use, stop the other service or change the `PORT` constant in `server.js`.
+Then visit <http://localhost:8000/>.
+
+## Customizing Content
+
+- Edit the `PROJECTS` array in `js/project.js` to update project titles, descriptions, tags, details, and links.
+- Edit the book copy, profile details, education gallery, skills, and book captions in `js/site.js`.
+- Update section markup, contact links, and sound track labels or paths in `index.html`.
+- The sound panel expects `assets/sound1.mp4` through `assets/sound5.mp4`. Replace those files or update the matching `data-file` paths in `index.html`.
+- `assets/hero.webm` is included but is not currently referenced by the page. To use it as a hero background, add a video element and connect it to the existing hero layout.
+
+## Accessibility and Motion
+
+The boot sequence and sound controls can be operated with the keyboard. The book supports keyboard interaction, including Escape to close it. Several decorative animations and the project transition respect the browser's `prefers-reduced-motion` setting.
+
+## License
+
+This project is intended for personal or demo use. Before publishing or redistributing it, verify the licenses for all included media, fonts, and other third-party assets.
