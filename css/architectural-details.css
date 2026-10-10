@@ -1,0 +1,220 @@
+:root {
+  --studio-mark:rgba(130,97,79,.42);
+  --studio-rule:rgba(73,67,54,.14);
+  --studio-paper:rgba(246,243,235,.9);
+}
+
+.topbar {
+  background:linear-gradient(180deg, var(--studio-paper), rgba(246,243,235,.78));
+  border-bottom:1px solid var(--studio-rule);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.topbar::after {
+  position:absolute;
+  right:clamp(20px, 4vw, 56px);
+  bottom:-1px;
+  width:46px;
+  height:2px;
+  background:var(--accent);
+  content:"";
+}
+
+.sandbox::after {
+  position:absolute;
+  z-index:2;
+  inset:5% 3.5%;
+  background:
+    linear-gradient(var(--studio-mark),var(--studio-mark)) left top/24px 1px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) left top/1px 24px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) right top/24px 1px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) right top/1px 24px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) left bottom/24px 1px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) left bottom/1px 24px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) right bottom/24px 1px no-repeat,
+    linear-gradient(var(--studio-mark),var(--studio-mark)) right bottom/1px 24px no-repeat;
+  content:"";
+  pointer-events:none;
+}
+
+.section {
+  position:relative;
+  isolation:isolate;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent 0 35px,
+    rgba(73,67,54,.018) 35px 36px
+  );
+}
+
+.section::before,
+.section::after {
+  position:absolute;
+  z-index:-1;
+  color:#77766c;
+  font:400 8px/1.5 'JetBrains Mono', monospace;
+  letter-spacing:1.6px;
+  pointer-events:none;
+}
+
+.section::before {
+  top:54px;
+  right:48px;
+  padding-left:12px;
+  border-left:1px solid var(--studio-mark);
+  content:"FIELD NOTES / 01";
+}
+
+.section::after {
+  right:48px;
+  bottom:34px;
+  width:24px;
+  height:24px;
+  border-right:1px solid var(--studio-mark);
+  border-bottom:1px solid var(--studio-mark);
+  content:"";
+}
+
+.archive::before { content:"BUILD REGISTER / 2026"; }
+
+.sec-head {
+  position:relative;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--studio-rule);
+}
+
+.sec-idx {
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+.about-book-stage::after {
+  position:absolute;
+  top:10px;
+  left:50%;
+  z-index:1;
+  width:min(88%, 760px);
+  padding:0 10px;
+  color:#77766c;
+  background:var(--bg-0);
+  content:"DOSSIER 01  /  SELECT A VOLUME";
+  font:400 8px/1.4 'JetBrains Mono', monospace;
+  letter-spacing:1.4px;
+  text-align:center;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+
+.project-intro {
+  position:relative;
+  padding:20px 0 22px;
+  border-top:1px solid var(--studio-rule);
+  border-bottom:1px solid var(--studio-rule);
+}
+
+.project-count {
+  padding:7px 10px;
+  border:1px solid var(--studio-rule);
+  background:rgba(255,255,255,.36);
+}
+
+.project-card {
+  position:relative;
+}
+
+.project-card::after {
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:12px;
+  height:12px;
+  border-top:1px solid var(--studio-mark);
+  border-right:1px solid var(--studio-mark);
+  content:"";
+  pointer-events:none;
+  transition:width .25s ease, height .25s ease, border-color .25s ease;
+}
+
+.project-card:hover::after {
+  width:20px;
+  height:20px;
+  border-color:var(--accent);
+}
+
+.footer {
+  position:relative;
+  margin:0 clamp(16px, 4vw, 56px);
+  background:
+    linear-gradient(90deg, var(--studio-mark),var(--studio-mark)) left top/28px 1px no-repeat,
+    linear-gradient(90deg, transparent, rgba(73,67,54,.04), transparent);
+}
+
+.footer-left::before {
+  display:block;
+  margin-bottom:4px;
+  color:#9a9588;
+  content:"END OF SHEET / EE-01";
+  font:400 7px/1.4 'JetBrains Mono', monospace;
+  letter-spacing:1.1px;
+}
+
+body.is-video-mode {
+  --studio-mark:rgba(181,148,91,.58);
+  --studio-rule:rgba(47,37,30,.18);
+  --studio-paper:rgba(242,239,233,.94);
+}
+
+body.is-video-mode #page main .section::before,
+body.is-video-mode #page main .section::after,
+body.is-video-mode #page main .about-book-stage::after,
+body.is-video-mode #page .footer-left::before {
+  font-family:'JetBrains Mono', monospace;
+}
+
+body.is-video-mode #page main .section::before,
+body.is-video-mode #page main .about-book-stage::after,
+body.is-video-mode #page .footer-left::before {
+  color:var(--video-olive);
+}
+
+body.is-video-mode #page main .section {
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent 0 35px,
+    rgba(47,37,30,.022) 35px 36px
+  );
+}
+
+body.is-video-mode #page main .project-count {
+  border-color:var(--video-line);
+  background-color:rgba(242,239,233,.62);
+}
+
+@media (max-width:768px) {
+.section::before { top:34px; right:24px; }
+.section::after { right:24px; bottom:22px; }
+.footer { margin:0 20px; }
+}
+
+@media (max-width:600px) {
+  .section::before {
+    top:24px;
+    right:16px;
+    font-size:7px;
+    letter-spacing:1px;
+  }
+
+  .section::after { right:16px; bottom:16px; }
+  .about-book-stage::after { font-size:7px; }
+  .footer { margin:0 16px; }
+  .topbar::after { right:12px; width:30px; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .project-card::after,
+  .contact-card {
+    transition:none;
+  }
+}

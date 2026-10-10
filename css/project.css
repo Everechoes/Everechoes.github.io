@@ -1,3 +1,4 @@
+/* ===== PROJECT ARCHIVE & CARDS ===== */
 .archive {
   padding-top:clamp(56px, 8vw, 104px);
   padding-bottom:clamp(72px, 10vw, 128px);
@@ -237,6 +238,7 @@
 .project-link:hover { color:var(--accent); }
 .project-link-pending { color:#89867b; cursor:default; }
 
+/* ===== PROJECT DETAIL MODAL ===== */
 .project-modal-title {
   margin:12px 0 8px;
   color:#292a24;
@@ -272,13 +274,28 @@
 .project-modal-link:hover { color:var(--accent); }
 
 .card {
+  --project-detail-mark:rgba(130,97,79,.48);
   width:min(620px, calc(100% - 32px));
   max-width:620px;
   max-height:min(78svh, 600px);
   overflow-x:hidden;
   border:1px solid rgba(73,67,54,.2);
+  border-top:2px solid var(--accent);
   border-radius:14px;
-  background:#f5f3ec;
+  background-color:#f5f3ec;
+  background-image:
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    linear-gradient(var(--project-detail-mark),var(--project-detail-mark)),
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(73,67,54,.018) 27px 28px);
+  background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-position:14px 14px, 14px 14px, calc(100% - 14px) 14px, calc(100% - 14px) 14px, 14px calc(100% - 14px), 14px calc(100% - 14px), calc(100% - 14px) calc(100% - 14px), calc(100% - 14px) calc(100% - 14px), 0 0;
+  background-size:16px 1px, 1px 16px, 16px 1px, 1px 16px, 16px 1px, 1px 16px, 16px 1px, 1px 16px, auto;
   box-shadow:0 28px 90px rgba(23,22,19,.26);
 }
 
@@ -427,6 +444,7 @@
   text-align:right;
 }
 
+/* ===== RESPONSIVE & REDUCED MOTION ===== */
 @media (max-width:900px) {
   .archive-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); }
   .project-preview { min-height:190px; }

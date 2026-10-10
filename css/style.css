@@ -1,9 +1,19 @@
+/* 1. Global foundation and boot sequence */
 @import url('base.css');
 @import url('boot.css');
+
+/* 2. Page layout, visual foundation, and responsive refinements */
 @import url('layout.css');
 @import url('foundation.css');
 @import url('refinements.css');
+
+/* 3. Interactive content modules */
 @import url('book.css');
 @import url('architecture.css');
 @import url('project.css');
-@import url('boot-draft.css');
+
+/* 4. Architectural boot-draft treatment */
+@import url('boot-draft.css?v=3');
+
+/* 5. Scroll animations & Lenis smooth scroll */
+@import url('scroll-animations.css');

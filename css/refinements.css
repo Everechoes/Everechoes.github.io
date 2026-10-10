@@ -21,6 +21,31 @@
 .sandbox + .section,
 .section + .section { margin-top:clamp(40px, 6vw, 72px); }
 
+.sec-line,
+.sec-head:hover .sec-line {
+  height:5px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 17px, rgba(73,67,54,.22) 17px 18px),
+    linear-gradient(90deg, rgba(73,67,54,.3), rgba(73,67,54,.12));
+  background-position:center;
+  background-size:auto 4px, 100% 1px;
+  background-repeat:repeat, no-repeat;
+}
+
+.about-book-stage::before {
+  position:absolute;
+  z-index:0;
+  inset:18px 5% 34px;
+  border:1px solid rgba(73,67,54,.12);
+  background-image:
+    linear-gradient(rgba(76,78,70,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,78,70,.035) 1px, transparent 1px);
+  background-size:24px 24px;
+  content:"";
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse at center, #000 0, rgba(0,0,0,.78) 58%, transparent 88%);
+}
+
 @media (max-width:768px) {
   .legend { top:auto; bottom:24px; }
   .sandbox + .section,
@@ -124,19 +149,22 @@
   white-space:nowrap;
 }
 .nav-brand-title {
-  font-family:'JetBrains Mono', monospace;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:-.7px;
-  text-shadow:.5px 0 rgba(52,55,47,.45), -.5px 0 rgba(52,55,47,.2);
+  font-family:'Playfair Display', Georgia, serif;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:-.25px;
+  text-shadow:none;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
 }
 .nav-brand-subtitle {
   margin-top:4px;
   color:#77796d;
   font-family:'JetBrains Mono', monospace;
   font-size:7px;
-  font-weight:700;
-  letter-spacing:2.2px;
+  font-weight:500;
+  letter-spacing:3px;
+  text-transform:uppercase;
 }
 .nav-brand-sketch {
   position:absolute;
@@ -148,21 +176,21 @@
   overflow:hidden;
   pointer-events:none;
 }
+.nav-ancient-swords { display:none; }
 .nav-brand-sketch path {
   fill:none;
   stroke:#666b60;
-  stroke-width:.85;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  stroke-width:.7;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
   stroke-dasharray:1;
   stroke-dashoffset:1;
   opacity:0;
-  animation:nav-sketch-draw 1.8s cubic-bezier(.42,0,.18,1) var(--sketch-delay) both,
-    nav-sketch-breathe 6s ease-in-out calc(var(--sketch-delay) + 1.8s) infinite;
+  animation:nav-sketch-draw 1.8s cubic-bezier(.42,0,.18,1) var(--sketch-delay) both;
 }
 .nav-brand-sketch .nav-sketch-detail {
   stroke:#967a50;
-  stroke-width:.65;
+  stroke-width:.55;
 }
 @keyframes nav-brand-arrive {
   from { opacity:0; transform:translateY(5px); }
@@ -170,12 +198,8 @@
 }
 @keyframes nav-sketch-draw {
   0% { stroke-dashoffset:1; opacity:0; }
-  12% { opacity:.7; }
-  100% { stroke-dashoffset:0; opacity:.7; }
-}
-@keyframes nav-sketch-breathe {
-  0%, 100% { opacity:.52; }
-  50% { opacity:.82; }
+  12% { opacity:.55; }
+  100% { stroke-dashoffset:0; opacity:.55; }
 }
 @media (max-width:480px) {
   .topnav > .nav-brand {
@@ -184,10 +208,10 @@
     height:30px;
     padding:0 8px;
   }
-  .nav-brand-title { font-size:7px; letter-spacing:-.5px; }
-  .nav-brand-subtitle { margin-top:3px; font-size:6px; letter-spacing:1.6px; }
+  .nav-brand-title { font-size:10px; }
+  .nav-brand-subtitle { margin-top:3px; font-size:6px; letter-spacing:2.4px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .topnav > .nav-brand { animation:none; }
-  .nav-brand-sketch path { animation:none; stroke-dashoffset:0; opacity:.7; }
+  .nav-brand-sketch path { animation:none; stroke-dashoffset:0; opacity:.55; }
 }

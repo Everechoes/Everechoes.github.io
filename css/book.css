@@ -400,15 +400,24 @@
 .book-closed:hover .page-layer-3 { transform: translateX(15px); }
 .book-closed:hover .page-layer-4 { transform: translateX(18px); }
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .book-closed:hover {
-    animation: book-hover-float 2.8s ease-in-out infinite;
-  }
-}
-
 @keyframes book-hover-float {
   0%, 100% { translate: 0 0; }
-  50% { translate: 0 -8px; }
+  50% { translate: 0 -6px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .book-closed {
+    animation:book-hover-float 5s ease-in-out infinite;
+  }
+
+  .book-hover-target:hover .book-closed,
+  .book-3d:focus-visible .book-closed {
+    animation-play-state:paused;
+  }
+
+  .book-3d.is-open .book-closed {
+    animation:none;
+  }
 }
 
 /* Book Cover */
@@ -882,6 +891,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .book-closed { animation:none; }
+
   .book-hover-target,
   .book-3d,
   .book-closed,

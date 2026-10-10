@@ -1,8 +1,13 @@
+/* ===== ARCHITECTURAL LINE ART ===== */
+.masthead .mini {
+  top:74%;
+}
+
 .hero-sketch {
   position:absolute;
   z-index:1;
   top:max(0px, calc(72% - min(31.64vw, 435px) - 12px));
-  left:50%;
+  left:calc(50% + clamp(12px, 2vw, 32px));
   bottom:auto;
   width:min(96vw, 1420px);
   height:auto;
@@ -28,7 +33,7 @@
   width:100%;
   height:100%;
   overflow:visible;
-  transform:translateX(2.5%);
+  transform:none;
   transform-origin:center bottom;
   transition:filter .35s ease, transform .35s ease;
 }
@@ -89,6 +94,63 @@
 .architecture-measure { fill:none; stroke:rgba(48,47,42,.76); stroke-width:1; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
 .page.ready .architecture-measure { animation:architecture-line-in 1.2s cubic-bezier(.42,0,.18,1) var(--line-delay) both; }
 
+.architecture-building-label {
+  cursor:crosshair;
+  pointer-events:bounding-box;
+  transition:fill .18s ease, opacity .18s ease;
+}
+
+.architecture-building-label:focus-visible {
+  fill:#8a5038;
+  opacity:1;
+  outline:none;
+  paint-order:stroke;
+  stroke:rgba(255,255,255,.86);
+  stroke-width:3px;
+}
+
+.architect-sketch [data-building] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent) {
+  transition:stroke .2s ease, opacity .2s ease, filter .2s ease;
+}
+
+.architect-sketch[data-highlighted-building] .architecture-lines > [data-building] {
+  opacity:.32;
+  transition:opacity .2s ease;
+}
+
+.architect-sketch[data-highlighted-building="villa"] .architecture-lines > [data-building="villa"],
+.architect-sketch[data-highlighted-building="little-tower"] .architecture-lines > [data-building="little-tower"],
+.architect-sketch[data-highlighted-building="central-building"] .architecture-lines > [data-building="central-building"],
+.architect-sketch[data-highlighted-building="business"] .architecture-lines > [data-building="business"],
+.architect-sketch[data-highlighted-building="package-yards"] .architecture-lines > [data-building="package-yards"],
+.architect-sketch[data-highlighted-building="tower"] .architecture-lines > [data-building="tower"],
+.architect-sketch[data-highlighted-building="home"] .architecture-lines > [data-building="home"] {
+  opacity:1;
+}
+
+.architect-sketch[data-highlighted-building="villa"] [data-building="villa"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="little-tower"] [data-building="little-tower"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="central-building"] [data-building="central-building"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="business"] [data-building="business"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="package-yards"] [data-building="package-yards"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="tower"] [data-building="tower"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
+.architect-sketch[data-highlighted-building="home"] [data-building="home"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent) {
+  stroke:#925b3f;
+  opacity:1;
+  filter:drop-shadow(0 0 2px rgba(146,91,63,.55));
+}
+
+.architect-sketch[data-highlighted-building="villa"] .architecture-building-label[data-building="villa"],
+.architect-sketch[data-highlighted-building="little-tower"] .architecture-building-label[data-building="little-tower"],
+.architect-sketch[data-highlighted-building="central-building"] .architecture-building-label[data-building="central-building"],
+.architect-sketch[data-highlighted-building="business"] .architecture-building-label[data-building="business"],
+.architect-sketch[data-highlighted-building="package-yards"] .architecture-building-label[data-building="package-yards"],
+.architect-sketch[data-highlighted-building="tower"] .architecture-building-label[data-building="tower"],
+.architect-sketch[data-highlighted-building="home"] .architecture-building-label[data-building="home"] {
+  fill:#8a5038;
+  opacity:1;
+}
+
 .architecture-accent {
   fill:none;
   stroke:#4b4943;
@@ -107,6 +169,26 @@
   letter-spacing:1px;
   opacity:0;
 }
+.architecture-notes text {
+  --annotation-drift-x:.8px;
+  --annotation-drift-y:-1px;
+  --annotation-drift-duration:6s;
+  --annotation-drift-delay:-1s;
+  animation:architecture-annotation-drift var(--annotation-drift-duration) ease-in-out var(--annotation-drift-delay) infinite;
+}
+.architecture-notes text:nth-child(3n) {
+  --annotation-drift-x:-1.1px;
+  --annotation-drift-y:.7px;
+  --annotation-drift-duration:7s;
+  --annotation-drift-delay:-3s;
+}
+.architecture-notes text:nth-child(3n + 1) {
+  --annotation-drift-x:.6px;
+  --annotation-drift-y:1.1px;
+  --annotation-drift-duration:6.5s;
+  --annotation-drift-delay:-4s;
+}
+.architecture-notes text.architecture-building-label { animation:none; }
 .page.ready .architecture-notes { animation:architecture-note-in .8s ease-out 3.8s both; }
 .architecture-notes text:nth-child(2) { fill:#4b4943; font-size:9px; }
 .architecture-glints { fill:none; stroke:#4b4943; stroke-width:1; opacity:0; pointer-events:none; }
@@ -117,10 +199,11 @@
 .architecture-pencil-hatch { opacity:.2; }
 .architecture-pencil-crosshatch { opacity:.18; }
 
+/* ===== HOVER & LINE-DRAW ANIMATIONS ===== */
 @media (hover:hover) and (pointer:fine) {
   .hero-sketch:hover .architect-sketch {
     filter:contrast(1.12);
-    transform:translateX(2.5%) scale(1.012);
+    transform:scale(1.012);
   }
   .hero-sketch:hover .architecture-measure {
     stroke:#292823;
@@ -142,12 +225,18 @@
   45% { opacity:.5; }
   100% { opacity:.26; }
 }
+@keyframes architecture-annotation-drift {
+  0%, 100% { translate:0 0; }
+  50% { translate:var(--annotation-drift-x) var(--annotation-drift-y); }
+}
 
+/* ===== RESPONSIVE & REDUCED MOTION ===== */
 @media (max-width:768px) {
   .hero-sketch { width:96vw; }
 }
 
 @media (max-width:480px) {
+  .masthead .mini { top:71%; }
   .hero-sketch { width:96vw; }
   .architecture-notes { font-size:24px; letter-spacing:.25px; }
   .architecture-notes text:nth-child(2) { font-size:24px; }
@@ -163,4 +252,5 @@
   .architecture-measure { animation:none; stroke-dashoffset:0; opacity:.82; }
   .architecture-notes,
   .architecture-glints { animation:none; opacity:.5; }
+  .architecture-notes text { animation:none; }
 }
