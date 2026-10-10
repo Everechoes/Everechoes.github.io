@@ -8,9 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:wght@500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/visual-settings.css">
+<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/visual-settings.css?v=14">
 <link rel="stylesheet" href="css/interaction-guard.css">
+<link rel="stylesheet" href="css/architectural-details.css">
+<link rel="stylesheet" href="css/scroll-animations.css?v=2">
 </head>
 <body>
 
@@ -18,36 +20,116 @@
 <div class="boot" id="boot">
   <div class="boot-rain" id="boot-rain" aria-hidden="true"></div>
   <svg class="boot-draft" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <!-- 1. Rapid perspective guidelines & vanishing lines (Coretan Garis Bantu) -->
     <g class="draft-guides">
-      <path pathLength="1" d="M64 676H1376M96 692H1324M720 128V758M102 208H1338" />
-      <path pathLength="1" d="M180 190v20m36-20v12m36-12v20m36-20v12m36-12v20m36-20v12m36-12v20m36-20v12m36-12v20m36-20v12M1006 190v20m36-20v12m36-12v20m36-20v12m36-12v20m36-20v12m36-12v20m36-20v12m36-12v20" />
-      <path pathLength="1" d="M112 286h42m-21-21v42m1152-21h42m-21-21v42M112 598h42m-21-21v42m1152-21h42m-21-21v42" />
-      <path pathLength="1" d="M118 254v330m8-330v330m1188-330v330m8-330v330" />
+      <path pathLength="1" d="M40 735H1400M80 700H1360M140 680H1300M200 500H1240M280 380H1160M340 300H1100" />
+      <path pathLength="1" d="M720 50V780M718 60V770M722 60V770" />
+      <path pathLength="1" d="M120 735L720 100L1320 735M220 735L720 300L1220 735M320 735L720 440L1120 735" />
+      <path pathLength="1" d="M180 180l40-8m-20-20v40m1040-20l40-8m-20-20v40M160 580l40-8m-20-20v40m1080-20l40-8m-20-20v40" />
+      <path pathLength="1" d="M480 380L720 100L960 380M560 500L720 300L880 500" />
     </g>
-    <g class="draft-building">
-      <path pathLength="1" d="M190 676V474l78-48 112 28v222M190 474l112 28 78-48M302 502v174M190 536l112 27 78-27M190 601l112 24 78-24M302 502l-34 174m112-222-34 222" />
-      <path pathLength="1" d="M207 496l28 7v20l-28-7zm48 12 28 7v20l-28-7zm48 11 28 7v20l-28-7zm-96 44 28 7v20l-28-7zm48 11 28 7v20l-28-7zm48 10 28 7v20l-28-7zm-96 44 28 6v20l-28-6zm48 9 28 6v20l-28-6zm48 8 28 6v20l-28-6z" />
-      <path pathLength="1" d="M506 676V360l94-68 116 34v350M506 360l116 34 94-68M622 394v282M506 442l116 34 94-34M506 526l116 31 94-31M506 608l116 27 94-27M622 394l-26 282m120-350-26 350" />
-      <path pathLength="1" d="M528 382l35 10v26l-35-10zm59 17 35 10v26l-35-10zm59 17 35 10v26l-35-10zm-118 57 35 10v26l-35-10zm59 17 35 10v26l-35-10zm59 16 35 10v26l-35-10zm-118 56 35 9v26l-35-9zm59 14 35 9v26l-35-9zm59 13 35 9v26l-35-9zm-118 57 35 8v26l-35-8zm59 12 35 8v26l-35-8zm59 11 35 8v26l-35-8z" />
-      <path pathLength="1" d="M816 676V462l78-56 126 28v242M816 462l126 29 78-57M942 491v185M816 526l126 30 78-30M816 600l126 25 78-25M942 491l-20 185m98-242-20 242" />
-      <path pathLength="1" d="M834 484l36 8v23l-36-8zm62 14 34 8v23l-34-8zm-62 55 36 8v23l-36-8zm62 13 34 8v23l-34-8zm-62 55 36 7v23l-36-7zm62 11 34 7v23l-34-7z" />
-      <path pathLength="1" d="M1048 676V512l74-38 104 21v181M1048 512l104 22 74-39M1152 534v142M1048 568l104 24 74-24M1048 624l104 20 74-20M1152 534l-22 142m96-181-22 181" />
-      <path pathLength="1" d="M1066 531l29 6v19l-29-6zm51 11 29 6v19l-29-6zm-51 46 29 6v19l-29-6zm51 10 29 6v19l-29-6zm-51 47 29 5v19l-29-5zm51 8 29 5v19l-29-5z" />
+
+    <!-- 2. Concentric drafting compass rings & celestial arcs (Busur Jangka & Astrolabe) -->
+    <g class="draft-compass-rings">
+      <path pathLength="1" d="M720 440m-130 0a130 130 0 1 0 260 0a130 130 0 1 0-260 0" />
+      <path pathLength="1" d="M720 440m-95 0a95 95 0 1 0 190 0a95 95 0 1 0-190 0" />
+      <path pathLength="1" d="M720 440m-68 0a68 68 0 1 0 136 0a68 68 0 1 0-136 0" />
+      <path pathLength="1" d="M720 440m-42 0a42 42 0 1 0 84 0a42 42 0 1 0-84 0" />
+      <path pathLength="1" d="M520 680a200 200 0 0 1 400 0M560 680a160 160 0 0 1 320 0M600 680a120 120 0 0 1 240 0" />
+      <path pathLength="1" d="M720 305v30m0 170v30M585 440h30m170 0h30M625 345l22 22m146 146l22 22M625 535l22-22m146-146l22-22" />
     </g>
+
+    <!-- 3. Main hand-drawn architectural monument & spire (Bentuk Utama Monumen Jam & Spire) -->
+    <g class="draft-object">
+      <!-- Apex Finial & Spire -->
+      <path pathLength="1" d="M720 60v60m-10 20h20m-16 20h32m-8-50l8-15l8 15z" />
+      <path pathLength="1" d="M720 100L668 295h104L720 100zM720 100v195" />
+      <path pathLength="1" d="M684 235h72M694 185h52M706 145h28" />
+      <path pathLength="1" d="M668 295l-12 12h128l-12-12" />
+
+      <!-- Upper Belfry & Louvers -->
+      <path pathLength="1" d="M656 307h128v78H656z" />
+      <path pathLength="1" d="M678 307v78m24-78v78m36-78v78m24-78v78" />
+      <path pathLength="1" d="M706 375v-48q14-16 28 0v48M684 375v-38q10-12 20 0v38M736 375v-38q10-12 20 0v38" />
+
+      <!-- Clockwork Story & Rose Dial -->
+      <path pathLength="1" d="M604 385h232v120H604z" />
+      <path pathLength="1" d="M592 385h256v15H592zM592 490h256v15H592z" />
+      <path pathLength="1" d="M604 400v90m28-90v90m176-90v90m28-90v90" />
+      <path pathLength="1" d="M720 440l28-18m-28 18v-34" />
+
+      <!-- Flying Buttresses & Side Towers -->
+      <path pathLength="1" d="M550 350l16-36l16 36h-32zM550 350h32v155h-32z" />
+      <path pathLength="1" d="M656 318q-56 22-74 72M656 332q-52 24-74 88" />
+      <path pathLength="1" d="M858 350l16-36l16 36h-32zM858 350h32v155h-32z" />
+      <path pathLength="1" d="M784 318q56 22 74 72M784 332q52 24 74 88" />
+
+      <!-- Grand Arched Portal Facade -->
+      <path pathLength="1" d="M492 505h456v180H492z" />
+      <path pathLength="1" d="M532 505v180m44-180v180m288-180v180m44-180v180" />
+      <path pathLength="1" d="M632 685v-105q88-85 176 0v105" />
+      <path pathLength="1" d="M648 685v-92q72-70 144 0v92" />
+      <path pathLength="1" d="M664 685v-80q56-55 112 0v80" />
+      <path pathLength="1" d="M516 685v-85q38-46 76 0v85" />
+      <path pathLength="1" d="M848 685v-85q38-46 76 0v85" />
+
+      <!-- Stepped Plinth Foundation -->
+      <path pathLength="1" d="M452 685h536v20H452z" />
+      <path pathLength="1" d="M408 705h624v20H408z" />
+      <path pathLength="1" d="M356 725h728v18H356z" />
+    </g>
+
+    <!-- 4. Expressive pencil scribble contours (Garis Coretan Tangan Berlapis) -->
+    <g class="draft-scribbles">
+      <path pathLength="1" d="M722 102L670 293M718 98L666 297M722 102L774 293M718 98L770 297" />
+      <path pathLength="1" d="M654 309h132M658 305h124M602 387h236M606 383h228" />
+      <path pathLength="1" d="M490 507h460M494 503h452M450 687h540M406 707h628M354 727h732" />
+      <path pathLength="1" d="M630 687v-108q90-88 180 0v108M634 683v-102q86-82 172 0v102" />
+      <path pathLength="1" d="M548 352h36M856 352h36M660 293l-16 14M780 293l16 14" />
+      <path pathLength="1" d="M720 440m-132 0a132 132 0 1 0 264 0a132 132 0 1 0-264 0" />
+      <path pathLength="1" d="M720 440m-66 0a66 66 0 1 0 132 0a66 66 0 1 0-132 0" />
+    </g>
+
+    <!-- 5. Shading scribble hatching (Coretan Arsiran Pensil & Bayangan) -->
+    <g class="draft-hatching">
+      <!-- Spire shadow scribbles -->
+      <path pathLength="1" d="M718 135l-8 14l10-12l-12 16l14-14l-16 18l18-16l-20 22l22-18l-24 24l26-22l-28 26l30-24l-32 28l34-26l-36 30l38-28" />
+      <!-- Belfry shadow scribbles -->
+      <path pathLength="1" d="M660 315l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14" />
+      <path pathLength="1" d="M756 315l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14" />
+      <!-- Clock chamber pilaster scribbles -->
+      <path pathLength="1" d="M608 405l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16" />
+      <path pathLength="1" d="M808 405l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16" />
+      <!-- Grand portal recessed shadow scribbles -->
+      <path pathLength="1" d="M670 682l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38" />
+      <path pathLength="1" d="M748 682l-22-38l18 40l-22-38l18 40l-22-38l18 40l-22-38l18 40l-22-38" />
+      <!-- Plinth stepped base hatching -->
+      <path pathLength="1" d="M460 702l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14" />
+      <path pathLength="1" d="M740 702l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14" />
+    </g>
+
+    <!-- 6. Architectural dimensions & technical callouts (Ukuran & Catatan Teknis) -->
     <g class="draft-dimensions">
-      <path pathLength="1" d="M462 360v316m-8-316h16m-16 316h16M776 405v271m-8-271h16m-16 271h16M160 706h240m-240-6v12m240-12v12M500 706h228m-228-6v12m228-12v12M810 706h278m-278-6v12m278-12v12" />
-      <path pathLength="1" d="m438 379 24-19 24 19m-48 278 24 19 24-19m266-236 24-19 24 19m-48 233 24 19 24-19" />
-      <path pathLength="1" d="M398 334l82-48m-8-11 14 22m-96 47 14 22m642-32 80 42m-6-25 12-23m-92 6 12-23" />
-      <path pathLength="1" d="M422 278l24-14 21 6m644 4 24 13 22-5" />
+      <path pathLength="1" d="M310 100v625m-12-625h24m-24 625h24" />
+      <path pathLength="1" d="M310 100l-5 16m5-16l5 16m-5 625l-5-16m5 16l5-16" />
+      <path pathLength="1" d="M1130 305v420m-12-420h24m-24 420h24" />
+      <path pathLength="1" d="M1130 305l-5 16m5-16l5 16m-5 420l-5-16m5 16l5-16" />
+      <path pathLength="1" d="M356 760h728m-728-8v16m728-16v16" />
+      <path pathLength="1" d="M356 760l16-5m-16 5l16 5m712-5l-16-5m16 5l-16 5" />
     </g>
+
+    <!-- 7. Handwritten notes & drafting marks -->
     <g class="draft-notes">
-      <path pathLength="1" d="M194 738h182m244 0h84m110 0h244m-712-14v30m488-30v30m322-30v30" />
-      <path pathLength="1" d="M112 748h22m1194 0h22M720 170l5 8h-10zM276 400h88m-88 8h53m778-8h82m-82 8h48" />
+      <path pathLength="1" d="M260 380h60l15-15h65" />
+      <path pathLength="1" d="M1100 440h60l15 15h70" />
+      <path pathLength="1" d="M720 40l6 10h-12z" />
+      <path pathLength="1" d="M180 755h120m840 0h120" />
     </g>
+
+    <!-- 8. Edge crop marks & registration crosshairs -->
     <g class="draft-edge-lines">
-      <path pathLength="1" d="M88 142l24-3m13 1 18-5m20 2 11-1M1092 96h34m18 0h18m13 3 28-2m18 2 13-1M1328 146l22 5m-4 17 3 19m-2 17v12M74 744l18 3m14 3 23-2m16 4 12-1M1156 788h22m14 2 28-3m16 3 18-1M1360 632l4 18m-3 17v12" />
-      <path pathLength="1" d="M92 180v23m-2 14 2 12m1250-79-2 20m1 13-1 14M76 650v19m2 15-1 14m1249 61 2 18m-1 13 2 12" />
-      <path pathLength="1" d="M124 102l12-2m-67 626 16-2m1167-618 15 1m-18 622h19" />
+      <path pathLength="1" d="M70 120h40m-20-20v40m1200-20h40m-20-20v40M70 780h40m-20-20v40m1200-20h40m-20-20v40" />
+      <path pathLength="1" d="M110 80l15-2m-15 4l15-2m1180 0l15 2m-15-4l15 2" />
     </g>
   </svg>
   <div class="boot-corner tl"></div>
@@ -56,14 +138,14 @@
   <button class="boot-corner br boot-home-shortcut" id="boot-home-shortcut" type="button" aria-label="Skip loading and open home" title="Skip loading and open home"></button>
 
   <div class="boot-hud">
-    <span class="boot-side-label mono">ST. PAVLOV OS</span>
-    <span class="boot-side-label mono">STATUS: BETA VERSION</span>
+    <span class="boot-side-label mono">ATRIUM OS</span>
+    <span class="boot-side-label mono">STATUS: 1.4 VERSION</span>
   </div>
 
   <div class="boot-panel">
     <p class="boot-kicker mono">Welcome To</p>
     <div class="boot-heading">
-      <strong>St. Pavlov Foundation</strong>
+      <strong>THE VENTURI ARCHIVE</strong>
       <span class="boot-subtitle mono">Everechoes</span>
     </div>
     <div class="boot-track"><i id="boot-bar"></i></div>
@@ -82,13 +164,31 @@
     <nav class="topnav">
       <div class="nav-brand" aria-hidden="true">
         <svg class="nav-brand-sketch" viewBox="0 0 132 34" focusable="false">
-          <path class="nav-sketch-line" style="--sketch-delay:.15s" pathLength="1" d="M7 12V6H17M115 6H125V12" />
-          <path class="nav-sketch-line" style="--sketch-delay:.4s" pathLength="1" d="M7 22V28H17M115 28H125V22" />
-          <path class="nav-sketch-detail" style="--sketch-delay:.65s" pathLength="1" d="M10 4H20M112 4H122M10 30H20M112 30H122" />
-          <path class="nav-sketch-detail" style="--sketch-delay:.9s" pathLength="1" d="M4 8V14M128 8V14M4 20V26M128 20V26" />
+          <g class="nav-architecture-frame">
+            <path class="nav-sketch-line" style="--sketch-delay:.15s" pathLength="1" d="M7 12V6H17M115 6H125V12" />
+            <path class="nav-sketch-line" style="--sketch-delay:.4s" pathLength="1" d="M7 22V28H17M115 28H125V22" />
+            <path class="nav-sketch-detail" style="--sketch-delay:.65s" pathLength="1" d="M10 4H20M112 4H122M10 30H20M112 30H122" />
+            <path class="nav-sketch-detail" style="--sketch-delay:.9s" pathLength="1" d="M4 8V14M128 8V14M4 20V26M128 20V26" />
+          </g>
+          <g class="nav-ancient-swords" aria-hidden="true">
+            <g class="nav-sword">
+              <path class="nav-sword-blade" d="M13 1 9.5 18 13 16 16.5 18Z" />
+              <path class="nav-sword-fuller" d="m13 5-1.5 9" />
+              <path class="nav-sword-guard" d="M5 19q8 3 16 0l-1 2q-7 2-14 0z" />
+              <path class="nav-sword-hilt" d="M13 21v9m-2-7 4 2m-4 1 4 2m-4 1 4 2" />
+              <path class="nav-sword-pommel" d="m13 29-2 2 2 2 2-2z" />
+            </g>
+            <g class="nav-sword" transform="translate(132 0) scale(-1 1)">
+              <path class="nav-sword-blade" d="M13 1 9.5 18 13 16 16.5 18Z" />
+              <path class="nav-sword-fuller" d="m13 5-1.5 9" />
+              <path class="nav-sword-guard" d="M5 19q8 3 16 0l-1 2q-7 2-14 0z" />
+              <path class="nav-sword-hilt" d="M13 21v9m-2-7 4 2m-4 1 4 2m-4 1 4 2" />
+              <path class="nav-sword-pommel" d="m13 29-2 2 2 2 2-2z" />
+            </g>
+          </g>
         </svg>
-        <span class="nav-brand-title">THE TEMPORAL</span>
-        <span class="nav-brand-subtitle">S C A L E</span>
+        <span class="nav-brand-title">The Temporal</span>
+        <span class="nav-brand-subtitle">Scale</span>
       </div>
       <a href="#about">01 ABOUT</a>
       <a href="#project">02 PROJECT</a>
@@ -140,11 +240,11 @@
             <ul class="sound-list visual-list">
               <li class="sound-choice visual-choice" data-visual-mode="draft">
                 <button class="sound-choice-select visual-choice-select mono" type="button" aria-pressed="true"><span>Architectural</span><small>Default Visual</small></button>
-                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Architectural ON" aria-pressed="true"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Select Architectural visual" aria-pressed="true"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
               </li>
               <li class="sound-choice visual-choice" data-visual-mode="video">
                 <button class="sound-choice-select visual-choice-select mono" type="button" aria-pressed="false"><span>Pa Ŵr yw'r Porthor?</span><small>Ancient Visual</small></button>
-                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Video OFF" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+                <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Select Pa Ŵr yw'r Porthor? visual" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
               </li>
             </ul>
           </section>
@@ -162,7 +262,7 @@
       </video>
 
       <div class="masthead">
-        <p class="mini"><span>1.3 Another World</span><i></i><span>1.4 Coming in November</span></p>
+        <p class="mini"><span>1.4 Drafting The Past</span><i></i><span>1.5 Coming in December</span></p>
         <div class="hero-sketch blueprint-area">
           <!-- Legacy architectural elevation removed.
           <svg class="architect-sketch" viewBox="0 0 760 336" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
@@ -227,19 +327,19 @@
                 <path class="architecture-edge" style="--line-delay:2s" pathLength="1" d="M 196 247 H 313 M 198 250 V 258 M 310 246 V 255 M -50 309 H 4 M -49 306 V 318 M 125 259 H 141 M 381 132 H 651 M 379 128 V 143 M 644 125 V 139 M 387 399 H 402 M 680 374 L 695 369 M 772 254 H 890 M 769 249 V 265 M 885 245 V 258 M 930 290 H 1059 M 927 285 V 301 M 1053 281 V 296 M 1093 207 H 1242 M 1090 202 V 218 M 1235 198 V 212 M 1277 320 H 1380 M 1273 315 V 330 M 1375 309 V 324" />
               </g>
               <g class="architecture-lines">
-                <g transform="translate(55 0)">
+                <g data-building="little-tower" transform="translate(55 0)">
                   <path class="architecture-line" style="--line-delay:.25s" pathLength="1" d="M 155 385 L 155 260 L 177 250 L 246 252 L 246 375 L 225 385 Z M 155 260 L 225 260 L 246 252 M 225 260 L 225 385" />
                   <path class="architecture-detail" style="--line-delay:1.35s" pathLength="1" d="M 155 290 L 225 290 L 246 282 M 155 320 L 225 320 L 246 312 M 155 350 L 225 350 L 246 342 M 173 260 L 173 385 M 191 260 L 191 385 M 208 260 L 208 385" />
                 </g>
-                <g transform="translate(-60 0)">
+                <g data-building="villa" transform="translate(-60 0)">
                   <path class="architecture-line architecture-line-strong" style="--line-delay:.2s" pathLength="1" d="M 20 398 V 318 H 45 V 282 L 73 270 H 150 L 178 270 V 306 L 150 318 V 398 Z M 45 282 H 150 L 178 270 M 150 282 V 398 M 14 404 H 164 L 198 392" />
                   <path class="architecture-detail" style="--line-delay:1.45s" pathLength="1" d="M 30 332 H 61 V 374 H 30 Z M 45 332 V 374 M 108 332 H 138 V 374 H 108 Z M 123 332 V 374 M 72 354 H 101 V 398 M 72 354 H 101 M 101 354 V 398 M 58 294 H 91 V 310 H 58 Z M 103 294 H 137 V 310 H 103 Z M 74 294 V 310 M 120 294 V 310 M 150 330 L 164 324 M 150 348 L 164 342 M 150 366 L 164 360 M 150 384 L 164 378 M 33 319 H 149 M 40 315 H 152 M 49 319 V 328 M 143 319 V 328" />
                 </g>
-                <g transform="translate(240 0)">
+                <g data-building="business" transform="translate(240 0)">
                   <path class="architecture-line" style="--line-delay:.35s" pathLength="1" d="M 545 385 L 545 265 L 565 255 L 635 257 L 635 377 L 610 385 Z M 545 265 L 610 265 L 635 257 M 610 265 L 610 385" />
                   <path class="architecture-detail" style="--line-delay:1.4s" pathLength="1" d="M 545 295 L 610 295 L 635 287 M 545 325 L 610 325 L 635 317 M 545 355 L 610 355 L 635 347 M 562 265 L 562 385 M 579 265 L 579 385 M 595 265 L 595 385 M 620 262 L 620 382" />
                 </g>
-                <g transform="translate(135 0)">
+                <g data-building="central-building" transform="translate(135 0)">
                   <path class="architecture-line" style="--line-delay:0s" pathLength="1" d="M 285 390 L 285 145 L 360 120 L 495 120 L 495 365 L 535 385 L 455 420 L 275 420 L 255 405 L 255 390 Z M 285 145 L 420 145 L 495 120 M 420 145 L 420 390" />
                   <path class="architecture-line architecture-line-strong" style="--line-delay:.65s" pathLength="1" d="M 285 390 L 420 390 L 500 365 M 285 145 L 360 120 M 420 390 L 455 420" />
                   <path class="architecture-detail" style="--line-delay:1.2s" pathLength="1" d="M 285 175 L 420 175 L 495 150 M 285 205 L 420 205 L 495 180 M 285 235 L 420 235 L 495 210 M 285 265 L 420 265 L 495 240 M 285 295 L 420 295 L 495 270 M 285 325 L 420 325 L 495 300 M 285 355 L 420 355 L 495 330 M 318 145 L 318 390 M 351 145 L 351 390 M 384 145 L 384 390 M 453 134 L 453 379 M 477 126 L 477 371" />
@@ -247,15 +347,15 @@
                   <path class="architecture-glass" d="M 291 149 H 312 V 171 H 291 Z M 324 149 H 345 V 171 H 324 Z M 357 149 H 378 V 171 H 357 Z M 390 149 H 411 V 171 H 390 Z M 291 179 H 312 V 201 H 291 Z M 324 179 H 345 V 201 H 324 Z M 357 179 H 378 V 201 H 357 Z M 390 179 H 411 V 201 H 390 Z M 291 209 H 312 V 231 H 291 Z M 324 209 H 345 V 231 H 324 Z M 357 209 H 378 V 231 H 357 Z M 390 209 H 411 V 231 H 390 Z M 291 239 H 312 V 261 H 291 Z M 324 239 H 345 V 261 H 324 Z M 357 239 H 378 V 261 H 357 Z M 390 239 H 411 V 261 H 390 Z M 291 269 H 312 V 291 H 291 Z M 324 269 H 345 V 291 H 324 Z M 357 269 H 378 V 291 H 357 Z M 390 269 H 411 V 291 H 390 Z M 291 299 H 312 V 321 H 291 Z M 324 299 H 345 V 321 H 324 Z M 357 299 H 378 V 321 H 357 Z M 390 299 H 411 V 321 H 390 Z M 291 329 H 312 V 351 H 291 Z M 324 329 H 345 V 351 H 324 Z M 357 329 H 378 V 351 H 357 Z M 390 329 H 411 V 351 H 390 Z" />
                   <path class="architecture-accent" style="--line-delay:2s" pathLength="1" d="M 285 138 H 420 L 495 113 M 292 142 H 410 M 296 393 H 410 M 430 151 V 378 M 437 148 V 375 M 444 146 V 373 M 451 144 V 370" />
                 </g>
-                <g transform="translate(-15 0)">
+                <g data-building="package-yards" transform="translate(-15 0)">
                   <path class="architecture-line" style="--line-delay:.4s" pathLength="1" d="M 980 398 L 980 300 L 998 292 L 1060 294 L 1060 390 L 1040 398 Z M 980 300 L 1040 300 L 1060 294 M 1040 300 L 1040 398" />
                   <path class="architecture-detail" style="--line-delay:1.5s" pathLength="1" d="M 980 324 L 1040 324 L 1060 318 M 980 348 L 1040 348 L 1060 342 M 980 372 L 1040 372 L 1060 366 M 1000 300 V 398 M 1020 300 V 398" />
                 </g>
-                <g transform="translate(25 0)">
+                <g data-building="tower" transform="translate(25 0)">
                   <path class="architecture-line" style="--line-delay:.5s" pathLength="1" d="M 1100 398 L 1100 220 L 1125 212 L 1200 215 L 1200 388 L 1175 398 Z M 1100 220 L 1175 220 L 1200 215 M 1175 220 L 1175 398" />
                   <path class="architecture-detail" style="--line-delay:1.3s" pathLength="1" d="M 1100 248 L 1175 248 L 1200 243 M 1100 276 L 1175 276 L 1200 271 M 1100 304 L 1175 304 L 1200 299 M 1100 332 L 1175 332 L 1200 327 M 1100 360 L 1175 360 L 1200 355 M 1118 220 V 398 M 1138 220 V 398 M 1157 220 V 398 M 1185 218 V 394" />
                 </g>
-                <g transform="translate(65 0)">
+                <g data-building="home" transform="translate(65 0)">
                   <path class="architecture-line" style="--line-delay:.3s" pathLength="1" d="M 1230 398 L 1230 330 L 1248 322 L 1300 324 L 1300 390 L 1280 398 Z M 1230 330 L 1280 330 L 1300 324 M 1280 330 L 1280 398" />
                   <path class="architecture-detail" style="--line-delay:1.6s" pathLength="1" d="M 1241 346 H 1253 V 372 H 1241 Z M 1258 346 H 1270 V 372 H 1258 Z M 1247 398 V 378 H 1264 V 398 M 1285 334 L 1295 331 M 1285 354 L 1295 351 M 1285 374 L 1295 371" />
                 </g>
@@ -263,11 +363,11 @@
               </g>
               <path class="architecture-measure" style="--line-delay:2.5s" pathLength="1" d="M 168 264 V 402 M 126 264 H 168 M 126 402 H 168 M 164 260 L 172 268 M 164 398 L 172 406 M 164 299 H 172 M 164 333 H 172 M 164 368 H 172 M 315 250 V 385 M 301 250 H 315 M 301 385 H 315 M 311 246 L 319 254 M 311 381 L 319 389 M 311 277 H 319 M 311 304 H 319 M 311 331 H 319 M 311 358 H 319 M 892 255 V 385 M 875 255 H 892 M 875 385 H 892 M 888 251 L 896 259 M 888 381 L 896 389 M 888 281 H 896 M 888 307 H 896 M 888 333 H 896 M 888 359 H 896 M 1060 292 V 398 M 1045 292 H 1060 M 1045 398 H 1060 M 1056 288 L 1064 296 M 1056 394 L 1064 402 M 1056 318 H 1064 M 1056 345 H 1064 M 1056 372 H 1064 M 1240 212 V 398 M 1225 212 H 1240 M 1225 398 H 1240 M 1236 208 L 1244 216 M 1236 394 L 1244 402 M 1236 238 H 1244 M 1236 264 H 1244 M 1236 290 H 1244 M 1236 316 H 1244 M 1236 342 H 1244 M 1236 368 H 1244 M 1282 322 V 398 M 1282 322 H 1295 M 1282 398 H 1295 M 1278 318 L 1286 326 M 1278 394 L 1286 402 M 1278 341 H 1286 M 1278 360 H 1286 M 1278 379 H 1286" />
               <g class="architecture-notes">
-                <text x="18" y="248">Villa | 01</text>
+                <text class="architecture-building-label" data-building="villa" x="18" y="248" tabindex="0" aria-label="Highlight Villa in diagram">Villa | 01</text>
                 <text x="177" y="337" transform="rotate(-90 177 337)">H 12.8 M</text>
-                <text x="210" y="238">Little Tower | 02</text>
+                <text class="architecture-building-label" data-building="little-tower" x="210" y="238" tabindex="0" aria-label="Highlight Little Tower in diagram">Little Tower | 02</text>
                 <text x="326" y="320" transform="rotate(-90 326 320)">H 13.0 M</text>
-                <text x="420" y="78">Central Building</text>
+                <text class="architecture-building-label" data-building="central-building" x="420" y="78" tabindex="0" aria-label="Highlight Central Building in diagram">Central Building</text>
                 <text x="738" y="278" transform="rotate(-90 738 278)">28.8 M / OVERALL HEIGHT</text>
                 <text x="676" y="178">L08</text>
                 <text x="676" y="208">L07</text>
@@ -277,13 +377,13 @@
                 <text x="676" y="328">L03</text>
                 <text x="676" y="358">L02</text>
                 <text x="676" y="378">G</text>
-                <text x="805" y="249">Business | 03</text>
+                <text class="architecture-building-label" data-building="business" x="805" y="249" tabindex="0" aria-label="Highlight Business in diagram">Business | 03</text>
                 <text x="903" y="321" transform="rotate(-90 903 321)">H 12.0 M</text>
-                <text x="935" y="284">Package Yards | 04</text>
+                <text class="architecture-building-label" data-building="package-yards" x="935" y="284" tabindex="0" aria-label="Highlight Package Yards in diagram">Package Yards | 04</text>
                 <text x="1071" y="350" transform="rotate(-90 1071 350)">H 9.8 M</text>
-                <text x="1123" y="204">Tower | 05</text>
+                <text class="architecture-building-label" data-building="tower" x="1123" y="204" tabindex="0" aria-label="Highlight Tower in diagram">Tower | 05</text>
                 <text x="1206" y="198">H = 17.2 M</text>
-                <text x="1293" y="314">Home | 06</text>
+                <text class="architecture-building-label" data-building="home" x="1293" y="314" tabindex="0" aria-label="Highlight Home in diagram">Home | 06</text>
                 <text x="1278" y="365" transform="rotate(-90 1278 365)">H 7.0 M</text>
                 <text x="18" y="458">Nova Miedź / 1:250</text>
                 <text x="1030" y="458">-J 100  / Point Irreversible.</text>
@@ -463,9 +563,12 @@
 
 <script src="js/project.js"></script>
 <script src="js/site.js"></script>
+<script src="js/architecture.js"></script>
 <script src="js/boot.js"></script>
 <script src="js/music.js"></script>
 <script src="js/visual-settings.js"></script>
 <script src="js/interaction-guard.js"></script>
+<script src="js/lenis.min.js"></script>
+<script src="js/scroll-animations.js"></script>
 </body>
 </html>
