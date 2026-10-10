@@ -99,6 +99,48 @@
   const backdrop = document.getElementById('card-backdrop');
   const card = document.getElementById('card');
   const cardInner = document.getElementById('card-inner');
+  let pageScrollLock = null;
+
+  function lockPageScroll() {
+    if (pageScrollLock) return;
+
+    const scrollY = window.scrollY;
+    const bodyStyle = document.body.style;
+    const htmlStyle = document.documentElement.style;
+    pageScrollLock = {
+      scrollY,
+      bodyPosition: bodyStyle.position,
+      bodyTop: bodyStyle.top,
+      bodyWidth: bodyStyle.width,
+      bodyOverflow: bodyStyle.overflow,
+      htmlOverflow: htmlStyle.overflow,
+      htmlScrollBehavior: htmlStyle.scrollBehavior
+    };
+
+    bodyStyle.position = 'fixed';
+    bodyStyle.top = `-${scrollY}px`;
+    bodyStyle.width = '100%';
+    bodyStyle.overflow = 'hidden';
+    htmlStyle.overflow = 'hidden';
+  }
+
+  function unlockPageScroll() {
+    if (!pageScrollLock) return;
+
+    const { scrollY, bodyPosition, bodyTop, bodyWidth, bodyOverflow, htmlOverflow, htmlScrollBehavior } = pageScrollLock;
+    const bodyStyle = document.body.style;
+    const htmlStyle = document.documentElement.style;
+    pageScrollLock = null;
+
+    bodyStyle.position = bodyPosition;
+    bodyStyle.top = bodyTop;
+    bodyStyle.width = bodyWidth;
+    bodyStyle.overflow = bodyOverflow;
+    htmlStyle.overflow = htmlOverflow;
+    htmlStyle.scrollBehavior = 'auto';
+    window.scrollTo(0, scrollY);
+    htmlStyle.scrollBehavior = htmlScrollBehavior;
+  }
 
   function openCard(p) {
     const tagMarkup = p.tags.map(tag => `<span>${tag}</span>`).join('');
@@ -120,14 +162,18 @@
         ${p.link ? `<a class="project-modal-link" href="${p.link}" target="_blank" rel="noopener noreferrer">Open repository <span aria-hidden="true">↗</span></a>` : '<span class="project-modal-pending mono">PREVIEW IN DEVELOPMENT</span>'}
       </div>
     `;
+    lockPageScroll();
     backdrop.classList.add('open');
     card.classList.add('open');
     document.getElementById('card-close').addEventListener('click', closeCard);
   }
 
   function closeCard() {
+    if (!pageScrollLock) return;
+
     backdrop.classList.remove('open');
     card.classList.remove('open');
+    unlockPageScroll();
   }
 
   backdrop.addEventListener('click', closeCard);

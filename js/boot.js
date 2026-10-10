@@ -251,7 +251,7 @@
               document.body.classList.remove('no-scroll');
             }, 1000);
           }, 1000);
-        }, 7000);
+        }, 3200);
       }
 
       if (!wasStorming) {
