@@ -63,7 +63,6 @@
   right:48px;
   padding-left:12px;
   border-left:1px solid var(--studio-mark);
-  content:"FIELD NOTES / 01";
 }
 
 .section::after {
@@ -76,7 +75,7 @@
   content:"";
 }
 
-.archive::before { content:"BUILD REGISTER / 2026"; }
+
 
 .sec-head {
   position:relative;
@@ -99,7 +98,6 @@
   padding:0 10px;
   color:#77766c;
   background:var(--bg-0);
-  content:"DOSSIER 01  /  SELECT A VOLUME";
   font:400 8px/1.4 'JetBrains Mono', monospace;
   letter-spacing:1.4px;
   text-align:center;
@@ -155,7 +153,6 @@
   display:block;
   margin-bottom:4px;
   color:#9a9588;
-  content:"END OF SHEET / EE-01";
   font:400 7px/1.4 'JetBrains Mono', monospace;
   letter-spacing:1.1px;
 }

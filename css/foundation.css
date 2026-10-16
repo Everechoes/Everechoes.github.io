@@ -24,6 +24,14 @@ body {
   background-size:22px 22px;
 }
 
+html {
+  scrollbar-width:none;
+}
+
+html::-webkit-scrollbar {
+  display:none;
+}
+
 .page {
   position:relative;
   width:100%;
@@ -74,15 +82,6 @@ body {
   background-size:28px 28px;
   mask-image:radial-gradient(ellipse, #000 0, rgba(0,0,0,.72) 58%, transparent 82%);
   pointer-events:none;
-}
-
-.hero-video {
-  opacity:.08;
-  filter:saturate(.55) contrast(.92) brightness(1.16);
-}
-
-.video-overlay {
-  background:linear-gradient(180deg, rgba(244,244,240,.18), rgba(244,244,240,.24) 52%, #f4f4f0 100%);
 }
 
 .masthead, .scroll-cue, .legend, .coord { z-index:4; }

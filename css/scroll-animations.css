@@ -34,7 +34,7 @@ html.lenis, html.lenis body {
   transition: width 0.08s linear;
 }
 
-/* 3. Smart Header / Topbar Scroll Behavior */
+/* 3. Topbar Scroll Behavior */
 .page.ready .topbar {
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               background-color 0.35s ease,
@@ -44,15 +44,12 @@ html.lenis, html.lenis body {
 }
 
 .page.ready .topbar.scrolled {
+  transition-delay: 0s;
   background: rgba(246, 243, 235, 0.88) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
   border-bottom: 1px solid rgba(73, 67, 54, 0.14) !important;
   box-shadow: 0 4px 20px rgba(40, 39, 31, 0.04) !important;
-}
-
-.page.ready .topbar.hidden {
-  transform: translate(-50%, -100%) !important;
 }
 
 /* 4. Split Text Line Mask Reveal (.split-line / .line > span) */
@@ -203,4 +200,3 @@ html.lenis, html.lenis body {
   [data-reveal] { clip-path: none !important; }
   [data-reveal] img { transform: none !important; }
 }
-

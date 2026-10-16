@@ -786,6 +786,77 @@ body.is-video-mode #page .topbar .nav-brand-sketch .nav-sword-pommel {
   box-shadow:0 16px 40px rgba(48,47,41,.2), inset 0 0 0 1px rgba(255,255,255,.42);
 }
 
+.boot-background-settings {
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--settings-line);
+}
+
+.boot-background-label {
+  display:block;
+  margin-bottom:8px;
+  color:var(--settings-muted);
+  font-size:8px;
+  letter-spacing:1px;
+}
+
+.boot-background-settings input[type="file"] {
+  display:block;
+  width:100%;
+  color:var(--settings-muted);
+  font:400 9px 'JetBrains Mono',monospace;
+}
+
+.boot-background-settings input[type="file"]::file-selector-button {
+  margin-right:8px;
+  padding:7px 9px;
+  border:1px solid var(--settings-line);
+  background:rgba(113,128,113,.08);
+  color:var(--settings-text);
+  font:500 8px 'JetBrains Mono',monospace;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+
+.boot-background-settings input[type="file"]:focus-visible,
+.boot-background-remove:focus-visible {
+  outline:1px solid var(--settings-accent);
+  outline-offset:3px;
+}
+
+.boot-background-help,
+.boot-background-status {
+  margin-top:7px;
+  color:var(--settings-subtle);
+  font-size:8px;
+  line-height:1.5;
+}
+
+.boot-background-status {
+  color:var(--settings-accent-soft);
+  letter-spacing:.5px;
+}
+
+.boot-background-status.is-error {
+  color:#9a4438;
+}
+
+.boot-background-remove {
+  margin-top:8px;
+  padding:6px 8px;
+  border:1px solid var(--settings-line);
+  background:transparent;
+  color:var(--settings-muted);
+  font-size:8px;
+  letter-spacing:.7px;
+  cursor:pointer;
+}
+
+.boot-background-remove:hover {
+  border-color:var(--settings-accent);
+  color:var(--settings-text);
+}
+
 .sound-panel-heading {
   min-height:24px;
   padding-bottom:10px;
