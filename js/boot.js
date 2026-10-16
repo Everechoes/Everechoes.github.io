@@ -9,7 +9,11 @@
     const page = document.getElementById('page');
     const rain = document.getElementById('boot-rain');
     const homeShortcut = document.getElementById('boot-home-shortcut');
-    const rainStreaks = [];
+    const chronoStage = document.getElementById('chrono-stage');
+    const oscCanvas = document.getElementById('boot-oscilloscope');
+    const epochTracker = document.getElementById('epoch-live-tracker');
+    const hudFlux = document.getElementById('hud-flux');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!boot || !bar || !status || !value || !page) return;
 
@@ -26,57 +30,156 @@
 
     resetHomePosition();
 
+    // 1. INVERTED RAIN STREAKS & SPARKS
+    const rainStreaks = [];
     if (rain && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      for (let index = 0; index < 170; index++) {
+      for (let index = 0; index < 150; index++) {
         const streak = document.createElement('span');
         streak.style.setProperty('--left', `${Math.random() * 100}%`);
-        streak.style.setProperty('--width', `${1 + Math.random() * 0.9}px`);
-        streak.style.setProperty('--height', `${24 + Math.random() * 52}px`);
-        streak.style.setProperty('--opacity', `${0.38 + Math.random() * 0.24}`);
-        streak.style.setProperty('--fall-speed', `${9 + Math.random() * 6}`);
-        streak.style.setProperty('--drift', `${Math.random() * 64 - 32}px`);
-        streak.style.setProperty('--slant', `${Math.random() * 12 - 6}deg`);
+        streak.style.setProperty('--width', `${1 + Math.random() * 1.2}px`);
+        streak.style.setProperty('--height', `${30 + Math.random() * 55}px`);
+        streak.style.setProperty('--opacity', `${0.4 + Math.random() * 0.3}`);
+        streak.style.setProperty('--fall-speed', `${8 + Math.random() * 6}`);
+        streak.style.setProperty('--drift', `${Math.random() * 60 - 30}px`);
+        streak.style.setProperty('--slant', `${Math.random() * 10 - 5}deg`);
         streak.style.setProperty('--delay', `${-Math.random() * 6}s`);
         rain.appendChild(streak);
         rainStreaks.push(streak);
       }
     }
 
+    function createRainSparks() {
+      if (!rain || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      for (let index = 0; index < 24; index++) {
+        const spark = document.createElement('i');
+        spark.className = 'rain-spark';
+        spark.style.setProperty('--left', `${Math.random() * 100}%`);
+        spark.style.setProperty('--bottom', `${10 + Math.random() * 80}%`);
+        spark.style.setProperty('--spark-drift', `${Math.random() * 50 - 25}px`);
+        spark.style.setProperty('--spark-delay', `${Math.random() * 1.5}s`);
+        rain.appendChild(spark);
+        spark.addEventListener('animationend', () => spark.remove(), { once: true });
+      }
+    }
+
+    // 2. OSCILLOSCOPE WAVEFORM ENGINE
+    let oscCtx = null;
+    let oscFrameId = null;
+    let wavePhase = 0;
+
+    if (oscCanvas && oscCanvas.getContext) {
+      oscCtx = oscCanvas.getContext('2d');
+    }
+
+    function drawOscilloscope() {
+      if (!oscCtx || !oscCanvas) return;
+      const w = oscCanvas.width;
+      const h = oscCanvas.height;
+      const cy = h / 2;
+
+      oscCtx.clearRect(0, 0, w, h);
+
+      const isStorm = boot.classList.contains('storm-approaching');
+      const isResolution = boot.classList.contains('resolution-phase') || boot.classList.contains('resolution-still');
+
+      oscCtx.beginPath();
+      oscCtx.lineWidth = isStorm ? 2 : 1.5;
+
+      if (isStorm) {
+        oscCtx.strokeStyle = '#ff4d6d';
+        wavePhase += 0.28;
+      } else if (isResolution) {
+        oscCtx.strokeStyle = '#a7f3d0';
+        wavePhase += 0.05;
+      } else {
+        oscCtx.strokeStyle = '#dfbb73';
+        wavePhase += 0.08;
+      }
+
+      for (let x = 0; x < w; x++) {
+        const norm = x / w;
+        let y = cy;
+
+        if (isStorm) {
+          // Turbulent harmonic glitch wave with erratic spikes
+          const noise = (Math.random() - 0.5) * 8;
+          y += Math.sin(norm * 18 + wavePhase) * 9 + Math.cos(norm * 42 - wavePhase * 1.5) * 5 + noise;
+        } else if (isResolution) {
+          // Serene harmonic golden standing wave
+          y += Math.sin(norm * 8 + wavePhase) * 3.5;
+        } else {
+          // Steady calibration sine wave
+          y += Math.sin(norm * 12 + wavePhase) * 6 + Math.sin(norm * 24 + wavePhase * 0.5) * 2;
+        }
+
+        if (x === 0) oscCtx.moveTo(x, y);
+        else oscCtx.lineTo(x, y);
+      }
+
+      oscCtx.stroke();
+      oscFrameId = requestAnimationFrame(drawOscilloscope);
+    }
+
+    if (oscCtx) {
+      drawOscilloscope();
+    }
+
+    // 3. GYROSCOPIC MOUSE / POINTER PARALLAX
+    let targetTiltX = 0;
+    let targetTiltY = 0;
+    let currentTiltX = 0;
+    let currentTiltY = 0;
+    let parallaxFrameId = null;
+
+    function onPointerMove(e) {
+      const nx = (e.clientX / window.innerWidth) - 0.5;
+      const ny = (e.clientY / window.innerHeight) - 0.5;
+      targetTiltY = nx * 14; // Horizontal tilt
+      targetTiltX = -ny * 14; // Vertical tilt
+    }
+
+    function updateParallax() {
+      if (chronoStage) {
+        currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+        chronoStage.style.setProperty('--tilt-x', `${currentTiltX.toFixed(2)}deg`);
+        chronoStage.style.setProperty('--tilt-y', `${currentTiltY.toFixed(2)}deg`);
+      }
+      parallaxFrameId = requestAnimationFrame(updateParallax);
+    }
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    updateParallax();
+
+    // 4. TIMELINE & REVERSE: 1999 STORM CUTSCENE
     const steps = [
-  { pct: 0,   text: 'INITIATING ST. PAVLOV OS' },
-  { pct: 10,  text: 'CONNECTING ARCHIVE SERVER' },
-  { pct: 20,  text: 'DECODING ARCANUM INDEX' },
-  { pct: 32,  text: 'CALIBRATING ISOLATION BARRIER' },
-  { pct: 44,  text: 'ESTABLISHING RESONANCE MATRIX' },
-  { pct: 56,  text: 'STRENGTHENING LAPIDARY SHIELD' },
-  { pct: 68,  text: 'SYNCHRONIZING REGULUS SIGNAL' },
-  { pct: 80,  text: 'SCANNING CHRONO-DISRUPTION' },
-  { pct: 81,  text: 'CLOUD FRONT APPROACHING' },
-  { pct: 82,  text: 'ATMOSPHERIC PRESSURE SHIFTING' },
-  { pct: 83,  text: 'TEMPORAL PRECIPITATION DETECTED' },
-  { pct: 84,  text: 'CHRONO-STORM IMMINENT' },
-  { pct: 85,  text: 'Warning: The Rain Reversing' },
-  { pct: 91,  text: 'Warning: The Rain Reversing' },
-  { pct: 92,  text: 'Warning: The Rain Reversing'},
-  { pct: 93,  text: 'Warning: The Rain Reversing' },
-  { pct: 94,  text: 'Warning: The Rain Reversing' },
-  { pct: 95,  text: 'Warning: The Rain Reversing' },
-  { pct: 96,  text: 'Reconnecting Signal...' },
-  { pct: 97,  text: 'Reconnecting Signal...' },
-  { pct: 98,  text: 'Reconnecting Signal...' },
-  { pct: 99,  text: 'Reconnecting Signal...' },
-  { pct: 100, text: 'Welcome Back, Architect.' }
-];
+      { pct: 0,   text: 'INITIALIZING ARCHIVE' },
+      { pct: 25,  text: 'LOADING COLLECTIONS' },
+      { pct: 50,  text: 'PREPARING INTERFACE' },
+      { pct: 75,  text: 'SYNCHRONIZING CONTENT' },
+      { pct: 100, text: 'ARCHIVE READY' }
+    ];
+
+    const historicalEpochs = [
+      '1999.12.31 // 23:59:59',
+      '1985.10.26 // 01:21:00',
+      '1966.07.16 // ERA DISSOLVING',
+      '1945.05.08 // TIMELINE COLLAPSE',
+      '1929.10.24 // BLACK THURSDAY',
+      '1914.06.28 // ARCHDUKE FALL',
+      '1888.11.08 // LONDON FOG',
+      '1789.07.14 // BASTILLE FALL'
+    ];
+
     let i = 0;
     let timeoutId = null;
     let bootComplete = false;
     let isStalling = false;
-    let currentPct = 0;
     let resolutionPhaseActive = false;
     let stormInterval = null;
     let stormStartedAt = null;
-    let rainClearInterval = null;
     let currentRainDensity = 0;
+    let epochIndex = 0;
 
     function setRainDensity(density) {
       currentRainDensity = Math.max(0, Math.min(density, 1));
@@ -87,27 +190,26 @@
       });
     }
 
-    function createRainSparks() {
-      if (!rain || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      for (let index = 0; index < 26; index++) {
-        const spark = document.createElement('i');
-        spark.className = 'rain-spark';
-        spark.style.setProperty('--left', `${Math.random() * 100}%`);
-        spark.style.setProperty('--top', `${20 + Math.random() * 80}%`);
-        spark.style.setProperty('--spark-drift', `${Math.random() * 56 - 28}px`);
-        spark.style.setProperty('--spark-delay', `${Math.random() * 1.2}s`);
-        rain.appendChild(spark);
-        spark.addEventListener('animationend', () => spark.remove(), { once: true });
-      }
-    }
-
     function updateStormSpeed() {
+      if (!stormStartedAt) return;
       const elapsed = performance.now() - stormStartedAt;
-      const progress = Math.min(elapsed / 20000, 1);
-      const duration = 0.5 - progress * 0.44;
-      boot.style.setProperty('--glitch-speed', `${duration.toFixed(3)}s`);
-      setRainDensity(Math.min(elapsed / 12000, 1));
+      const progress = Math.min(elapsed / 16000, 1);
+
+      // Decelerates hand speed duration (meaning spins FASTER: 2.0s down to 0.16s)
+      const duration = 2.0 - progress * 1.84;
+      boot.style.setProperty('--storm-rev-speed', `${Math.max(duration, 0.16).toFixed(3)}s`);
+      boot.style.setProperty('--glitch-speed', `${(0.4 - progress * 0.32).toFixed(3)}s`);
+      setRainDensity(Math.min(elapsed / 8000, 1));
+
+      // Cycle rapidly backwards through historical eras
+      if (epochTracker) {
+        epochIndex = (epochIndex + 1) % historicalEpochs.length;
+        epochTracker.textContent = `EPOCH: ${historicalEpochs[epochIndex]}`;
+      }
+
+      if (hudFlux) {
+        hudFlux.textContent = `FLUX: ${(0.002 + Math.random() * 0.98).toFixed(4)} Δt`;
+      }
     }
 
     function stopStorm() {
@@ -115,49 +217,12 @@
         clearInterval(stormInterval);
         stormInterval = null;
       }
-      boot.classList.remove('storm-approaching');
+      boot.classList.remove('storm-approaching', 'storm-gathering');
+      boot.style.removeProperty('--storm-rev-speed');
       boot.style.removeProperty('--glitch-speed');
     }
 
-    function beginRainClearing() {
-      stopStorm();
-      boot.classList.remove('storm-gathering');
-      boot.classList.add('storm-clearing');
-      const clearingStartedAt = performance.now();
-      const startingDensity = currentRainDensity;
-
-      rainClearInterval = setInterval(() => {
-        const progress = Math.min((performance.now() - clearingStartedAt) / 2600, 1);
-        setRainDensity(startingDensity * (1 - progress));
-
-        if (progress >= 1) {
-          clearInterval(rainClearInterval);
-          rainClearInterval = null;
-          setRainDensity(0);
-        }
-      }, 100);
-    }
-
-    function finishRainClearing() {
-      if (rainClearInterval) {
-        clearInterval(rainClearInterval);
-        rainClearInterval = null;
-      }
-      setRainDensity(0);
-    }
-
-    function updateStormClearColor(pct) {
-      const progress = Math.min(Math.max((pct - 95) / 4, 0), 1);
-      const start = [119, 123, 125];
-      const end = [244, 244, 240];
-      const channels = start.map((channel, index) => Math.round(channel + (end[index] - channel) * progress));
-      boot.style.backgroundColor = `rgb(${channels.join(', ')})`;
-    }
-
     function updateStatus(text, pct) {
-      currentPct = pct;
-      
-      // Handle 100% resolution phase
       if (pct === 100 && !resolutionPhaseActive) {
         enterResolutionPhase();
         return;
@@ -170,124 +235,87 @@
       value.textContent = String(pct).padStart(3, '0') + '%';
       bar.style.width = pct + '%';
 
-      if (pct === 80) boot.classList.add('storm-gathering');
+      if (pct === 80) {
+        boot.classList.add('storm-gathering');
+      }
 
       if (pct >= 85 && pct < 95) {
         if (!boot.classList.contains('storm-approaching')) {
           stormStartedAt = performance.now();
-          boot.style.setProperty('--glitch-speed', '0.5s');
+          boot.style.setProperty('--storm-rev-speed', '2.0s');
+          boot.style.setProperty('--glitch-speed', '0.4s');
           setRainDensity(0);
           boot.classList.remove('storm-gathering');
-          boot.classList.add('storm-approaching', 'storm-text-lift');
+          boot.classList.add('storm-approaching');
           createRainSparks();
-          stormInterval = setInterval(updateStormSpeed, 100);
+          stormInterval = setInterval(updateStormSpeed, 120);
         }
       }
 
-      if (pct === 95) {
-        beginRainClearing();
+      if (pct >= 95) {
+        stopStorm();
+        boot.classList.add('storm-clearing');
+        setRainDensity(0.1);
+        if (epochTracker) {
+          epochTracker.textContent = 'EPOCH: 1999.12.31 // RE-SYNCHRONIZED';
+        }
+        if (hudFlux) {
+          hudFlux.textContent = 'FLUX: 0.0000 Δt (STABLE)';
+        }
       }
-      if (pct >= 95 && pct < 100) updateStormClearColor(pct);
-      if (pct === 99) finishRainClearing();
     }
 
     function enterResolutionPhase() {
       resolutionPhaseActive = true;
-
-      updateStormClearColor(100);
-      if (rainClearInterval) finishRainClearing();
-      const wasStorming = boot.classList.contains('storm-approaching');
       stopStorm();
-      boot.classList.remove('storm-text-lift');
-      if (wasStorming) boot.classList.add('storm-clearing');
+      setRainDensity(0);
 
-      // 2. Change main text and percentage
-      status.classList.remove('status-fade');
-      void status.offsetWidth;
-      status.classList.add('status-fade');
-      status.textContent = 'Welcome Back, Architect.';
+      boot.classList.remove('storm-clearing', 'storm-gathering', 'storm-approaching');
+      boot.classList.add('resolution-phase');
+
+      status.textContent = 'Archive Ready.';
       value.textContent = '100%';
       bar.style.width = '100%';
 
-      // 3. Create and add subtitle element for resolution phase
       let subText = document.getElementById('boot-subtext');
       if (!subText) {
         subText = document.createElement('div');
         subText.id = 'boot-subtext';
         subText.className = 'boot-subtext mono';
-        subText.textContent = 'The rain has stopped. The world is still.';
-        
-        // Insert after boot-readout
+        subText.textContent = 'Welcome to the archive.';
         const readout = document.querySelector('.boot-readout');
         if (readout && readout.parentNode) {
           readout.parentNode.insertBefore(subText, readout.nextSibling);
         }
       }
-      subText.classList.add('fade-in-resolution');
 
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-      boot.classList.remove('whiteout', 'whiteout-exit');
+      if (timeoutId) clearTimeout(timeoutId);
 
-      function showClearSky() {
-        boot.classList.remove('storm-clearing');
-        boot.classList.add('resolution-phase', 'resolution-flash');
+      timeoutId = setTimeout(() => {
+        boot.classList.add('resolution-still');
 
         timeoutId = setTimeout(() => {
-          boot.classList.remove('resolution-flash');
-          boot.classList.add('resolution-still');
-
-          timeoutId = setTimeout(() => {
-            boot.style.transition = 'opacity 1s ease-out, transform 1.3s cubic-bezier(.2,.7,.2,1)';
-            boot.style.opacity = '0';
-            boot.style.transform = 'scale(1.035)';
-            resetHomePosition();
-            page.classList.add('ready');
+          resetHomePosition();
+          page.classList.add('ready');
+          requestAnimationFrame(() => {
+            boot.classList.add('is-leaving');
 
             setTimeout(() => {
               boot.style.display = 'none';
               document.body.classList.remove('no-scroll');
-            }, 1000);
-          }, 1000);
-        }, 3200);
-      }
-
-      if (!wasStorming) {
-        setRainDensity(0);
-        showClearSky();
-        return;
-      }
-
-      const clearingStartedAt = performance.now();
-      const clearingDuration = 3200;
-      function clearRain() {
-        const progress = Math.min((performance.now() - clearingStartedAt) / clearingDuration, 1);
-        setRainDensity(1 - progress);
-
-        if (progress < 1) {
-          timeoutId = setTimeout(clearRain, 100);
-          return;
-        }
-
-        setRainDensity(0);
-        timeoutId = setTimeout(showClearSky, 1800);
-      }
-      clearRain();
+              if (oscFrameId) cancelAnimationFrame(oscFrameId);
+              if (parallaxFrameId) cancelAnimationFrame(parallaxFrameId);
+              window.removeEventListener('pointermove', onPointerMove);
+            }, prefersReducedMotion ? 0 : 1400);
+          });
+        }, 1200);
+      }, 2600);
     }
 
     function finishBoot() {
       if (bootComplete) return;
-
       bootComplete = true;
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-
-      // Skip to resolution phase directly if resolution not already active
+      if (timeoutId) clearTimeout(timeoutId);
       if (!resolutionPhaseActive) {
         enterResolutionPhase();
       }
@@ -304,7 +332,6 @@
       const s = steps[i];
       updateStatus(s.text, s.pct);
 
-      // If we just hit 100%, the resolution phase is now active
       if (s.pct === 100) {
         bootComplete = true;
         return;
@@ -312,21 +339,19 @@
 
       i++;
 
-      // Spread the storm sequence across 20 seconds, with progressively faster glitching.
       if (s.pct === 95) {
-        timeoutId = setTimeout(next, 2700);
+        timeoutId = setTimeout(next, 2600);
       } else if (s.pct >= 95) {
-        timeoutId = setTimeout(next, 650);
+        timeoutId = setTimeout(next, 700);
       } else if (s.pct >= 85) {
-        timeoutId = setTimeout(next, 2000);
+        timeoutId = setTimeout(next, 2200);
       } else if (s.pct >= 80) {
         timeoutId = setTimeout(next, 1200);
       } else {
-        timeoutId = setTimeout(next, 500);
+        timeoutId = setTimeout(next, 450);
       }
     }
 
-    // Skip animation with click or keydown
     function skipBoot() {
       if (!bootComplete && !isStalling) {
         finishBoot();
@@ -335,11 +360,12 @@
 
     function skipToHome() {
       if (bootComplete && boot.style.display === 'none') return;
-
       bootComplete = true;
       if (timeoutId) clearTimeout(timeoutId);
       if (stormInterval) clearInterval(stormInterval);
-      if (rainClearInterval) clearInterval(rainClearInterval);
+      if (oscFrameId) cancelAnimationFrame(oscFrameId);
+      if (parallaxFrameId) cancelAnimationFrame(parallaxFrameId);
+      window.removeEventListener('pointermove', onPointerMove);
       resetHomePosition();
       boot.style.display = 'none';
       page.classList.add('ready');
@@ -355,7 +381,11 @@
 
     boot.addEventListener('click', skipBoot);
     document.addEventListener('keydown', event => {
-      if (event.target !== homeShortcut) skipBoot();
+      if (event.key === 'Escape' || event.code === 'Space') {
+        skipToHome();
+      } else if (event.target !== homeShortcut) {
+        skipBoot();
+      }
     });
 
     next();

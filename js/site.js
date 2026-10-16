@@ -204,11 +204,11 @@
     'The Prisoner in the Cave': 'My Skill'
   };
   const lockedBookMessages = {
-    'Paradise Regained': 'Will be Unlocked in 1.5',
-    'The Prisoner in the Cave': 'Will be Unlocked in 1.7'
+    'The Prisoner in the Cave': 'Will be unlocked in 1.7 Into the Echoes '
   };
   let lockNoticeTimeout;
   let lockNoticeHideTimeout;
+
   const bookContents = {
     'Pa Gur Yw Y Porthaur': {
       chapter: 'Chapter 1: Pa Gur yv y Porthaur?',
@@ -242,12 +242,6 @@
           paragraphs: [
             'My development stack is built upon a foundation of continuous learning and practical application. From crafting user interfaces in Figma to deploying backend logic with Laragon and PHP, every tool I use plays a crucial role in bringing ideas to life.',
             'By combining structural web fundamentals (HTML, CSS, JavaScript) with efficient database design (MySQL) and reliable version control (Git & GitHub), I aim to construct software that is efficient, scalable, and meaningful.'          
-          ]
-        },
-        {
-          heading: 'Beyond the Stone',
-          paragraphs: [
-            'Following the marks, the prisoner found a hidden passage that rose toward the surface. The climb was difficult, but the sound of wind grew clearer with every step, until the cave opened onto the world.'
           ]
         }
       ]
@@ -602,33 +596,38 @@
     selectBook(sideBook);
   }
 
+  let closeAnimationTimeout;
+
   function openBook() {
     if (book.classList.contains('is-locked')) {
       showLockedNotice(centerCover?.alt);
       return;
     }
     if (isSelecting) return;
+    window.clearTimeout(closeAnimationTimeout);
+    book.classList.remove('is-closing');
     book.classList.add('is-open');
     book.setAttribute('aria-expanded', 'true');
     if (opened) {
       opened.querySelectorAll('.book-page').forEach(page => { page.scrollTop = 0; });
       opened.setAttribute('aria-hidden', 'false');
-      opened.style.opacity = '1';
-      const revealPage = function(event) {
-        if (event.propertyName !== 'transform') return;
-        opened.removeEventListener('transitionend', revealPage);
-      };
-      opened.addEventListener('transitionend', revealPage);
+      opened.style.removeProperty('opacity');
     }
   }
 
   function closeBook() {
+    if (!book.classList.contains('is-open')) return;
+    window.clearTimeout(closeAnimationTimeout);
+    book.classList.add('is-closing');
     book.classList.remove('is-open');
     book.setAttribute('aria-expanded', 'false');
     if (opened) {
       opened.setAttribute('aria-hidden', 'true');
       opened.style.removeProperty('opacity');
     }
+    closeAnimationTimeout = window.setTimeout(() => {
+      book.classList.remove('is-closing');
+    }, 900);
     sideBooks.forEach(sideBook => {
       sideBook.classList.remove('is-selected');
       sideBook.setAttribute('aria-pressed', 'false');

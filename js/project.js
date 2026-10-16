@@ -12,19 +12,19 @@ const PROJECTS = [
   {
     id: 2,
     title: 'Coming Soon',
-    desc: 'Will be added in 1.4',
+    desc: 'Coming Soon',
     tags: ['...', '...'],
     status: 'IN PROGRESS 45%',
     visual: 'layout',
-    detail: 'Coming soon in version 1.4'
+    detail: 'Coming soon'
   },
   {
     id: 3,
     title: 'Coming Soon',
-    desc: 'Will be added in 1.9',
+    desc: 'Coming Soon',
     tags: ['...', '...'],
     status: 'IN PROGRESS 7%',
     visual: 'interaction',
-    detail: 'Coming soon in version 1.9'
+    detail: 'Coming soon'
   }
 ];

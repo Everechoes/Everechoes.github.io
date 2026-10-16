@@ -24,7 +24,7 @@
   if (typeof window.Lenis !== 'undefined' && !prefersReducedMotion) {
     try {
       lenisInstance = new window.Lenis({
-        duration: 1.25,
+        duration: 0.65,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 1.15,
@@ -43,24 +43,14 @@
     }
   }
 
-  // 3. Smart Topbar Auto-Hide & Scrolled State
+  // 3. Topbar Scrolled State
   const topbar = document.querySelector('.topbar');
-  let lastScrollY = 0;
 
   function handleScroll(scrollY) {
     updateProgressBar(scrollY);
 
     if (topbar) {
       topbar.classList.toggle('scrolled', scrollY > 20);
-
-      const isScrollingDown = scrollY > lastScrollY + 4;
-      const isDeep = scrollY > 260;
-
-      if (isDeep && isScrollingDown) {
-        topbar.classList.add('hidden');
-      } else if (scrollY < lastScrollY - 4) {
-        topbar.classList.remove('hidden');
-      }
     }
 
     // Parallax update
@@ -69,7 +59,6 @@
     // Eager reveal check while scrolling
     checkVisibleNow();
 
-    lastScrollY = scrollY;
   }
 
   if (lenisInstance) {
