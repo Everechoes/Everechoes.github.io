@@ -4,157 +4,298 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Everechoes</title>
-<meta name="description" content="sabubu lex.">
+<meta name="description" content="Fu*k you rockstar games.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:wght@500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=5">
-<link rel="stylesheet" href="css/visual-settings.css?v=14">
+<link rel="stylesheet" href="css/style.css?v=16">
+<link rel="stylesheet" href="css/visual-settings.css?v=15">
 <link rel="stylesheet" href="css/interaction-guard.css">
 <link rel="stylesheet" href="css/architectural-details.css">
 <link rel="stylesheet" href="css/scroll-animations.css?v=2">
 </head>
 <body>
 
-<!-- ========== BOOT SEQUENCE ========== -->
+<!-- ========== ARCHIVE LOADING SCREEN ========== -->
 <div class="boot" id="boot">
+  <div class="boot-background" id="boot-background" aria-hidden="true">
+    <img id="boot-background-image" alt="" hidden>
+    <video id="boot-background-video" muted loop playsinline hidden></video>
+  </div>
+  <!-- 1. Atmospheric Ambient Grain & Inverted Rain Particles -->
+  <div class="boot-grain" aria-hidden="true"></div>
   <div class="boot-rain" id="boot-rain" aria-hidden="true"></div>
-  <svg class="boot-draft" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-    <!-- 1. Rapid perspective guidelines & vanishing lines (Coretan Garis Bantu) -->
-    <g class="draft-guides">
-      <path pathLength="1" d="M40 735H1400M80 700H1360M140 680H1300M200 500H1240M280 380H1160M340 300H1100" />
-      <path pathLength="1" d="M720 50V780M718 60V770M722 60V770" />
-      <path pathLength="1" d="M120 735L720 100L1320 735M220 735L720 300L1220 735M320 735L720 440L1120 735" />
-      <path pathLength="1" d="M180 180l40-8m-20-20v40m1040-20l40-8m-20-20v40M160 580l40-8m-20-20v40m1080-20l40-8m-20-20v40" />
-      <path pathLength="1" d="M480 380L720 100L960 380M560 500L720 300L880 500" />
+
+  <!-- 2. Interactive 3D Perspective Stage for the Chrono-Astrolabe -->
+  <div class="chrono-stage" id="chrono-stage">
+<svg class="chrono-svg" id="chrono-svg" viewBox="0 0 1200 840" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Gradients for Haute Horlogerie Luxury Brass, Gold & Blued Steel -->
+      <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f5e0a3"/>
+        <stop offset="35%" stop-color="#cda358"/>
+        <stop offset="70%" stop-color="#dfbb73"/>
+        <stop offset="100%" stop-color="#8a652e"/>
+      </linearGradient>
+      <linearGradient id="brass-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#694d27"/>
+        <stop offset="50%" stop-color="#b88f51"/>
+        <stop offset="100%" stop-color="#e8cf94"/>
+      </linearGradient>
+      <radialGradient id="dial-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#141720" stop-opacity="0.95"/>
+        <stop offset="65%" stop-color="#0a0c10" stop-opacity="0.98"/>
+        <stop offset="100%" stop-color="#050608" stop-opacity="1"/>
+      </radialGradient>
+      <radialGradient id="halo-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#dfbb73" stop-opacity="0.22"/>
+        <stop offset="50%" stop-color="#64b5f6" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="chrono-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+
+    <!-- 0. Ambient Lens Flare & Harmonic Halo -->
+    <circle cx="600" cy="420" r="340" class="chrono-ambient-halo" fill="url(#halo-glow)" />
+
+    <!-- 1. Background Technical Drafting Datum Lines & Coordinates -->
+    <g class="chrono-datum-grid">
+      <!-- Crosshairs -->
+      <path pathLength="1" class="datum-line" d="M160 420H1040M600 80V760" />
+      <path pathLength="1" class="datum-line" d="M280 100L920 740M920 100L280 740" />
+      <!-- Caliper circles -->
+      <circle cx="600" cy="420" r="380" class="datum-circle" />
+      <circle cx="600" cy="420" r="325" class="datum-circle dashed" />
+      <!-- Corner registration marks -->
+      <path pathLength="1" class="datum-mark" d="M200 160h30m-15-15v30M1000 160h30m-15-15v30M200 680h30m-15-15v30M1000 680h30m-15-15v30" />
+      <!-- Drafting callout text labels -->
+      <text x="210" y="200" class="datum-text">CALIBER: 1999 // ARCANUM DRAFT</text>
+      <text x="210" y="215" class="datum-text">TEMPORAL FLUX: ST. PAVLOV OBSERVER</text>
+      <text x="890" y="200" class="datum-text">MATRIX: N25.165 · E121.553</text>
+      <text x="890" y="215" class="datum-text">PARALLAX: 3-AXIS GIMBAL</text>
     </g>
 
-    <!-- 2. Concentric drafting compass rings & celestial arcs (Busur Jangka & Astrolabe) -->
-    <g class="draft-compass-rings">
-      <path pathLength="1" d="M720 440m-130 0a130 130 0 1 0 260 0a130 130 0 1 0-260 0" />
-      <path pathLength="1" d="M720 440m-95 0a95 95 0 1 0 190 0a95 95 0 1 0-190 0" />
-      <path pathLength="1" d="M720 440m-68 0a68 68 0 1 0 136 0a68 68 0 1 0-136 0" />
-      <path pathLength="1" d="M720 440m-42 0a42 42 0 1 0 84 0a42 42 0 1 0-84 0" />
-      <path pathLength="1" d="M520 680a200 200 0 0 1 400 0M560 680a160 160 0 0 1 320 0M600 680a120 120 0 0 1 240 0" />
-      <path pathLength="1" d="M720 305v30m0 170v30M585 440h30m170 0h30M625 345l22 22m146 146l22 22M625 535l22-22m146-146l22-22" />
+    <!-- 2. LAYER 1: OUTER ZODIAC & EPOCH ASTROLABE RING (Rotates Clockwise normally, reverses in storm) -->
+    <g class="chrono-ring-outer" id="chrono-ring-outer">
+      <!-- Outer perimeter gear teeth -->
+      <path pathLength="1" class="ring-gear-teeth" d="M884.0 420.0L892.0 420.0L891.7 432.7L883.7 432.4M882.9 444.8L890.9 445.4L889.5 458.1L881.6 457.1M879.7 469.3L887.6 470.7L885.1 483.2L877.3 481.5M874.3 493.5L882.1 495.6L878.5 507.8L870.9 505.4M866.9 517.1L874.4 519.9L869.8 531.7L862.4 528.7M857.4 540.0L864.6 543.4L859.0 554.8L851.9 551.1M846.0 562.0L852.9 566.0L846.3 576.9L839.5 572.6M832.6 582.9L839.2 587.5L831.7 597.8L825.3 592.9M817.6 602.6L823.7 607.7L815.3 617.3L809.4 611.9M800.8 620.8L806.5 626.5L797.3 635.3L791.9 629.4M782.6 637.6L787.7 643.7L777.8 651.7L772.9 645.3M762.9 652.6L767.5 659.2L756.9 666.3L752.6 659.5M742.0 666.0L746.0 672.9L734.8 679.0L731.1 671.9M720.0 677.4L723.4 684.6L711.7 689.8L708.7 682.4M697.1 686.9L699.9 694.4L687.8 698.5L685.4 690.9M673.5 694.3L675.6 702.1L663.2 705.1L661.5 697.3M649.3 699.7L650.7 707.6L638.1 709.5L637.1 701.6M624.8 702.9L625.4 710.9L612.7 711.7L612.4 703.7M600.0 704.0L600.0 712.0L587.3 711.7L587.6 703.7M575.2 702.9L574.6 710.9L561.9 709.5L562.9 701.6M550.7 699.7L549.3 707.6L536.8 705.1L538.5 697.3M526.5 694.3L524.4 702.1L512.2 698.5L514.6 690.9M502.9 686.9L500.1 694.4L488.3 689.8L491.3 682.4M480.0 677.4L476.6 684.6L465.2 679.0L468.9 671.9M458.0 666.0L454.0 672.9L443.1 666.3L447.4 659.5M437.1 652.6L432.5 659.2L422.2 651.7L427.1 645.3M417.4 637.6L412.3 643.7L402.7 635.3L408.1 629.4M399.2 620.8L393.5 626.5L384.7 617.3L390.6 611.9M382.4 602.6L376.3 607.7L368.3 597.8L374.7 592.9M367.4 582.9L360.8 587.5L353.7 576.9L360.5 572.6M354.0 562.0L347.1 566.0L341.0 554.8L348.1 551.1M342.6 540.0L335.4 543.4L330.2 531.7L337.6 528.7M333.1 517.1L325.6 519.9L321.5 507.8L329.1 505.4M325.7 493.5L317.9 495.6L314.9 483.2L322.7 481.5M320.3 469.3L312.4 470.7L310.5 458.1L318.4 457.1M317.1 444.8L309.1 445.4L308.3 432.7L316.3 432.4M316.0 420.0L308.0 420.0L308.3 407.3L316.3 407.6M317.1 395.2L309.1 394.6L310.5 381.9L318.4 382.9M320.3 370.7L312.4 369.3L314.9 356.8L322.7 358.5M325.7 346.5L317.9 344.4L321.5 332.2L329.1 334.6M333.1 322.9L325.6 320.1L330.2 308.3L337.6 311.3M342.6 300.0L335.4 296.6L341.0 285.2L348.1 288.9M354.0 278.0L347.1 274.0L353.7 263.1L360.5 267.4M367.4 257.1L360.8 252.5L368.3 242.2L374.7 247.1M382.4 237.4L376.3 232.3L384.7 222.7L390.6 228.1M399.2 219.2L393.5 213.5L402.7 204.7L408.1 210.6M417.4 202.4L412.3 196.3L422.2 188.3L427.1 194.7M437.1 187.4L432.5 180.8L443.1 173.7L447.4 180.5M458.0 174.0L454.0 167.1L465.2 161.0L468.9 168.1M480.0 162.6L476.6 155.4L488.3 150.2L491.3 157.6M502.9 153.1L500.1 145.6L512.2 141.5L514.6 149.1M526.5 145.7L524.4 137.9L536.8 134.9L538.5 142.7M550.7 140.3L549.3 132.4L561.9 130.5L562.9 138.4M575.2 137.1L574.6 129.1L587.3 128.3L587.6 136.3M600.0 136.0L600.0 128.0L612.7 128.3L612.4 136.3M624.8 137.1L625.4 129.1L638.1 130.5L637.1 138.4M649.3 140.3L650.7 132.4L663.2 134.9L661.5 142.7M673.5 145.7L675.6 137.9L687.8 141.5L685.4 149.1M697.1 153.1L699.9 145.6L711.7 150.2L708.7 157.6M720.0 162.6L723.4 155.4L734.8 161.0L731.1 168.1M742.0 174.0L746.0 167.1L756.9 173.7L752.6 180.5M762.9 187.4L767.5 180.8L777.8 188.3L772.9 194.7M782.6 202.4L787.7 196.3L797.3 204.7L791.9 210.6M800.8 219.2L806.5 213.5L815.3 222.7L809.4 228.1M817.6 237.4L823.7 232.3L831.7 242.2L825.3 247.1M832.6 257.1L839.2 252.5L846.3 263.1L839.5 267.4M846.0 278.0L852.9 274.0L859.0 285.2L851.9 288.9M857.4 300.0L864.6 296.6L869.8 308.3L862.4 311.3M866.9 322.9L874.4 320.1L878.5 332.2L870.9 334.6M874.3 346.5L882.1 344.4L885.1 356.8L877.3 358.5M879.7 370.7L887.6 369.3L889.5 381.9L881.6 382.9M882.9 395.2L890.9 394.6L891.7 407.3L883.7 407.6" />
+      <!-- Outer bezel rims -->
+      <circle cx="600" cy="420" r="284" class="ring-bezel-outer" />
+      <circle cx="600" cy="420" r="260" class="ring-bezel-inner" />
+      <!-- 360-degree astrolabe vernier graduations -->
+      <path pathLength="1" class="ring-graduations" d="M862.0 420.0L878.0 420.0M861.6 433.7L866.6 434.0M860.6 447.4L865.5 447.9M858.8 461.0L863.7 461.8M856.3 474.5L861.2 475.5M853.1 487.8L862.7 490.4M849.2 501.0L853.9 502.5M844.6 513.9L849.3 515.7M839.3 526.6L843.9 528.6M833.4 538.9L837.9 541.2M826.9 551.0L840.8 559.0M819.7 562.7L823.9 565.4M812.0 574.0L816.0 576.9M803.6 584.9L807.5 588.0M794.7 595.3L798.4 598.7M785.3 605.3L792.3 612.3M775.3 614.7L778.7 618.4M764.9 623.6L768.0 627.5M754.0 632.0L756.9 636.0M742.7 639.7L745.4 643.9M731.0 646.9L739.0 660.8M718.9 653.4L721.2 657.9M706.6 659.3L708.6 663.9M693.9 664.6L695.7 669.3M681.0 669.2L682.5 673.9M667.8 673.1L670.4 682.7M654.5 676.3L655.5 681.2M641.0 678.8L641.8 683.7M627.4 680.6L627.9 685.5M613.7 681.6L614.0 686.6M600.0 682.0L600.0 698.0M586.3 681.6L586.0 686.6M572.6 680.6L572.1 685.5M559.0 678.8L558.2 683.7M545.5 676.3L544.5 681.2M532.2 673.1L529.6 682.7M519.0 669.2L517.5 673.9M506.1 664.6L504.3 669.3M493.4 659.3L491.4 663.9M481.1 653.4L478.8 657.9M469.0 646.9L461.0 660.8M457.3 639.7L454.6 643.9M446.0 632.0L443.1 636.0M435.1 623.6L432.0 627.5M424.7 614.7L421.3 618.4M414.7 605.3L407.7 612.3M405.3 595.3L401.6 598.7M396.4 584.9L392.5 588.0M388.0 574.0L384.0 576.9M380.3 562.7L376.1 565.4M373.1 551.0L359.2 559.0M366.6 538.9L362.1 541.2M360.7 526.6L356.1 528.6M355.4 513.9L350.7 515.7M350.8 501.0L346.1 502.5M346.9 487.8L337.3 490.4M343.7 474.5L338.8 475.5M341.2 461.0L336.3 461.8M339.4 447.4L334.5 447.9M338.4 433.7L333.4 434.0M338.0 420.0L322.0 420.0M338.4 406.3L333.4 406.0M339.4 392.6L334.5 392.1M341.2 379.0L336.3 378.2M343.7 365.5L338.8 364.5M346.9 352.2L337.3 349.6M350.8 339.0L346.1 337.5M355.4 326.1L350.7 324.3M360.7 313.4L356.1 311.4M366.6 301.1L362.1 298.8M373.1 289.0L359.2 281.0M380.3 277.3L376.1 274.6M388.0 266.0L384.0 263.1M396.4 255.1L392.5 252.0M405.3 244.7L401.6 241.3M414.7 234.7L407.7 227.7M424.7 225.3L421.3 221.6M435.1 216.4L432.0 212.5M446.0 208.0L443.1 204.0M457.3 200.3L454.6 196.1M469.0 193.1L461.0 179.2M481.1 186.6L478.8 182.1M493.4 180.7L491.4 176.1M506.1 175.4L504.3 170.7M519.0 170.8L517.5 166.1M532.2 166.9L529.6 157.3M545.5 163.7L544.5 158.8M559.0 161.2L558.2 156.3M572.6 159.4L572.1 154.5M586.3 158.4L586.0 153.4M600.0 158.0L600.0 142.0M613.7 158.4L614.0 153.4M627.4 159.4L627.9 154.5M641.0 161.2L641.8 156.3M654.5 163.7L655.5 158.8M667.8 166.9L670.4 157.3M681.0 170.8L682.5 166.1M693.9 175.4L695.7 170.7M706.6 180.7L708.6 176.1M718.9 186.6L721.2 182.1M731.0 193.1L739.0 179.2M742.7 200.3L745.4 196.1M754.0 208.0L756.9 204.0M764.9 216.4L768.0 212.5M775.3 225.3L778.7 221.6M785.3 234.7L792.3 227.7M794.7 244.7L798.4 241.3M803.6 255.1L807.5 252.0M812.0 266.0L816.0 263.1M819.7 277.3L823.9 274.6M826.9 289.0L840.8 281.0M833.4 301.1L837.9 298.8M839.3 313.4L843.9 311.4M844.6 326.1L849.3 324.3M849.2 339.0L853.9 337.5M853.1 352.2L862.7 349.6M856.3 365.5L861.2 364.5M858.8 379.0L863.7 378.2M860.6 392.6L865.5 392.1M861.6 406.3L866.6 406.0" />
+      <!-- 12 Historical Epoch Markers (Reversing in the storm) -->
+      <g class="epoch-markers">
+        <text x="600" y="156" class="epoch-label" text-anchor="middle">1999</text>
+        <text x="732" y="192" class="epoch-label" text-anchor="middle">1985</text>
+        <text x="828" y="288" class="epoch-label" text-anchor="middle">1966</text>
+        <text x="864" y="420" class="epoch-label" text-anchor="middle" dominant-baseline="central">1945</text>
+        <text x="828" y="552" class="epoch-label" text-anchor="middle">1929</text>
+        <text x="732" y="648" class="epoch-label" text-anchor="middle">1914</text>
+        <text x="600" y="692" class="epoch-label" text-anchor="middle">1888</text>
+        <text x="468" y="648" class="epoch-label" text-anchor="middle">1848</text>
+        <text x="372" y="552" class="epoch-label" text-anchor="middle">1789</text>
+        <text x="336" y="420" class="epoch-label" text-anchor="middle" dominant-baseline="central">1666</text>
+        <text x="372" y="288" class="epoch-label" text-anchor="middle">1492</text>
+        <text x="468" y="192" class="epoch-label" text-anchor="middle">1066</text>
+      </g>
     </g>
 
-    <!-- 3. Main hand-drawn architectural monument & spire (Bentuk Utama Monumen Jam & Spire) -->
-    <g class="draft-object">
-      <!-- Apex Finial & Spire -->
-      <path pathLength="1" d="M720 60v60m-10 20h20m-16 20h32m-8-50l8-15l8 15z" />
-      <path pathLength="1" d="M720 100L668 295h104L720 100zM720 100v195" />
-      <path pathLength="1" d="M684 235h72M694 185h52M706 145h28" />
-      <path pathLength="1" d="M668 295l-12 12h128l-12-12" />
-
-      <!-- Upper Belfry & Louvers -->
-      <path pathLength="1" d="M656 307h128v78H656z" />
-      <path pathLength="1" d="M678 307v78m24-78v78m36-78v78m24-78v78" />
-      <path pathLength="1" d="M706 375v-48q14-16 28 0v48M684 375v-38q10-12 20 0v38M736 375v-38q10-12 20 0v38" />
-
-      <!-- Clockwork Story & Rose Dial -->
-      <path pathLength="1" d="M604 385h232v120H604z" />
-      <path pathLength="1" d="M592 385h256v15H592zM592 490h256v15H592z" />
-      <path pathLength="1" d="M604 400v90m28-90v90m176-90v90m28-90v90" />
-      <path pathLength="1" d="M720 440l28-18m-28 18v-34" />
-
-      <!-- Flying Buttresses & Side Towers -->
-      <path pathLength="1" d="M550 350l16-36l16 36h-32zM550 350h32v155h-32z" />
-      <path pathLength="1" d="M656 318q-56 22-74 72M656 332q-52 24-74 88" />
-      <path pathLength="1" d="M858 350l16-36l16 36h-32zM858 350h32v155h-32z" />
-      <path pathLength="1" d="M784 318q56 22 74 72M784 332q52 24 74 88" />
-
-      <!-- Grand Arched Portal Facade -->
-      <path pathLength="1" d="M492 505h456v180H492z" />
-      <path pathLength="1" d="M532 505v180m44-180v180m288-180v180m44-180v180" />
-      <path pathLength="1" d="M632 685v-105q88-85 176 0v105" />
-      <path pathLength="1" d="M648 685v-92q72-70 144 0v92" />
-      <path pathLength="1" d="M664 685v-80q56-55 112 0v80" />
-      <path pathLength="1" d="M516 685v-85q38-46 76 0v85" />
-      <path pathLength="1" d="M848 685v-85q38-46 76 0v85" />
-
-      <!-- Stepped Plinth Foundation -->
-      <path pathLength="1" d="M452 685h536v20H452z" />
-      <path pathLength="1" d="M408 705h624v20H408z" />
-      <path pathLength="1" d="M356 725h728v18H356z" />
+    <!-- 3. LAYER 2: MIDDLE GYROSCOPE & ARMILLARY RING (Counter-rotates) -->
+    <g class="chrono-ring-mid" id="chrono-ring-mid">
+      <!-- 8-Windowed Gyro Gimbal Band -->
+      <path pathLength="1" class="gyro-band" d="M806.9 441.7L822.8 443.4A224 224 0 0 1 774.1 561.0L761.6 550.9A208 208 0 0 0 806.9 441.7Z M730.9 581.6L741.0 594.1A224 224 0 0 1 623.4 642.8L621.7 626.9A208 208 0 0 0 730.9 581.6Z M578.3 626.9L576.6 642.8A224 224 0 0 1 459.0 594.1L469.1 581.6A208 208 0 0 0 578.3 626.9Z M438.4 550.9L425.9 561.0A224 224 0 0 1 377.2 443.4L393.1 441.7A208 208 0 0 0 438.4 550.9Z M393.1 398.3L377.2 396.6A224 224 0 0 1 425.9 279.0L438.4 289.1A208 208 0 0 0 393.1 398.3Z M469.1 258.4L459.0 245.9A224 224 0 0 1 576.6 197.2L578.3 213.1A208 208 0 0 0 469.1 258.4Z M621.7 213.1L623.4 197.2A224 224 0 0 1 741.0 245.9L730.9 258.4A208 208 0 0 0 621.7 213.1Z M761.6 289.1L774.1 279.0A224 224 0 0 1 822.8 396.6L806.9 398.3A208 208 0 0 0 761.6 289.1Z " />
+      <!-- Gimbal balance pivots (Synthetic Rubies) -->
+      <circle cx="600" cy="204" r="3.2" class="chrono-ruby" />
+      <circle cx="816" cy="420" r="3.2" class="chrono-ruby" />
+      <circle cx="600" cy="636" r="3.2" class="chrono-ruby" />
+      <circle cx="384" cy="420" r="3.2" class="chrono-ruby" />
+      <!-- Orbital celestial planet ellipses -->
+      <ellipse cx="600" cy="420" rx="236" ry="85" class="orbital-ellipse" transform="rotate(-28 600 420)" />
+      <circle cx="785" cy="372" r="4.5" class="orbital-node" />
+      <circle cx="415" cy="468" r="4.5" class="orbital-node" />
     </g>
 
-    <!-- 4. Expressive pencil scribble contours (Garis Coretan Tangan Berlapis) -->
-    <g class="draft-scribbles">
-      <path pathLength="1" d="M722 102L670 293M718 98L666 297M722 102L774 293M718 98L770 297" />
-      <path pathLength="1" d="M654 309h132M658 305h124M602 387h236M606 383h228" />
-      <path pathLength="1" d="M490 507h460M494 503h452M450 687h540M406 707h628M354 727h732" />
-      <path pathLength="1" d="M630 687v-108q90-88 180 0v108M634 683v-102q86-82 172 0v102" />
-      <path pathLength="1" d="M548 352h36M856 352h36M660 293l-16 14M780 293l16 14" />
-      <path pathLength="1" d="M720 440m-132 0a132 132 0 1 0 264 0a132 132 0 1 0-264 0" />
-      <path pathLength="1" d="M720 440m-66 0a66 66 0 1 0 132 0a66 66 0 1 0-132 0" />
-    </g>
+    <!-- 4. LAYER 3: THE HAUTE HORLOGERIE POCKET CHRONOMETER -->
+    <g class="chrono-watch-assembly" id="chrono-watch-assembly">
+      <!-- Bow Ring & Fluted Winding Crown -->
+      <g class="watch-crown-group">
+        <path pathLength="1" class="watch-bow" d="M568 248 C 568 195, 632 195, 632 248 M578 248 C 578 206, 622 206, 622 248" />
+        <rect x="586" y="238" width="28" height="18" rx="2" class="watch-crown" />
+        <!-- Crown knurl ribs -->
+        <path pathLength="1" class="watch-crown-ribs" d="M590 238v18 M595 238v18 M600 238v18 M605 238v18 M610 238v18" />
+      </g>
 
-    <!-- 5. Shading scribble hatching (Coretan Arsiran Pensil & Bayangan) -->
-    <g class="draft-hatching">
-      <!-- Spire shadow scribbles -->
-      <path pathLength="1" d="M718 135l-8 14l10-12l-12 16l14-14l-16 18l18-16l-20 22l22-18l-24 24l26-22l-28 26l30-24l-32 28l34-26l-36 30l38-28" />
-      <!-- Belfry shadow scribbles -->
-      <path pathLength="1" d="M660 315l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14" />
-      <path pathLength="1" d="M756 315l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14l-14-12l16 14" />
-      <!-- Clock chamber pilaster scribbles -->
-      <path pathLength="1" d="M608 405l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16" />
-      <path pathLength="1" d="M808 405l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16l-16-14l18 16" />
-      <!-- Grand portal recessed shadow scribbles -->
-      <path pathLength="1" d="M670 682l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38l-18 40l22-38" />
-      <path pathLength="1" d="M748 682l-22-38l18 40l-22-38l18 40l-22-38l18 40l-22-38l18 40l-22-38" />
-      <!-- Plinth stepped base hatching -->
-      <path pathLength="1" d="M460 702l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14" />
-      <path pathLength="1" d="M740 702l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14m12 14l14-14" />
-    </g>
+      <!-- Main Watch Case -->
+      <circle cx="600" cy="420" r="172" class="watch-case-outer" />
+      <circle cx="600" cy="420" r="164" class="watch-case-stepped" />
+      <!-- Coin-edge 120 flutes -->
+      <path pathLength="1" class="watch-coin-edge" d="M758.0 420.0L764.0 420.0M757.8 428.3L763.8 428.6M757.1 436.5L763.1 437.1M756.1 444.7L762.0 445.7M754.5 452.9L760.4 454.1M752.6 460.9L758.4 462.4M750.3 468.8L756.0 470.7M747.5 476.6L753.1 478.8M744.3 484.3L749.8 486.7M740.8 491.7L746.1 494.5M736.8 499.0L742.0 502.0M732.5 506.1L737.5 509.3M727.8 512.9L732.7 516.4M722.8 519.4L727.5 523.2M717.4 525.7L721.9 529.7M711.7 531.7L716.0 536.0M705.7 537.4L709.7 541.9M699.4 542.8L703.2 547.5M692.9 547.8L696.4 552.7M686.1 552.5L689.3 557.5M679.0 556.8L682.0 562.0M671.7 560.8L674.5 566.1M664.3 564.3L666.7 569.8M656.6 567.5L658.8 573.1M648.8 570.3L650.7 576.0M640.9 572.6L642.4 578.4M632.9 574.5L634.1 580.4M624.7 576.1L625.7 582.0M616.5 577.1L617.1 583.1M608.3 577.8L608.6 583.8M600.0 578.0L600.0 584.0M591.7 577.8L591.4 583.8M583.5 577.1L582.9 583.1M575.3 576.1L574.3 582.0M567.1 574.5L565.9 580.4M559.1 572.6L557.6 578.4M551.2 570.3L549.3 576.0M543.4 567.5L541.2 573.1M535.7 564.3L533.3 569.8M528.3 560.8L525.5 566.1M521.0 556.8L518.0 562.0M513.9 552.5L510.7 557.5M507.1 547.8L503.6 552.7M500.6 542.8L496.8 547.5M494.3 537.4L490.3 541.9M488.3 531.7L484.0 536.0M482.6 525.7L478.1 529.7M477.2 519.4L472.5 523.2M472.2 512.9L467.3 516.4M467.5 506.1L462.5 509.3M463.2 499.0L458.0 502.0M459.2 491.7L453.9 494.5M455.7 484.3L450.2 486.7M452.5 476.6L446.9 478.8M449.7 468.8L444.0 470.7M447.4 460.9L441.6 462.4M445.5 452.9L439.6 454.1M443.9 444.7L438.0 445.7M442.9 436.5L436.9 437.1M442.2 428.3L436.2 428.6M442.0 420.0L436.0 420.0M442.2 411.7L436.2 411.4M442.9 403.5L436.9 402.9M443.9 395.3L438.0 394.3M445.5 387.1L439.6 385.9M447.4 379.1L441.6 377.6M449.7 371.2L444.0 369.3M452.5 363.4L446.9 361.2M455.7 355.7L450.2 353.3M459.2 348.3L453.9 345.5M463.2 341.0L458.0 338.0M467.5 333.9L462.5 330.7M472.2 327.1L467.3 323.6M477.2 320.6L472.5 316.8M482.6 314.3L478.1 310.3M488.3 308.3L484.0 304.0M494.3 302.6L490.3 298.1M500.6 297.2L496.8 292.5M507.1 292.2L503.6 287.3M513.9 287.5L510.7 282.5M521.0 283.2L518.0 278.0M528.3 279.2L525.5 273.9M535.7 275.7L533.3 270.2M543.4 272.5L541.2 266.9M551.2 269.7L549.3 264.0M559.1 267.4L557.6 261.6M567.1 265.5L565.9 259.6M575.3 263.9L574.3 258.0M583.5 262.9L582.9 256.9M591.7 262.2L591.4 256.2M600.0 262.0L600.0 256.0M608.3 262.2L608.6 256.2M616.5 262.9L617.1 256.9M624.7 263.9L625.7 258.0M632.9 265.5L634.1 259.6M640.9 267.4L642.4 261.6M648.8 269.7L650.7 264.0M656.6 272.5L658.8 266.9M664.3 275.7L666.7 270.2M671.7 279.2L674.5 273.9M679.0 283.2L682.0 278.0M686.1 287.5L689.3 282.5M692.9 292.2L696.4 287.3M699.4 297.2L703.2 292.5M705.7 302.6L709.7 298.1M711.7 308.3L716.0 304.0M717.4 314.3L721.9 310.3M722.8 320.6L727.5 316.8M727.8 327.1L732.7 323.6M732.5 333.9L737.5 330.7M736.8 341.0L742.0 338.0M740.8 348.3L746.1 345.5M744.3 355.7L749.8 353.3M747.5 363.4L753.1 361.2M750.3 371.2L756.0 369.3M752.6 379.1L758.4 377.6M754.5 387.1L760.4 385.9M756.1 395.3L762.0 394.3M757.1 403.5L763.1 402.9M757.8 411.7L763.8 411.4" />
+      <circle cx="600" cy="420" r="156" class="watch-bezel" />
 
-    <!-- 6. Architectural dimensions & technical callouts (Ukuran & Catatan Teknis) -->
-    <g class="draft-dimensions">
-      <path pathLength="1" d="M310 100v625m-12-625h24m-24 625h24" />
-      <path pathLength="1" d="M310 100l-5 16m5-16l5 16m-5 625l-5-16m5 16l5-16" />
-      <path pathLength="1" d="M1130 305v420m-12-420h24m-24 420h24" />
-      <path pathLength="1" d="M1130 305l-5 16m5-16l5 16m-5 420l-5-16m5 16l5-16" />
-      <path pathLength="1" d="M356 760h728m-728-8v16m728-16v16" />
-      <path pathLength="1" d="M356 760l16-5m-16 5l16 5m712-5l-16-5m16 5l-16 5" />
-    </g>
+      <!-- Dial Face with Dark Arcane Glass & Guilloché -->
+      <circle cx="600" cy="420" r="150" fill="url(#dial-glow)" class="watch-dial-bg" />
+      <path pathLength="1" class="watch-guilloche" d="M570 420a30 30 0 1 0 60 0a30 30 0 1 0 -60 0 M558 420a42 42 0 1 0 84 0a42 42 0 1 0 -84 0 M546 420a54 54 0 1 0 108 0a54 54 0 1 0 -108 0 M534 420a66 66 0 1 0 132 0a66 66 0 1 0 -132 0 M522 420a78 78 0 1 0 156 0a78 78 0 1 0 -156 0 M510 420a90 90 0 1 0 180 0a90 90 0 1 0 -180 0 M498 420a102 102 0 1 0 204 0a102 102 0 1 0 -204 0 M605.0 420.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M598.3 445.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M580.0 463.3a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M555.0 470.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M530.0 463.3a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M511.7 445.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M505.0 420.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M511.7 395.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M530.0 376.7a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M555.0 370.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M580.0 376.7a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 M598.3 395.0a45 45 0 1 0 90 0a45 45 0 1 0 -90 0 " />
 
-    <!-- 7. Handwritten notes & drafting marks -->
-    <g class="draft-notes">
-      <path pathLength="1" d="M260 380h60l15-15h65" />
-      <path pathLength="1" d="M1100 440h60l15 15h70" />
-      <path pathLength="1" d="M720 40l6 10h-12z" />
-      <path pathLength="1" d="M180 755h120m840 0h120" />
-    </g>
+      <!-- Railway 60-Minute Track -->
+      <circle cx="600" cy="420" r="147" class="watch-track-rim" />
+      <circle cx="600" cy="420" r="137" class="watch-track-rim" />
+      <path pathLength="1" class="watch-ticks" d="M734.0 420.0L746.0 420.0M737.2 434.4L745.2 435.3M735.0 448.7L742.8 450.4M731.2 462.6L738.9 465.1M726.1 476.1L733.4 479.4M716.0 487.0L726.4 493.0M711.6 501.1L718.1 505.8M702.6 512.3L708.5 517.7M692.3 522.6L697.7 528.5M681.1 531.6L685.8 538.1M667.0 536.0L673.0 546.4M656.1 546.1L659.4 553.4M642.6 551.2L645.1 558.9M628.7 555.0L630.4 562.8M614.4 557.2L615.3 565.2M600.0 554.0L600.0 566.0M585.6 557.2L584.7 565.2M571.3 555.0L569.6 562.8M557.4 551.2L554.9 558.9M543.9 546.1L540.6 553.4M533.0 536.0L527.0 546.4M518.9 531.6L514.2 538.1M507.7 522.6L502.3 528.5M497.4 512.3L491.5 517.7M488.4 501.1L481.9 505.8M484.0 487.0L473.6 493.0M473.9 476.1L466.6 479.4M468.8 462.6L461.1 465.1M465.0 448.7L457.2 450.4M462.8 434.4L454.8 435.3M466.0 420.0L454.0 420.0M462.8 405.6L454.8 404.7M465.0 391.3L457.2 389.6M468.8 377.4L461.1 374.9M473.9 363.9L466.6 360.6M484.0 353.0L473.6 347.0M488.4 338.9L481.9 334.2M497.4 327.7L491.5 322.3M507.7 317.4L502.3 311.5M518.9 308.4L514.2 301.9M533.0 304.0L527.0 293.6M543.9 293.9L540.6 286.6M557.4 288.8L554.9 281.1M571.3 285.0L569.6 277.2M585.6 282.8L584.7 274.8M600.0 286.0L600.0 274.0M614.4 282.8L615.3 274.8M628.7 285.0L630.4 277.2M642.6 288.8L645.1 281.1M656.1 293.9L659.4 286.6M667.0 304.0L673.0 293.6M681.1 308.4L685.8 301.9M692.3 317.4L697.7 311.5M702.6 327.7L708.5 322.3M711.6 338.9L718.1 334.2M716.0 353.0L726.4 347.0M726.1 363.9L733.4 360.6M731.2 377.4L738.9 374.9M735.0 391.3L742.8 389.6M737.2 405.6L745.2 404.7" />
 
-    <!-- 8. Edge crop marks & registration crosshairs -->
-    <g class="draft-edge-lines">
-      <path pathLength="1" d="M70 120h40m-20-20v40m1200-20h40m-20-20v40M70 780h40m-20-20v40m1200-20h40m-20-20v40" />
-      <path pathLength="1" d="M110 80l15-2m-15 4l15-2m1180 0l15 2m-15-4l15 2" />
+      <!-- Hour Diamond Indices (12 gems) -->
+      <g class="watch-diamonds">
+        <polygon points="600,290 603,293 600,296 597,293" />
+        <polygon points="665,308 668,311 665,314 662,311" />
+        <polygon points="712,355 715,358 712,361 709,358" />
+        <polygon points="730,420 727,423 724,420 727,417" />
+        <polygon points="712,485 715,488 712,491 709,488" />
+        <polygon points="665,532 668,535 665,538 662,535" />
+        <polygon points="600,550 603,547 600,544 597,293" />
+        <polygon points="535,532 538,535 535,538 532,535" />
+        <polygon points="488,485 491,488 488,491 485,488" />
+        <polygon points="470,420 473,423 476,420 473,417" />
+        <polygon points="488,355 491,358 488,361 485,358" />
+        <polygon points="535,308 538,311 535,314 532,311" />
+      </g>
+
+      <!-- Roman Numerals (I to XII) -->
+      <g class="watch-numerals">
+        <!-- XII (12h) -->
+        <path pathLength="1" d="M588 302v14m-3-14h6m-6 14h6 M596 302l6 14l6-14m-9 0h6m6 0h6m-12 14h6" />
+        <!-- I (1h) -->
+        <path pathLength="1" d="M650 318l5 12m-3-1h5m-3 12h5" />
+        <!-- II (2h) -->
+        <path pathLength="1" d="M685 354l6 12m-2-1h4m-2 12h4 M693 354l6 12m-2-1h4m-2 12h4" />
+        <!-- III (3h) -->
+        <path pathLength="1" d="M702 413v14m-2-14h4m-4 14h4 M708 413v14m-2-14h4m-4 14h4 M714 413v14m-2-14h4m-4 14h4" />
+        <!-- IV (4h) -->
+        <path pathLength="1" d="M687 470l4 12m5-12l-5 8l7 4" />
+        <!-- V (5h) -->
+        <path pathLength="1" d="M652 507l5 12l7-8" />
+        <!-- VI (6h) -->
+        <path pathLength="1" d="M591 526l5 14l5-14m-7 0h4m5 0h4m-9 14h4 M606 526v14m-2-14h4m-4 14h4" />
+        <!-- VII (7h) -->
+        <path pathLength="1" d="M544 507l5 12l5-12 M556 507v12 M561 507v12" />
+        <!-- VIII (8h) -->
+        <path pathLength="1" d="M508 470l5 12l5-12 M520 470v12 M525 470v12 M530 470v12" />
+        <!-- IX (9h) -->
+        <path pathLength="1" d="M486 413v14m-2-14h4m-4 14h4 M493 413l9 14m-9 0l9-14" />
+        <!-- X (10h) -->
+        <path pathLength="1" d="M506 354l10 13m-10 0l10-13" />
+        <!-- XI (11h) -->
+        <path pathLength="1" d="M540 318l10 13m-10 0l10-13 M555 318v13" />
+      </g>
+
+      <!-- Skeleton Sub-Dial 1: Ratchet Wheel at 10 o'clock -->
+      <g class="skeleton-ratchet">
+        <circle cx="554" cy="374" r="25" class="gear-rim" />
+        <circle cx="554" cy="374" r="8" class="gear-hub" />
+        <path pathLength="1" class="gear-spokes" d="M529 374h50M554 349v50M536 356l36 36M536 392l36-36" />
+        <circle cx="554" cy="374" r="3" class="chrono-ruby" />
+      </g>
+
+      <!-- Skeleton Sub-Dial 2: Tourbillon Escapement at 6 o'clock -->
+      <g class="skeleton-tourbillon">
+        <!-- Tourbillon Aperture Bezel -->
+        <circle cx="600" cy="476" r="32" class="tourbillon-bezel" />
+        <!-- Horizontal Bridge with Polished Chamfers -->
+        <path pathLength="1" class="tourbillon-bridge" d="M568 476h64 M572 473h6v6h-6z M622 473h6v6h-6z" />
+        <!-- Balance Wheel Rim with 12 Gold Inertia Screws -->
+        <circle cx="600" cy="476" r="22" class="balance-rim" id="balance-wheel" />
+        <!-- Archimedean Coiled Hairspring -->
+        <path pathLength="1" class="balance-hairspring" d="M600 476 a2 2 0 0 1 2 2 a4 4 0 0 1 -4 0 a6 6 0 0 1 6 -2 a8 8 0 0 1 -8 6 a11 11 0 0 1 11 -8 a14 14 0 0 1 -14 12 a17 17 0 0 1 17 -15" />
+        <!-- Center Jewel -->
+        <circle cx="600" cy="476" r="3.5" class="chrono-ruby" />
+      </g>
+
+      <!-- Movement Bridge Screws (Blued Steel) -->
+      <g class="watch-screws">
+        <circle cx="538" cy="406" r="2.4" class="blued-screw" />
+        <circle cx="648" cy="372" r="2.4" class="blued-screw" />
+        <circle cx="566" cy="462" r="2.4" class="blued-screw" />
+        <circle cx="634" cy="462" r="2.4" class="blued-screw" />
+      </g>
+
+      <!-- Center Arbor Assembly -->
+      <circle cx="600" cy="420" r="7" class="arbor-ring" />
+      <circle cx="600" cy="420" r="3.5" class="chrono-ruby center-gem" />
+
+      <!-- 5. LAYER 4: MASTER BREGUET BLUED STEEL WATCH HANDS -->
+      <!-- Hour Hand -->
+      <g class="chrono-hand chrono-hand-hour" id="chrono-hand-hour">
+        <path pathLength="1" class="hand-blade" d="M600 435 v-65 m-4 -18 a4 4 0 1 0 8 0 a4 4 0 1 0 -8 0 m4 -4 v-8" />
+        <circle cx="600" cy="352" r="3.8" class="breguet-moon" />
+      </g>
+
+      <!-- Minute Hand -->
+      <g class="chrono-hand chrono-hand-minute" id="chrono-hand-minute">
+        <path pathLength="1" class="hand-blade" d="M600 440 v-105 m-5 -22 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0 m5 -5 v-12" />
+        <circle cx="600" cy="313" r="4.8" class="breguet-moon" />
+      </g>
+
+      <!-- Second Hand (Crimson Needle with Teardrop Counterbalance) -->
+      <g class="chrono-hand chrono-hand-second" id="chrono-hand-second">
+        <path pathLength="1" class="hand-second" d="M600 452 v-155 m-2.5 16 a2.5 2.5 0 1 0 5 0 a2.5 2.5 0 1 0 -5 0" />
+      </g>
     </g>
   </svg>
-  <div class="boot-corner tl"></div>
-  <div class="boot-corner tr"></div>
-  <div class="boot-corner bl"></div>
-  <button class="boot-corner br boot-home-shortcut" id="boot-home-shortcut" type="button" aria-label="Skip loading and open home" title="Skip loading and open home"></button>
-
-  <div class="boot-hud">
-    <span class="boot-side-label mono">ATRIUM OS</span>
-    <span class="boot-side-label mono">STATUS: 1.4 VERSION</span>
   </div>
 
+  <!-- 3. Top St. Pavlov HUD Bar -->
+  <header class="boot-hud-top" aria-hidden="true">
+    <div class="hud-top-left mono">
+      <span class="hud-badge"><i class="hud-beacon"></i>CLEARANCE: TIMEKEEPER</span>
+      <span class="hud-meta">ST. PAVLOV // CHRONO-CALIBER 1999</span>
+    </div>
+    <div class="hud-top-center mono">
+      <span class="epoch-live-tracker" id="epoch-live-tracker">EPOCH: 1999.12.31 // 23:59:59</span>
+    </div>
+    <div class="hud-top-right mono">
+      <span class="hud-coord">N25°09'54" · E121°33'10"</span>
+      <span class="hud-telemetry" id="hud-flux">FLUX: 0.002 Δt</span>
+    </div>
+  </header>
+
+  <!-- 4. Tactical Corner Reticles & Skip Shortcut -->
+  <div class="boot-reticle tl"></div>
+  <div class="boot-reticle tr"></div>
+  <div class="boot-reticle bl"></div>
+  <button class="boot-reticle br boot-home-shortcut" id="boot-home-shortcut" type="button" aria-label="Skip to home" title="Skip to home">
+    <span class="shortcut-key mono">[ESC / SKIP]</span>
+  </button>
+
+  <!-- 5. Center-Bottom Main Telemetry & Progress Readout Panel -->
   <div class="boot-panel">
-    <p class="boot-kicker mono">Welcome To</p>
+    <p class="boot-kicker mono">EVERECHOES / ARCHIVE INITIALIZATION</p>
     <div class="boot-heading">
-      <strong>THE VENTURI ARCHIVE</strong>
-      <span class="boot-subtitle mono">Everechoes</span>
+      <strong id="boot-title">EVERECHOES</strong>
+      <span class="boot-subtitle mono">THE TEMPORAL SCALE</span>
     </div>
-    <div class="boot-track"><i id="boot-bar"></i></div>
-    <div class="boot-readout">
-      <span id="boot-status">LINKING RENDERER</span>
-      <output id="boot-value">0%</output>
+
+    <!-- Live Oscilloscope Waveform Canvas -->
+    <div class="boot-oscilloscope-wrap" aria-hidden="true">
+      <canvas id="boot-oscilloscope" width="280" height="28"></canvas>
+    </div>
+
+    <!-- Progress Track with Dual Guides & Photon Runner -->
+    <div class="boot-track">
+      <i id="boot-bar"></i>
+    </div>
+
+    <!-- Status Readout & Percentage Output -->
+    <div class="boot-readout mono">
+      <span id="boot-status">INITIALIZING ARCHIVE</span>
+      <output id="boot-value">000%</output>
     </div>
   </div>
-  <p class="boot-coord">N25.165 · E121.553</p>
+
+  <!-- 6. Bottom Ambient Coordinates -->
+  <div class="boot-footer-meta mono" aria-hidden="true">
+    <span>PERSONAL ARCHIVE // 2026</span>
+  </div>
 </div>
 
 <!-- ========== MAIN PAGE ========== -->
@@ -187,8 +328,8 @@
             </g>
           </g>
         </svg>
-        <span class="nav-brand-title">The Temporal</span>
-        <span class="nav-brand-subtitle">Scale</span>
+        <span class="nav-brand-title">VENTURI</span>
+        <span class="nav-brand-subtitle">ARCHIVE</span>
       </div>
       <a href="#about">01 ABOUT</a>
       <a href="#project">02 PROJECT</a>
@@ -214,7 +355,7 @@
             <p class="sound-status mono" id="sound-status" aria-live="polite">SOUND OFF</p>
             <ul class="sound-list">
               <li class="sound-choice" data-name="SOUND 01" data-file="assets/sound1.mp4">
-                <button class="sound-choice-select mono" type="button" aria-pressed="true"><span>Polymerized Dreams</span><small>assets/sound1.mp4</small></button>
+                <button class="sound-choice-select mono" type="button" aria-pressed="true"><span>Turn Echo</span><small>assets/sound1.mp4</small></button>
                 <button class="sound-slot-toggle" type="button" aria-label="Play SOUND 01" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
               </li>
               <li class="sound-choice" data-name="SOUND 02" data-file="assets/sound2.mp4">
@@ -247,6 +388,13 @@
                 <button class="sound-slot-toggle visual-slot-toggle" type="button" aria-label="Select Pa Ŵr yw'r Porthor? visual" aria-pressed="false"><span class="sound-checkbox"></span><span class="sound-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
               </li>
             </ul>
+            <div class="boot-background-settings">
+              <label class="boot-background-label mono" for="boot-background-file">LOADING SCREEN BACKGROUND</label>
+              <input id="boot-background-file" type="file" accept="video/mp4,video/webm,image/jpeg,image/png,.mp4,.webm,.jpg,.jpeg,.png">
+              <p class="boot-background-help">MP4, WebM, JPG, or PNG. Saved in this browser for your next visit.</p>
+              <p class="boot-background-status mono" id="boot-background-status" aria-live="polite">USING DEFAULT BACKGROUND</p>
+              <button class="boot-background-remove mono" id="boot-background-remove" type="button" hidden>REMOVE BACKGROUND</button>
+            </div>
           </section>
         </section>
       </div>
@@ -256,13 +404,12 @@
   <main>
     <!-- HERO / SANDBOX -->
     <section id="sandbox" class="sandbox">
-      <div id="scene" class="scene"></div>
       <video class="architecture-video" id="architecture-video" muted loop playsinline preload="none" draggable="false" aria-label="Architectural video study" hidden>
         <source src="assets/Videos.webm" type="video/webm">
       </video>
 
       <div class="masthead">
-        <p class="mini"><span>1.4 Drafting The Past</span><i></i><span>1.5 Coming in December</span></p>
+        <p class="mini"><span>1.5 Fragments of Forever</span><i></i><span>1.6 Coming in December</span></p>
         <div class="hero-sketch blueprint-area">
           <!-- Legacy architectural elevation removed.
           <svg class="architect-sketch" viewBox="0 0 760 336" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
@@ -422,7 +569,7 @@
       </div>
       <!-- Interactive 3D Book -->
       <div class="about-book-stage">
-        <button class="book-side-book book-side-book-left is-locked" data-slot="left" type="button" aria-label="Pilih The Prisoner in the Cave, Locked" aria-pressed="false">
+        <button class="book-side-book book-side-book-left" data-slot="left" type="button" aria-label="Pilih The Prisoner in the Cave" aria-pressed="false">
           <img src="assets/cover-left.png" alt="The Prisoner in the Cave" draggable="false" />
           <span class="book-lock-overlay" aria-hidden="true">Locked</span>
         </button>
@@ -443,7 +590,7 @@
               <img src="assets/book-cover.png" alt="Pa Gur Yw Y Porthaur" class="book-cover-img" draggable="false" />
               <div class="book-cover-sheen"></div>
               <span class="book-lock-overlay" aria-hidden="true">Locked</span>
-              <div class="book-lock-notice" role="status" aria-live="polite" hidden>Will be Unlocked in 1.5</div>
+              <div class="book-lock-notice" role="status" aria-live="polite" hidden>Will be Unlocked in 1.7</div>
             </div>
           </div>
 
@@ -452,12 +599,36 @@
             <button type="button" class="book-close-btn" id="book-close-btn" aria-label="Tutup buku">&times;</button>
             <div class="book-spine-crease"></div>
             <div class="book-page book-page-left" data-lenis-prevent>
+              <div class="page-watermark" aria-hidden="true">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                  <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" />
+                  <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  <circle cx="100" cy="100" r="68" fill="none" stroke="currentColor" stroke-width="0.8" />
+                  <circle cx="100" cy="100" r="42" fill="none" stroke="currentColor" stroke-width="1" />
+                  <path d="M 100 20 L 107 85 L 172 100 L 107 115 L 100 180 L 93 115 L 28 100 L 93 85 Z" fill="none" stroke="currentColor" stroke-width="1" />
+                  <path d="M 100 45 L 105 88 L 148 100 L 105 112 L 100 155 L 95 112 L 52 100 L 95 88 Z" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 2" />
+                  <path d="M 45 45 L 155 155 M 155 45 L 45 155" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1 3" />
+                  <circle cx="100" cy="100" r="4" fill="currentColor" />
+                </svg>
+              </div>
               <div class="page-ornament mono"></div>
               <h3 class="page-heading"></h3>
               <div class="page-paragraphs"></div>
               <div class="page-footer mono"></div>
             </div>
-            <div class="book-page book-page-right">
+            <div class="book-page book-page-right" data-lenis-prevent>
+              <div class="page-watermark" aria-hidden="true">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                  <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" />
+                  <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  <circle cx="100" cy="100" r="68" fill="none" stroke="currentColor" stroke-width="0.8" />
+                  <circle cx="100" cy="100" r="42" fill="none" stroke="currentColor" stroke-width="1" />
+                  <path d="M 100 20 L 107 85 L 172 100 L 107 115 L 100 180 L 93 115 L 28 100 L 93 85 Z" fill="none" stroke="currentColor" stroke-width="1" />
+                  <path d="M 100 45 L 105 88 L 148 100 L 105 112 L 100 155 L 95 112 L 52 100 L 95 88 Z" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 2" />
+                  <path d="M 45 45 L 155 155 M 155 45 L 45 155" stroke="currentColor" stroke-width="0.5" stroke-dasharray="1 3" />
+                  <circle cx="100" cy="100" r="4" fill="currentColor" />
+                </svg>
+              </div>
               <div class="page-ornament mono"></div>
               <h3 class="page-heading"></h3>
               <div class="page-paragraphs"></div>
@@ -469,7 +640,7 @@
           <button class="book-nav-button book-nav-next" type="button" data-direction="right" aria-label="Buku berikutnya"><span aria-hidden="true"></span></button>
           <p class="book-caption" id="book-caption" aria-live="polite">LOREM</p>
         </div>
-        <button class="book-side-book book-side-book-right is-locked" data-slot="right" type="button" aria-label="Pilih Paradise Regained, Locked" aria-pressed="false">
+        <button class="book-side-book book-side-book-right" data-slot="right" type="button" aria-label="Pilih Paradise Regained" aria-pressed="false">
           <img src="assets/cover-right.png" alt="Paradise Regained" draggable="false" />
           <span class="book-lock-overlay" aria-hidden="true">Locked</span>
         </button>
@@ -491,7 +662,7 @@
        </div>
        <div class="archive-grid" id="archive-grid"></div>
     </section>
-
+    
     <!-- CONTACT US -->
     <section id="contact" class="section contact">
       <div class="sec-head">
@@ -543,7 +714,7 @@
     </div>
 
     <div class="footer-center mono">
-      <span></span>Version 1.3</span>
+      <span>Version 1.5</span>
     </div>
 
     <div class="footer-right">
@@ -562,13 +733,14 @@
 </aside>
 
 <script src="js/project.js"></script>
-<script src="js/site.js"></script>
+<script src="js/site.js?v=9"></script>
 <script src="js/architecture.js"></script>
-<script src="js/boot.js"></script>
+<script src="js/boot.js?v=11"></script>
 <script src="js/music.js"></script>
 <script src="js/visual-settings.js"></script>
+<script src="js/boot-background.js?v=2"></script>
 <script src="js/interaction-guard.js"></script>
 <script src="js/lenis.min.js"></script>
-<script src="js/scroll-animations.js"></script>
+<script src="js/scroll-animations.js?v=2"></script>
 </body>
 </html>

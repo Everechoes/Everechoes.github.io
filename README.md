@@ -1,88 +1,27 @@
-# The Temporal Scale
+# Everechoes — The Temporal Scale
 
-A responsive, single-page personal portfolio by Everechoes. The site presents its portfolio content through an architectural archive interface, with a boot sequence, interactive building illustration, book-inspired profile section, and project and contact areas.
+A responsive, single-page portfolio presented as an architectural archive. It combines a paper-and-ink visual style with a custom loading sequence, an illustrated building study, an interactive book, project cards, and contact links.
+
+Built with HTML, CSS, and vanilla JavaScript. No package installation or build step is required.
 
 ## Features
 
-- Responsive About, Project, and Contact sections
-- Animated boot sequence with an option to skip directly to the page
-- Architectural hero illustration with interactive building highlights
-- Optional architectural video mode, selectable from System Settings
-- System Settings panel with visual and sound controls
-- Five selectable looping audio tracks
-- Interactive book for profile, education, and skills content
-- Project cards with details and external links
-- Live clock, scroll effects, and ambient visual details
-- Keyboard interactions and support for `prefers-reduced-motion`
-- No frontend framework, package installation, or build step required
-
-## Recent Updates
-
-1. Added an Ancient Visual mode to System Settings, inspired by *Pa Ŵr yw'r Porthor?*
-2. Fixed bugs and interaction issues.
-3. Added `assets/Videos.webm` to the Ancient Visual mode.
-4. Added smoother animations to System Settings.
-5. Improved spacing in the About, Project, and Contact sections.
-6. Add a animation after the loading screen done.
-7. Updating Animation Default Visual to Another Visual.
-
-## Tech Stack
-
-- HTML, CSS, and vanilla JavaScript
-- Lenis for smooth scrolling
-- Google Fonts for typography
-- Node.js built-in modules for the optional local server
-
-## Project Structure
-
-```text
-.
-├── index.html
-├── server.js
-├── favicon.svg
-├── css/
-│   ├── style.css                  # CSS entry point
-│   ├── base.css                  # Base styles, variables, and utilities
-│   ├── layout.css                # Page layout and responsive rules
-│   ├── foundation.css            # Main visual theme
-│   ├── refinements.css           # Additional visual and responsive refinements
-│   ├── boot.css                  # Boot sequence
-│   ├── boot-draft.css            # Architectural boot illustration
-│   ├── architecture.css          # Architectural hero illustration and interactions
-│   ├── architectural-details.css # Editorial and architectural styling details
-│   ├── book.css                  # Interactive book
-│   ├── project.css               # Project archive and cards
-│   ├── scroll-animations.css     # Scroll and reveal animations
-│   ├── visual-settings.css       # Visual modes and settings panel
-│   └── interaction-guard.css     # Interaction and input safeguards
-├── js/
-│   ├── site.js                   # Clock, book content, and shared page behavior
-│   ├── project.js                # Project archive content
-│   ├── architecture.js           # Building highlight interactions
-│   ├── boot.js                   # Boot sequence
-│   ├── music.js                  # Sound settings and playback
-│   ├── visual-settings.js        # Architectural/video mode controls
-│   ├── scroll-animations.js      # Lenis scrolling and reveal effects
-│   ├── interaction-guard.js      # Interaction safeguards
-│   ├── lenis.min.js              # Smooth-scroll library
-│   └── sandbox.js                # Optional scene script; not loaded by index.html
-└── assets/
-    ├── README.md                 # Asset notes
-    ├── Videos.webm               # Architectural visual mode video
-    ├── sound1.mp4 ... sound5.mp4 # Sound choices
-    ├── book-cover.png, cover-left.png, cover-right.png
-    ├── profile-pic.png, school-pic*
-    ├── Skill-*.png, Skill-*.webp, Skills-*.png
-    └── logo-discord.webp, logo-github.webp, logo-spotify.png
-```
+- **Archive loading screen** with progress feedback, a skip control, and a left-to-right page-reveal transition into the portfolio.
+- **Custom loading-screen background:** choose an MP4, WebM, JPG, or PNG in **System Settings → Visual**. The selected file is stored in the browser using IndexedDB and can be removed to restore the default background. This setting is local to the browser and is not uploaded with the website.
+- **Architectural hero illustration** with interactive building highlights and an optional video visual mode.
+- **Interactive profile book** with profile, education, and skills content.
+- **Project archive** with project details and repository links.
+- **System Settings** for visual modes and five selectable audio tracks.
+- **Responsive About, Project, and Contact sections**, live clock, fixed top navigation, smooth scrolling, and scroll effects.
+- Keyboard-accessible controls and support for `prefers-reduced-motion`.
 
 ## Run Locally
 
-Opening `index.html` directly may work, but running a local HTTP server is recommended for media and browser compatibility.
+Run the site through a local HTTP server for the best browser compatibility, especially for media playback and loading-screen background storage.
 
 ### Node.js
 
-The included server uses only Node.js built-in modules. No dependencies need to be installed:
+The included server uses Node.js built-in modules only:
 
 ```bash
 node server.js
@@ -92,7 +31,7 @@ Open <http://localhost:8000/>.
 
 ### Python
 
-Alternatively, start Python's built-in server from the project directory:
+Alternatively, run Python's built-in server from the project root:
 
 ```bash
 python -m http.server 8000
@@ -100,18 +39,71 @@ python -m http.server 8000
 
 Then open <http://localhost:8000/>.
 
-## Customizing Content
+## Customizing
 
-- Edit the project data in `js/project.js`.
-- Edit the profile, education, skills, and book content in `js/site.js`.
-- Update section markup, contact links, visual-mode labels, and sound track paths in `index.html`.
-- Replace the sound files or update their matching `data-file` attributes in `index.html`.
-- Update the architectural drawing and building labels in the hero SVG in `index.html`; its styling is in `css/architecture.css`.
+- **Portfolio sections, navigation, contact links, and media controls:** `index.html`
+- **Project data:** `js/project.js`
+- **Profile, education, skills, and book content:** `js/site.js`
+- **Audio track file paths and labels:** edit the matching `.sound-choice` entries in `index.html`
+- **Architectural illustration and building interactions:** `index.html`, `css/architecture.css`, and `js/architecture.js`
+- **Loading-screen background behavior:** `js/boot-background.js`
+- **Visual styling:** stylesheets in `css/`; `css/style.css` is the main stylesheet entry point.
 
-## Accessibility and Motion
+### Loading-screen background
 
-Interactive controls include keyboard support, and the book can be closed with Escape. Scroll and decorative effects account for the browser's `prefers-reduced-motion` setting. The interface uses semantic HTML and descriptive labels for its interactive architectural illustration.
+Visitors can select `.mp4`, `.webm`, `.jpg`, `.jpeg`, or `.png` files from **System Settings → Visual**. The choice is saved in the current browser's IndexedDB storage. Use **Remove Background** in the same panel to return to the default paper-and-grid background.
+
+The selected media is stored locally in that browser; it is not part of the repository and is not shared with other visitors. For video backgrounds, use a browser-supported MP4 or WebM encoding and test it in the target browsers.
+
+## Project Structure
+
+```text
+.
+├── index.html
+├── server.js
+├── favicon.svg
+├── css/
+│   ├── style.css                  # Main stylesheet entry point
+│   ├── base.css                   # Base styles, colors, and utilities
+│   ├── layout.css                 # Page layout and top navigation
+│   ├── foundation.css             # Main archival visual theme
+│   ├── refinements.css            # Responsive and visual refinements
+│   ├── boot.css                   # Loading screen and exit transition
+│   ├── boot-draft.css             # Loading-screen illustration styling
+│   ├── architecture.css           # Architectural hero illustration
+│   ├── architectural-details.css  # Editorial and architectural details
+│   ├── book.css                   # Interactive book
+│   ├── project.css                # Project archive
+│   ├── scroll-animations.css      # Smooth scrolling and reveal effects
+│   ├── visual-settings.css        # Settings panel and visual modes
+│   └── interaction-guard.css      # Interaction safeguards
+├── js/
+│   ├── site.js                    # Shared page behavior and book content
+│   ├── project.js                 # Project data
+│   ├── architecture.js            # Building highlight interactions
+│   ├── boot.js                    # Loading sequence
+│   ├── boot-background.js         # Custom loading-screen media and storage
+│   ├── music.js                   # Audio settings and playback
+│   ├── visual-settings.js         # Visual mode controls
+│   ├── scroll-animations.js       # Smooth scrolling and reveal effects
+│   ├── interaction-guard.js       # Interaction safeguards
+│   └── lenis.min.js               # Smooth-scroll library
+└── assets/
+    ├── README.md                  # Asset guide and inventory
+    ├── Videos.webm                # Architectural visual-mode video
+    ├── sound1.mp4 ... sound5.mp4  # Audio choices
+    ├── book-cover.png, cover-left.png, cover-right.png
+    ├── profile, school, and skills images
+    └── contact logos and other visual assets
+```
+
+## Publishing Notes
+
+- Preserve asset filename capitalization; GitHub Pages and other Linux-based hosts are case-sensitive.
+- Test media playback and the loading screen on the actual hosting origin.
+- The custom loading-screen background is a per-browser preference and is not included in a GitHub upload.
+- Review the rights and licenses for bundled images, audio, video, and fonts before publishing.
 
 ## License
 
-This project is intended for personal or demo use. Before publishing or redistributing it, verify the licenses and usage rights for all included media, fonts, and third-party assets.
+No explicit software license is currently included. Unless a license is added, the source code is not granted for reuse by others. Verify usage rights for third-party assets before publishing or redistributing them.
