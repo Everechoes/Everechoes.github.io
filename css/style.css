@@ -1,18 +1,19 @@
 /* 1. Global foundation */
 @import url('base.css');
 
+/* Keep the shared loading sequence ahead of the page-specific theme. */
+@import url('boot.css?v=15');
+
 /* 2. Page layout, visual foundation, and responsive refinements */
 @import url('layout.css');
-@import url('foundation.css');
+@import url('foundation.css?v=2');
 @import url('refinements.css');
 
 /* 3. Interactive content modules */
 @import url('book.css');
 @import url('architecture.css');
 @import url('project.css');
+@import url('mail-archive.css');
 
-/* 4. Architectural boot-draft treatment */
-@import url('boot-draft.css?v=8');
-
-/* Keep the archive loader last so page-level themes cannot restyle it. */
-@import url('boot.css?v=13');
+/* Draw the loading-screen architecture over the shared page styles. */
+@import url('boot-draft.css?v=10');

@@ -1051,7 +1051,7 @@
   .book-page-left { padding-right: 20px; }
   .book-page-right { padding-left: 20px; }
   .book-closed { width: 200px; height: 290px; }
-  .book-nav-button { width: 32px; height: 32px; }
+  .book-nav-button { width: 44px; height: 44px; }
   .book-nav-prev { left: calc(50% - 140px); }
   .book-nav-next { right: calc(50% - 140px); }
   .page-watermark {

@@ -562,6 +562,7 @@ body.is-video-mode #page .topbar {
   width:100% !important;
   padding:18px clamp(20px, 4vw, 56px);
   transform:translateX(-50%) !important;
+  background:linear-gradient(180deg, rgba(246,239,228,.94), rgba(233,223,209,.88));
   background:linear-gradient(
     180deg,
     color-mix(in srgb, var(--video-surface-raised) 92%, transparent),
@@ -586,17 +587,8 @@ body.is-video-mode #page .topbar .topnav > a {
   font-family:var(--video-book-display-font) !important;
 }
 
-body.is-video-mode #page .topbar .nav-brand-title {
-  font-family:var(--video-book-display-font) !important;
-  color:var(--video-text) !important;
-}
-
 body.is-video-mode #page .topbar .clock {
   font-family:var(--video-book-body-font) !important;
-}
-
-body.is-video-mode #page .topbar .nav-brand-subtitle {
-  font-family:'JetBrains Mono', monospace !important;
 }
 
 body.is-video-mode #page .topbar .topnav > a,
@@ -670,44 +662,9 @@ body.is-video-mode #sandbox .scroll-cue:visited {
   text-shadow:0 1px 3px rgba(227,218,201,.9), 0 0 1px rgba(227,218,201,.8);
 }
 
-body.is-video-mode #page .topbar .nav-brand-subtitle {
-  color:var(--video-olive);
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch path {
-  stroke:var(--video-brass);
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-architecture-frame {
-  display:block;
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-ancient-swords {
-  display:none;
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-ancient-swords .nav-sword path {
-  stroke:var(--video-brass);
-  stroke-width:.8;
-  stroke-linecap:square;
-  stroke-linejoin:miter;
-  stroke-dasharray:none;
-  stroke-dashoffset:0;
-  opacity:1;
-  animation:none;
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-sword-blade {
-  fill:rgba(181,148,91,.16);
-}
-
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-sword-hilt,
-body.is-video-mode #page .topbar .nav-brand-sketch .nav-sword-pommel {
-  stroke:var(--video-umber);
-}
-
 @media (max-width:600px) {
   .sound-panel {
+    max-height:calc(100vh - 76px);
     max-height:calc(100svh - 76px);
   }
 
@@ -725,6 +682,32 @@ body.is-video-mode #page .topbar .nav-brand-sketch .nav-sword-pommel {
     left:10px;
     display:block;
     font-size:8px;
+  }
+
+  body.is-video-mode #page .topbar {
+    padding-top:calc(10px + env(safe-area-inset-top, 0px));
+    padding-right:calc(12px + env(safe-area-inset-right, 0px));
+    padding-left:calc(12px + env(safe-area-inset-left, 0px));
+  }
+
+  body.is-video-mode #page .topbar .topnav {
+    display:grid;
+    grid-template-columns:minmax(96px, 1.2fr) repeat(2, minmax(0, 1fr));
+    gap:6px 8px;
+    width:100% !important;
+  }
+
+  body.is-video-mode #page .topbar .clock {
+    margin-left:0 !important;
+  }
+
+  body.is-video-mode #sandbox.is-video-mode .legend {
+    right:calc(12px + env(safe-area-inset-right, 0px));
+    bottom:calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  body.is-video-mode #sandbox.is-video-mode .coord {
+    left:calc(10px + env(safe-area-inset-left, 0px));
   }
 }
 

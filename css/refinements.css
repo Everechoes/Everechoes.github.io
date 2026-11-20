@@ -120,19 +120,55 @@
   .lede { font-size:16px; }
 }
 
+@media (max-width:768px) {
+  .sandbox { min-height:100vh; min-height:100svh; }
+}
+
+@media (max-width:600px) {
+  .sandbox { height:100vh; height:100svh; }
+  .topnav a {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:44px;
+    min-height:44px;
+  }
+  .sound-settings-toggle { width:44px; height:44px; }
+  .book-nav-button { width:44px; height:44px; }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  @media (max-width:600px) {
+    .topbar {
+      padding-top:calc(10px + env(safe-area-inset-top, 0px));
+      padding-right:calc(12px + env(safe-area-inset-right, 0px));
+      padding-left:calc(12px + env(safe-area-inset-left, 0px));
+    }
+    .scroll-cue { bottom:calc(10px + env(safe-area-inset-bottom, 0px)); }
+    .legend {
+      right:calc(12px + env(safe-area-inset-right, 0px));
+      bottom:calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+    .footer { padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px)); }
+    .boot-home-shortcut {
+      right:calc(24px + env(safe-area-inset-right, 0px));
+      bottom:calc(24px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
+
 /* ===== TOPNAV BRAND (Moved from index.html inline style) ===== */
 .topnav > .nav-brand {
   position:relative;
   display:flex;
-  flex:0 0 132px;
-  flex-direction:column;
+  flex:0 0 48px;
   align-items:center;
   justify-content:center;
-  width:132px;
-  height:34px;
+  width:48px;
+  height:48px;
   min-width:0;
   margin:0;
-  padding:0 12px;
+  padding:0;
   overflow:hidden;
   color:#34372f;
   line-height:1;
@@ -140,78 +176,26 @@
   isolation:isolate;
   animation:nav-brand-arrive .9s cubic-bezier(.16,1,.3,1) both;
 }
-.nav-brand-title,
-.nav-brand-subtitle {
-  position:relative;
-  z-index:1;
+.nav-brand-logo {
   display:block;
+  width:auto;
+  height:44px;
   max-width:100%;
-  white-space:nowrap;
-}
-.nav-brand-title {
-  font-family:'Playfair Display', Georgia, serif;
-  font-size:13px;
-  font-weight:500;
-  letter-spacing:-.25px;
-  text-shadow:none;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:geometricPrecision;
-}
-.nav-brand-subtitle {
-  margin-top:4px;
-  color:#77796d;
-  font-family:'JetBrains Mono', monospace;
-  font-size:7px;
-  font-weight:500;
-  letter-spacing:3px;
-  text-transform:uppercase;
-}
-.nav-brand-sketch {
-  position:absolute;
-  z-index:0;
-  inset:0;
-  display:block;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  pointer-events:none;
-}
-.nav-ancient-swords { display:none; }
-.nav-brand-sketch path {
-  fill:none;
-  stroke:#666b60;
-  stroke-width:.7;
-  stroke-linecap:square;
-  stroke-linejoin:miter;
-  stroke-dasharray:1;
-  stroke-dashoffset:1;
-  opacity:0;
-  animation:nav-sketch-draw 1.8s cubic-bezier(.42,0,.18,1) var(--sketch-delay) both;
-}
-.nav-brand-sketch .nav-sketch-detail {
-  stroke:#967a50;
-  stroke-width:.55;
+  object-fit:contain;
+  transform:translateX(-6px);
 }
 @keyframes nav-brand-arrive {
   from { opacity:0; transform:translateY(5px); }
   to { opacity:1; transform:translateY(0); }
 }
-@keyframes nav-sketch-draw {
-  0% { stroke-dashoffset:1; opacity:0; }
-  12% { opacity:.55; }
-  100% { stroke-dashoffset:0; opacity:.55; }
-}
 @media (max-width:480px) {
   .topnav > .nav-brand {
-    flex-basis:96px;
-    width:96px;
-    height:30px;
-    padding:0 8px;
+    flex-basis:40px;
+    width:40px;
+    height:40px;
   }
-  .nav-brand-title { font-size:10px; }
-  .nav-brand-subtitle { margin-top:3px; font-size:6px; letter-spacing:2.4px; }
+  .nav-brand-logo { height:36px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .topnav > .nav-brand { animation:none; }
-  .nav-brand-sketch path { animation:none; stroke-dashoffset:0; opacity:.55; }
 }

@@ -383,7 +383,10 @@
   margin:0;
   color:#4e4d45;
   font-size:15px;
-  line-height:1.85;
+  line-height:1.75;
+  text-align:justify;
+  text-align-last:left;
+  text-justify:inter-word;
 }
 
 .project-modal-footer {

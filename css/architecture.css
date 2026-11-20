@@ -1,6 +1,6 @@
 /* ===== ARCHITECTURAL LINE ART ===== */
 .masthead .mini {
-  top:74%;
+  top:76%;
 }
 
 .hero-sketch {
@@ -39,6 +39,31 @@
 }
 
 .architect-sketch path { fill:none; stroke-linecap:square; stroke-linejoin:round; }
+.architecture-tooltip {
+  position:absolute;
+  z-index:5;
+  display:grid;
+  gap:6px;
+  width:max-content;
+  max-width:min(260px, calc(100vw - 32px));
+  padding:12px 14px;
+  border:1px solid rgba(73,67,54,.3);
+  color:#373630;
+  background:rgba(246,243,235,.96);
+  box-shadow:0 8px 24px rgba(37,34,27,.12);
+  pointer-events:none;
+  animation:architecture-tooltip-in .55s cubic-bezier(.16,1,.3,1) both;
+}
+.architecture-tooltip[hidden] { display:none; }
+.architecture-tooltip-title {
+  color:#8a5038;
+  font:500 10px/1.4 'JetBrains Mono', monospace;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.architecture-tooltip-description {
+  font:400 12px/1.55 'Lora', Georgia, serif;
+}
 .architecture-pencil-hatch {
   fill:url(#architectural-hatch) !important;
   stroke:none !important;
@@ -113,9 +138,15 @@
   transition:stroke .2s ease, opacity .2s ease, filter .2s ease;
 }
 
+.architecture-lines > [data-building] {
+  transform-box:fill-box;
+  transform-origin:center;
+  scale:1;
+  transition:opacity .2s ease, scale .2s ease;
+}
+
 .architect-sketch[data-highlighted-building] .architecture-lines > [data-building] {
   opacity:.32;
-  transition:opacity .2s ease;
 }
 
 .architect-sketch[data-highlighted-building="villa"] .architecture-lines > [data-building="villa"],
@@ -126,6 +157,7 @@
 .architect-sketch[data-highlighted-building="tower"] .architecture-lines > [data-building="tower"],
 .architect-sketch[data-highlighted-building="home"] .architecture-lines > [data-building="home"] {
   opacity:1;
+  scale:1.05;
 }
 
 .architect-sketch[data-highlighted-building="villa"] [data-building="villa"] :is(.architecture-line, .architecture-detail, .architecture-glass, .architecture-accent),
@@ -216,6 +248,10 @@
   12% { opacity:.96; }
   100% { stroke-dashoffset:0; opacity:.96; }
 }
+@keyframes architecture-tooltip-in {
+  from { opacity:0; transform:translateY(8px) scale(.98); filter:blur(2px); }
+  to { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+}
 @keyframes architecture-note-in {
   from { opacity:0; }
   to { opacity:.92; }
@@ -236,7 +272,7 @@
 }
 
 @media (max-width:480px) {
-  .masthead .mini { top:71%; }
+  .masthead .mini { top:73%; }
   .hero-sketch { width:96vw; }
   .architecture-notes { font-size:24px; letter-spacing:.25px; }
   .architecture-notes text:nth-child(2) { font-size:24px; }
@@ -253,4 +289,6 @@
   .architecture-notes,
   .architecture-glints { animation:none; opacity:.5; }
   .architecture-notes text { animation:none; }
+  .architecture-tooltip { animation:none; }
+  .architecture-lines > [data-building] { transition:none; }
 }

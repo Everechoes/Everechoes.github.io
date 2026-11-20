@@ -21,20 +21,7 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* 2. Top Scroll Progress Indicator */
-.scroll-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent, #82614f), var(--accent-3, #a48a62));
-  z-index: 1001;
-  pointer-events: none;
-  transition: width 0.08s linear;
-}
-
-/* 3. Topbar Scroll Behavior */
+/* 2. Topbar Scroll Behavior */
 .page.ready .topbar {
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
               background-color 0.35s ease,
@@ -45,9 +32,9 @@ html.lenis, html.lenis body {
 
 .page.ready .topbar.scrolled {
   transition-delay: 0s;
-  background: rgba(246, 243, 235, 0.88) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  background: rgba(246, 243, 235, 0.65) !important;
+  backdrop-filter: blur(22px) !important;
+  -webkit-backdrop-filter: blur(22px) !important;
   border-bottom: 1px solid rgba(73, 67, 54, 0.14) !important;
   box-shadow: 0 4px 20px rgba(40, 39, 31, 0.04) !important;
 }
@@ -186,7 +173,6 @@ html.lenis, html.lenis body {
 
 /* 9. Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-progress-bar { display: none; }
   .topbar { transition: none !important; }
   .split-line > .split-inner { transform: none !important; transition: none !important; }
   .sec-idx { opacity: 1 !important; transform: none !important; transition: none !important; }

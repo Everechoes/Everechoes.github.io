@@ -11,14 +11,57 @@
   -webkit-backdrop-filter:blur(12px);
 }
 
-.topbar::after {
+.reading-progress-control {
   position:absolute;
+  top:100%;
   right:clamp(20px, 4vw, 56px);
-  bottom:-1px;
+  z-index:101;
+  display:grid;
+  place-items:center;
+  width:46px;
+  height:40px;
+  padding:4px 0 0;
+  border:0;
+  color:var(--accent);
+  background:transparent;
+  cursor:pointer;
+}
+
+.reading-progress-control::before {
+  position:absolute;
+  top:0;
+  right:0;
   width:46px;
   height:2px;
-  background:var(--accent);
+  background:linear-gradient(
+    90deg,
+    var(--accent) 0,
+    var(--accent) var(--reading-progress, 0%),
+    var(--studio-mark) var(--reading-progress, 0%),
+    var(--studio-mark) 100%
+  );
   content:"";
+}
+
+.reading-progress-arrow {
+  opacity:.58;
+  font:500 12px/1 'JetBrains Mono', monospace;
+  transition:opacity .2s ease, transform .2s ease;
+}
+
+.reading-progress-control:hover .reading-progress-arrow,
+.reading-progress-control:focus-visible .reading-progress-arrow {
+  opacity:1;
+  transform:translateY(-2px);
+}
+
+.reading-progress-control:focus-visible {
+  outline:1px solid var(--accent);
+  outline-offset:-2px;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .reading-progress-arrow { transition:none; }
 }
 
 .sandbox::after {
@@ -206,12 +249,322 @@ body.is-video-mode #page main .project-count {
   .section::after { right:16px; bottom:16px; }
   .about-book-stage::after { font-size:7px; }
   .footer { margin:0 16px; }
-  .topbar::after { right:12px; width:30px; }
+  .reading-progress-control {
+    right:12px;
+    width:44px;
+    height:40px;
+  }
+  .reading-progress-control::before { width:30px; }
 }
 
 @media (prefers-reduced-motion:reduce) {
   .project-card::after,
   .contact-card {
     transition:none;
+  }
+}
+
+/* ===== ARCHIVAL INVITATION HERO ===== */
+#sandbox .hero-sketch {
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+  margin:0;
+  transform:none;
+}
+
+#sandbox {
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+}
+
+#sandbox .blueprint-area::before { display:none; }
+#sandbox .masthead > .role { display:none; }
+
+/* Keep the restored architectural plate at its original drafting proportions. */
+#sandbox .architect-sketch:not(.invitation-art) {
+  position:absolute;
+  z-index:1;
+  top:auto;
+  right:auto;
+  bottom:clamp(72px, 17vh, 156px);
+  left:50%;
+  width:min(96vw, 1420px);
+  height:auto;
+  aspect-ratio:1420 / 500;
+  transform:translateX(-50%);
+}
+
+/* ===== UTTU ARCHIVAL INVITATION HERO ===== */
+.invitation-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+  pointer-events: auto;
+}
+
+.invitation-art[hidden] {
+  display:none !important;
+}
+
+.invitation-stage {
+  position: relative;
+  z-index: 1;
+  width: min(82vw, 960px);
+  height: auto;
+  max-width: 960px;
+  max-height: none;
+  aspect-ratio: 1024 / 583;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  opacity: 0;
+  transform: none;
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: flat;
+}
+
+@media (min-width:769px) {
+  .invitation-stage {
+    width: min(80vw, 940px);
+    height: auto;
+    max-width: 940px;
+    max-height: none;
+    flex: 0 0 auto;
+  }
+}
+
+.page.ready .invitation-stage {
+  opacity: 1;
+  transform: none;
+}
+
+.invitation-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Floating Ambient Arcanum Dust Particles */
+.invitation-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.invitation-mote {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--size, 2px);
+  height: var(--size, 2px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 224, 163, 0.95) 0%, rgba(205, 163, 88, 0.5) 60%, rgba(255, 255, 255, 0) 100%);
+  box-shadow: 0 0 6px rgba(223, 187, 115, 0.75);
+  animation: mote-float var(--duration, 8s) ease-in-out var(--delay, 0s) infinite;
+  opacity: 0;
+}
+
+@keyframes mote-float {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  20% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift-x, 15px), var(--drift-y, -40px)) scale(1.2);
+  }
+}
+
+.invitation-quill-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.invitation-svg-meta {
+  display: none !important;
+}
+
+/* SVG Typography Styling */
+.svg-meta-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: rgba(62, 54, 43, 0.8);
+}
+
+.svg-meta-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 6.5px;
+  letter-spacing: 0.16em;
+  fill: rgba(85, 75, 60, 0.65);
+}
+
+.svg-year-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  fill: #a08c58;
+}
+
+.svg-title-text {
+  font-family: 'Great Vibes', 'Brush Script MT', cursive;
+  font-size: 92px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.svg-title-shimmer {
+  font-family: 'Great Vibes', 'Brush Script MT', cursive;
+  font-size: 92px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: title-gold-sweep 6s ease-in-out 1.5s infinite;
+}
+
+@keyframes title-gold-sweep {
+  0%, 15% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  40% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+
+.svg-banner-text {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 11.5px;
+  fill: #484033;
+  letter-spacing: 0.05em;
+}
+
+.svg-banner-sub {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  fill: #6e614d;
+}
+
+.svg-credit-year {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  fill: #655a47;
+}
+
+.svg-credit-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 6.5px;
+  letter-spacing: 0.14em;
+  fill: rgba(72, 63, 50, 0.68);
+}
+
+.quill-welcome-path {
+  stroke: #443e34;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  filter: drop-shadow(0 0.5px 0.5px rgba(255, 255, 255, 0.5));
+}
+
+.feather-quill-pen {
+  opacity: 0;
+  transform-origin: 0 0;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: filter 0.3s ease, opacity 0.4s ease;
+}
+
+.feather-quill-pen:hover {
+  filter: drop-shadow(-6px 12px 8px rgba(35, 30, 22, 0.55)) drop-shadow(0 0 10px rgba(100, 160, 225, 0.4));
+}
+
+.invitation-replay-hit {
+  position: absolute;
+  left: 35%;
+  top: 67%;
+  width: 34%;
+  height: 22%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.invitation-replay-hit:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.6);
+  outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .invitation-stage {
+    aspect-ratio: auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .invitation-canvas,
+  .invitation-quill-stage {
+    object-fit: contain;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation-stage {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .quill-welcome-path {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+  .feather-quill-pen {
+    opacity: 1 !important;
+    transform: translate(645px, 454px) rotate(-25deg) !important;
   }
 }
