@@ -52,6 +52,24 @@
   setInterval(updateClock, 1000);
   updateClock();
 
+  const connectionStatus = document.getElementById('connection-status');
+  if (connectionStatus) {
+    const statusItems = connectionStatus.querySelectorAll('[data-connection]');
+    const announcement = connectionStatus.querySelector('.connection-status-announcement');
+    const updateConnectionStatus = () => {
+      const state = navigator.onLine ? 'online' : 'offline';
+      connectionStatus.dataset.connection = state;
+      statusItems.forEach(item => {
+        item.classList.toggle('is-active', item.dataset.connection === state);
+      });
+      announcement.textContent = state === 'online' ? 'Online' : 'Offline';
+    };
+
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+    updateConnectionStatus();
+  }
+
   // Render Projects
   const grid = document.getElementById('archive-grid');
   function projectSketch(type) {
@@ -66,29 +84,77 @@
   PROJECTS.forEach((p, idx) => {
     const card = document.createElement('article');
     card.className = 'project-card';
-    card.innerHTML = `
-      <button class="project-card-main" type="button" aria-label="View ${p.title} project notes">
-        <div class="project-preview">
-          ${projectSketch(p.visual)}
-          <span class="preview-label mono">FIG. 0${idx + 1}</span>
-          <span class="preview-scale mono">STUDY / 0${idx + 1}</span>
-        </div>
-        <div class="project-card-copy">
-          <div class="project-card-meta">
-            <span class="card-idx mono">0${idx + 1} / PROJECT</span>
-            <span class="project-status mono">${p.status}</span>
-          </div>
-          <h3 class="card-title">${p.title}</h3>
-          <p class="card-desc">${p.desc}</p>
-        </div>
-      </button>
-      <div class="project-card-footer">
-        <div class="card-tags">${p.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-        ${p.link
-          ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="project-link">Repository <span aria-hidden="true">↗</span></a>`
-          : '<span class="project-link project-link-pending">Preview pending <span aria-hidden="true">—</span></span>'}
-      </div>
-    `;
+    const main = document.createElement('button');
+    main.className = 'project-card-main';
+    main.type = 'button';
+    main.setAttribute('aria-label', `View ${p.title} project notes`);
+
+    const preview = document.createElement('div');
+    preview.className = 'project-preview';
+    preview.insertAdjacentHTML('beforeend', projectSketch(p.visual));
+
+    const previewLabel = document.createElement('span');
+    previewLabel.className = 'preview-label mono';
+    previewLabel.textContent = `FIG. 0${idx + 1}`;
+    const previewScale = document.createElement('span');
+    previewScale.className = 'preview-scale mono';
+    previewScale.textContent = `STUDY / 0${idx + 1}`;
+    preview.append(previewLabel, previewScale);
+
+    const copy = document.createElement('div');
+    copy.className = 'project-card-copy';
+    const meta = document.createElement('div');
+    meta.className = 'project-card-meta';
+    const cardIdx = document.createElement('span');
+    cardIdx.className = 'card-idx mono';
+    cardIdx.textContent = `0${idx + 1} / PROJECT`;
+    const status = document.createElement('span');
+    status.className = 'project-status mono';
+    status.textContent = p.status;
+    meta.append(cardIdx, status);
+    const title = document.createElement('h3');
+    title.className = 'card-title';
+    title.textContent = p.title;
+    const description = document.createElement('p');
+    description.className = 'card-desc';
+    description.textContent = p.desc;
+    copy.append(meta, title, description);
+    main.append(preview, copy);
+
+    const footer = document.createElement('div');
+    footer.className = 'project-card-footer';
+    const tags = document.createElement('div');
+    tags.className = 'card-tags';
+    p.tags.forEach(tag => {
+      const tagElement = document.createElement('span');
+      tagElement.textContent = tag;
+      tags.appendChild(tagElement);
+    });
+    footer.appendChild(tags);
+    if (p.link) {
+      const link = document.createElement('a');
+      link.href = p.link;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'project-link';
+      link.append('Repository ');
+      const arrow = document.createElement('span');
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '↗';
+      link.appendChild(arrow);
+      footer.appendChild(link);
+    } else {
+      const pending = document.createElement('span');
+      pending.className = 'project-link project-link-pending';
+      pending.append('Preview pending ');
+      const dash = document.createElement('span');
+      dash.setAttribute('aria-hidden', 'true');
+      dash.textContent = '—';
+      pending.appendChild(dash);
+      footer.appendChild(pending);
+    }
+
+    card.append(main, footer);
 
     card.querySelector('.project-card-main').addEventListener('click', () => openCard(p));
 
@@ -143,29 +209,90 @@
   }
 
   function openCard(p) {
-    const tagMarkup = p.tags.map(tag => `<span>${tag}</span>`).join('');
+    cardInner.replaceChildren();
+    const head = document.createElement('div');
+    head.className = 'project-modal-head';
+    const idx = document.createElement('span');
+    idx.className = 'card-idx mono';
+    idx.append('PROJECT FILE ');
+    const slash = document.createElement('i');
+    slash.textContent = ' / ';
+    idx.append(slash, `0${p.id}`);
 
-    cardInner.innerHTML = `
-      <div class="project-modal-head">
-        <span class="card-idx mono">PROJECT FILE <i> / </i> 0${p.id}</span>
-        <button class="card-close" id="card-close" type="button" aria-label="Close project details">&times;</button>
-      </div>
-      <h2 class="project-modal-title">${p.title}</h2>
-      <p class="project-modal-status mono">${p.status}</p>
-      <div class="project-modal-rule" aria-hidden="true"></div>
-      <p class="project-modal-detail">${p.detail}</p>
-      <div class="project-modal-footer">
-        <div class="project-modal-stack">
-          <span class="project-modal-label mono">BUILT WITH</span>
-          <div class="card-tags project-modal-tags">${tagMarkup}</div>
-        </div>
-        ${p.link ? `<a class="project-modal-link" href="${p.link}" target="_blank" rel="noopener noreferrer">Open repository <span aria-hidden="true">↗</span></a>` : '<span class="project-modal-pending mono">PREVIEW IN DEVELOPMENT</span>'}
-      </div>
-    `;
+    const close = document.createElement('button');
+    close.className = 'card-close';
+    close.id = 'card-close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Close project details');
+    close.textContent = '×';
+    head.append(idx, close);
+
+    const title = document.createElement('h2');
+    title.id = 'project-modal-title';
+    title.className = 'project-modal-title';
+    title.textContent = p.title;
+    const status = document.createElement('p');
+    status.className = 'project-modal-status mono';
+    status.textContent = p.status;
+    const rule = document.createElement('div');
+    rule.className = 'project-modal-rule';
+    rule.setAttribute('aria-hidden', 'true');
+    const detail = document.createElement('p');
+    detail.className = 'project-modal-detail';
+    detail.textContent = p.detail;
+
+    const footer = document.createElement('div');
+    footer.className = 'project-modal-footer';
+    const stack = document.createElement('div');
+    stack.className = 'project-modal-stack';
+    const label = document.createElement('span');
+    label.className = 'project-modal-label mono';
+    label.textContent = 'BUILT WITH';
+    const tags = document.createElement('div');
+    tags.className = 'card-tags project-modal-tags';
+    p.tags.forEach(tag => {
+      const tagElement = document.createElement('span');
+      tagElement.textContent = tag;
+      tags.appendChild(tagElement);
+    });
+    stack.append(label, tags);
+    footer.appendChild(stack);
+
+    if (p.link) {
+      let linkUrl;
+      try {
+        linkUrl = new URL(p.link, window.location.href);
+        if (linkUrl.protocol !== 'https:' && linkUrl.protocol !== 'http:') linkUrl = null;
+      } catch {
+        linkUrl = null;
+      }
+      if (linkUrl) {
+        const link = document.createElement('a');
+        link.className = 'project-modal-link';
+        link.href = linkUrl.href;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.append('Open repository ');
+        const arrow = document.createElement('span');
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '↗';
+        link.appendChild(arrow);
+        footer.appendChild(link);
+      }
+    } else {
+      const pending = document.createElement('span');
+      pending.className = 'project-modal-pending mono';
+      pending.textContent = 'PREVIEW IN DEVELOPMENT';
+      footer.appendChild(pending);
+    }
+
+    cardInner.append(head, title, status, rule, detail, footer);
     lockPageScroll();
     backdrop.classList.add('open');
     card.classList.add('open');
-    document.getElementById('card-close').addEventListener('click', closeCard);
+    card.setAttribute('aria-hidden', 'false');
+    close.addEventListener('click', closeCard);
+    close.focus();
   }
 
   function closeCard() {
@@ -173,6 +300,7 @@
 
     backdrop.classList.remove('open');
     card.classList.remove('open');
+    card.setAttribute('aria-hidden', 'true');
     unlockPageScroll();
   }
 

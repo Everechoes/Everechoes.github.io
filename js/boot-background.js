@@ -22,6 +22,7 @@
   };
   let databasePromise;
   let activeObjectUrl = null;
+  const maximumFileSize = 25 * 1024 * 1024;
 
   function setStatus(message, isError = false) {
     status.textContent = message;
@@ -125,9 +126,13 @@
     if (!format) {
       return Promise.reject(new Error('Choose an MP4, WebM, JPG, or PNG file.'));
     }
+    if (blob.size > maximumFileSize) {
+      return Promise.reject(new Error('Choose a background smaller than 25 MB.'));
+    }
 
     const objectUrl = URL.createObjectURL(blob);
     const target = format.element;
+    const otherTarget = target === video ? image : video;
 
     return new Promise((resolve, reject) => {
       let playbackBlocked = false;
@@ -143,6 +148,7 @@
       };
       const onLoaded = () => {
         cleanListeners();
+        clearElement(otherTarget);
         if (activeObjectUrl) URL.revokeObjectURL(activeObjectUrl);
         activeObjectUrl = objectUrl;
         image.hidden = target !== image;

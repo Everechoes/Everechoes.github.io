@@ -3,20 +3,17 @@
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Top Scroll Progress Bar
-  let progressBar = null;
-  if (!prefersReducedMotion) {
-    progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress-bar';
-    progressBar.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(progressBar);
-  }
+  // 1. Reading progress and back-to-top control
+  const progressControl = document.getElementById('reading-progress-control');
 
   function updateProgressBar(scrollY) {
-    if (!progressBar) return;
+    if (!progressControl) return;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
-    progressBar.style.width = `${progress}%`;
+    const displayedProgress = Math.round(progress);
+    progressControl.style.setProperty('--reading-progress', `${progress}%`);
+    progressControl.setAttribute('aria-label', `Page reading progress: ${displayedProgress}%. Return to top`);
+    progressControl.title = `Page reading progress: ${displayedProgress}%. Return to top`;
   }
 
   // 2. Lenis Smooth Scrolling
@@ -42,6 +39,18 @@
       console.warn('Lenis could not be initialized:', e);
     }
   }
+
+  progressControl?.addEventListener('click', () => {
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { duration: 1.2 });
+      return;
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth'
+    });
+  });
 
   // 3. Topbar Scrolled State
   const topbar = document.querySelector('.topbar');
@@ -97,8 +106,13 @@
     element.dataset.splitReady = 'true';
     const text = element.textContent.trim();
     if (!text) return;
-
-    element.innerHTML = `<span class="split-line"><span class="split-inner">${text}</span></span>`;
+    const line = document.createElement('span');
+    line.className = 'split-line';
+    const inner = document.createElement('span');
+    inner.className = 'split-inner';
+    inner.textContent = text;
+    line.appendChild(inner);
+    element.replaceChildren(line);
   }
 
   // Apply split text to section titles

@@ -2,13 +2,14 @@
   'use strict';
 
   const sketch = document.getElementById('architect-sketch');
+  const invitation = document.getElementById('archival-invitation');
   const heroSketch = document.querySelector('.hero-sketch');
   const video = document.getElementById('architecture-video');
   const sandbox = document.getElementById('sandbox');
   const page = document.getElementById('page');
   const status = document.getElementById('visual-settings-status');
   const choices = Array.from(document.querySelectorAll('.visual-choice'));
-  if (!sketch || !video || !sandbox || !page || !status || !choices.length) return;
+  if (!sketch || !invitation || !video || !sandbox || !page || !status || !choices.length) return;
 
   const body = document.body;
   body.classList.add('theme-default');
@@ -23,15 +24,21 @@
   }
 
   let modeRequest = 0;
+  let currentMode = 'draft';
   let playbackTimer;
   let transitionTimer;
+
+  function getSketch(mode) {
+    return mode === 'invitation' ? invitation : sketch;
+  }
 
   function clearTransition() {
     window.clearTimeout(transitionTimer);
     transitionTimer = undefined;
     body.classList.remove('is-switching-visual', 'to-ancient', 'to-default');
     if (video) video.classList.remove('is-animating');
-    if (sketch) sketch.classList.remove('is-animating');
+    sketch.classList.remove('is-animating');
+    invitation.classList.remove('is-animating');
   }
 
   function updateControls(mode) {
@@ -47,49 +54,60 @@
     });
   }
 
-  function setDraft(message = 'ARCHITECTURAL / ON') {
+  function setDraft(mode = 'draft', message = mode === 'invitation' ? 'ARCHIVAL INVITATION / ON' : 'ARCHITECTURAL STUDY / ON') {
     const isCurrentlyVideo = body.classList.contains('is-video-mode') || body.classList.contains('theme-ancient');
+    const targetSketch = getSketch(mode);
     const request = ++modeRequest;
     window.clearTimeout(playbackTimer);
-    updateControls('draft');
+    updateControls(mode);
 
-    if (!isCurrentlyVideo) {
+    if (!isCurrentlyVideo && currentMode === mode) {
       status.textContent = message;
       return;
     }
 
     clearTransition();
 
-    // 1. Prepare sketch and video for crossfade
-    sketch.classList.add('is-animating');
-    sketch.hidden = false;
-    sketch.removeAttribute('aria-hidden');
+    const previousSketch = currentMode === 'video' ? null : getSketch(currentMode);
+    if (previousSketch && previousSketch !== targetSketch) {
+      previousSketch.hidden = true;
+      previousSketch.setAttribute('aria-hidden', 'true');
+    }
+
+    targetSketch.classList.add('is-animating');
+    targetSketch.hidden = false;
+    targetSketch.removeAttribute('aria-hidden');
 
     video.classList.add('is-animating');
 
     // 2. Add transition classes
     body.classList.add('is-switching-visual', 'to-default');
-    status.textContent = 'SWITCHING TO ARCHITECTURAL...';
+    status.textContent = mode === 'invitation' ? 'SWITCHING TO ARCHIVAL INVITATION...' : 'SWITCHING TO ARCHITECTURAL STUDY...';
 
     requestAnimationFrame(() => {
       sandbox.classList.remove('is-video-mode');
       body.classList.remove('is-video-mode', 'theme-ancient');
       body.classList.add('theme-default');
     });
+    currentMode = mode;
 
     transitionTimer = window.setTimeout(() => {
       if (request !== modeRequest) return;
       video.pause();
       video.hidden = true;
       video.classList.remove('is-animating');
-      sketch.classList.remove('is-animating');
+      targetSketch.classList.remove('is-animating');
       body.classList.remove('is-switching-visual', 'to-default');
       status.textContent = message;
+      if (mode === 'invitation' && typeof window.replayWelcomeWriting === 'function') {
+        window.replayWelcomeWriting();
+      }
     }, 850);
   }
 
   function setAncient(message = 'ANCIENT / ON') {
     const isAlreadyVideo = body.classList.contains('is-video-mode') && body.classList.contains('theme-ancient');
+    const previousMode = currentMode;
     const request = ++modeRequest;
     window.clearTimeout(playbackTimer);
     updateControls('video');
@@ -104,7 +122,8 @@
     // 1. Prepare video and sketch for crossfade
     video.classList.add('is-animating');
     video.hidden = false;
-    sketch.classList.add('is-animating');
+    const previousSketch = previousMode === 'video' ? null : getSketch(previousMode);
+    if (previousSketch) previousSketch.classList.add('is-animating');
 
     // 2. Add transition classes
     body.classList.add('is-switching-visual', 'to-ancient');
@@ -116,6 +135,9 @@
       }
     }).catch(err => {
       console.warn('Video auto-playback deferred:', err);
+      if (request === modeRequest && !video.hidden) {
+        setDraft('draft', 'VIDEO / PLAYBACK UNAVAILABLE');
+      }
     });
 
     requestAnimationFrame(() => {
@@ -123,11 +145,15 @@
       body.classList.add('is-video-mode', 'theme-ancient');
       body.classList.remove('theme-default');
     });
+    currentMode = 'video';
 
     transitionTimer = window.setTimeout(() => {
       if (request !== modeRequest) return;
-      sketch.setAttribute('aria-hidden', 'true');
-      sketch.classList.remove('is-animating');
+      if (previousSketch) {
+        previousSketch.setAttribute('aria-hidden', 'true');
+        previousSketch.hidden = true;
+        previousSketch.classList.remove('is-animating');
+      }
       video.classList.remove('is-animating');
       body.classList.remove('is-switching-visual', 'to-ancient');
       if (!video.paused) {
@@ -139,6 +165,8 @@
   function selectMode(mode) {
     if (mode === 'draft') {
       setDraft();
+    } else if (mode === 'invitation') {
+      setDraft('invitation');
     } else {
       setAncient();
     }
@@ -154,7 +182,7 @@
   });
 
   video.addEventListener('error', () => {
-    if (!video.hidden) setDraft('VIDEO / FILE UNAVAILABLE');
+    if (!video.hidden) setDraft('draft', 'VIDEO / FILE UNAVAILABLE');
   });
 
 })();
