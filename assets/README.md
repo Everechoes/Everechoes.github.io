@@ -11,7 +11,6 @@ This folder contains images and audio used by the portfolio page. Asset paths ar
 | `book-cover.png` | Center book cover for the profile section. |
 | `cover-left.png` | Left-side book: *The Prisoner in the Cave* (Skills). |
 | `cover-right.png` | Right-side book: *Paradise Regained* (Education). |
-| `cover-right2.webp` | Available in the folder, but not currently referenced by the page or scripts. |
 
 Book order and content are configured in `js/site.js`; the initial cover markup is in `index.html`.
 
@@ -51,7 +50,7 @@ These icons appear on the Skills page inside the interactive book. Their labels 
 | `logo-github.webp` | Logo on the GitHub contact card. |
 | `logo-spotify.png` | Logo on the Spotify contact card. |
 
-Logo sources and contact links are defined in `index.html`. The Discord and GitHub markup also lists `.png` and `.jpg` fallback sources, but those fallback files are not currently present in this folder. To support browsers without WebP, add fallback files with those names or update the markup.
+Logo sources and contact links are defined in `index.html`. The Discord and GitHub logos use WebP, while Spotify uses PNG.
 
 ### Audio
 
@@ -59,17 +58,13 @@ The Sound Settings panel in `index.html` offers five tracks. `js/music.js` loads
 
 | File | Name in the panel |
 | --- | --- |
-| `sound1.mp4` | Polymerized Dreams |
+| `sound1.mp4` | Turn Echo |
 | `sound2.mp4` | Temporal Scale |
 | `sound3.mp4` | The Road Not Taken |
 | `sound4.mp4` | Assassin's Creed 2 |
 | `sound5.mp4` | Siren Song (2023) |
 
 To replace a track, keep its filename or update the matching `data-file` attribute on the `.sound-choice` item in `index.html`. Playback starts after user interaction. If a file is missing or cannot be played, the panel displays the path that needs to be checked.
-
-### Optional Hero Video
-
-`hero.webm` is available in this folder, but it is not currently used by `index.html`. Adding the file alone will not display it. To use it as a hero background, add a `<video>` element to the markup, style it with CSS, and configure video loading and playback behavior as needed.
 
 ## Replacing or Adding Assets
 
