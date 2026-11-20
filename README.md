@@ -4,11 +4,23 @@ A responsive, single-page portfolio presented as an architectural archive. It co
 
 Built with HTML, CSS, and vanilla JavaScript. No package installation or build step is required.
 
+## Latest Update
+
+**20 November 2026**
+
+- Updated project and profile data presentation in the `site.js` and `project.js` modules.
+- Added an Archive Updates view with selectable letters, collect/remove actions, unread status, and keyboard-accessible controls.
+- Added a Music Card to the archive with an illustrated cassette-style shortcut and five curated tracks.
+- Added browser-local loading-screen backgrounds for MP4, WebM, JPG, JPEG, and PNG media.
+- Removed unused logo and archived elevation assets from the repository.
+- Updated local media handling for range requests so audio and video playback works reliably through the included Node.js server.
+
 ## Features
 
-- **Archive loading screen** with progress feedback, a skip control, and a left-to-right page-reveal transition into the portfolio.
+- **Project updates and Music Card:** selectable project updates in the archive sidebar, collect/remove controls, and a cassette shortcut that opens the five-track Music Card.
+- **Archive intro screen** with an animated signature, blinking status line, skip control, and upward curtain reveal into the portfolio.
 - **Custom loading-screen background:** choose an MP4, WebM, JPG, or PNG in **System Settings → Visual**. The selected file is stored in the browser using IndexedDB and can be removed to restore the default background. This setting is local to the browser and is not uploaded with the website.
-- **Architectural hero illustration** with interactive building highlights and an optional video visual mode.
+- **Animated architectural-study hero** with a selectable video visual mode.
 - **Interactive profile book** with profile, education, and skills content.
 - **Project archive** with project details and repository links.
 - **System Settings** for visual modes and five selectable audio tracks.
@@ -27,7 +39,7 @@ The included server uses Node.js built-in modules only:
 node server.js
 ```
 
-Open <http://localhost:8000/>.
+Open [http://localhost:8000/](http://localhost:8000/).
 
 ### Python
 
@@ -37,7 +49,7 @@ Alternatively, run Python's built-in server from the project root:
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000/>.
+Then open [http://localhost:8000/](http://localhost:8000/).
 
 ## Customizing
 
@@ -45,7 +57,7 @@ Then open <http://localhost:8000/>.
 - **Project data:** `js/project.js`
 - **Profile, education, skills, and book content:** `js/site.js`
 - **Audio track file paths and labels:** edit the matching `.sound-choice` entries in `index.html`
-- **Architectural illustration and building interactions:** `index.html`, `css/architecture.css`, and `js/architecture.js`
+- **Hero artwork and visual modes:** `index.html`, `css/architectural-details.css`, `js/architecture.js`, and `js/visual-settings.js`
 - **Loading-screen background behavior:** `js/boot-background.js`
 - **Visual styling:** stylesheets in `css/`; `css/style.css` is the main stylesheet entry point.
 
@@ -61,7 +73,6 @@ The selected media is stored locally in that browser; it is not part of the repo
 .
 ├── index.html
 ├── server.js
-├── favicon.svg
 ├── css/
 │   ├── style.css                  # Main stylesheet entry point
 │   ├── base.css                   # Base styles, colors, and utilities
@@ -70,17 +81,19 @@ The selected media is stored locally in that browser; it is not part of the repo
 │   ├── refinements.css            # Responsive and visual refinements
 │   ├── boot.css                   # Loading screen and exit transition
 │   ├── boot-draft.css             # Loading-screen illustration styling
-│   ├── architecture.css           # Architectural hero illustration
+│   ├── architecture.css           # Legacy architectural illustration styles
 │   ├── architectural-details.css  # Editorial and architectural details
 │   ├── book.css                   # Interactive book
 │   ├── project.css                # Project archive
+│   ├── mail-archive.css           # Correspondence archive panel
 │   ├── scroll-animations.css      # Smooth scrolling and reveal effects
 │   ├── visual-settings.css        # Settings panel and visual modes
 │   └── interaction-guard.css      # Interaction safeguards
 ├── js/
 │   ├── site.js                    # Shared page behavior and book content
 │   ├── project.js                 # Project data
-│   ├── architecture.js            # Building highlight interactions
+│   ├── mail-archive.js             # Correspondence archive interactions
+│   ├── architecture.js            # Legacy building highlight interactions
 │   ├── boot.js                    # Loading sequence
 │   ├── boot-background.js         # Custom loading-screen media and storage
 │   ├── music.js                   # Audio settings and playback

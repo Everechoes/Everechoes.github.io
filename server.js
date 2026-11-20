@@ -20,8 +20,22 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   const urlPath = req.url.split('?')[0];
-  const safePath = path.normalize(decodeURIComponent(urlPath)).replace(/^(\.\.[/\\])+/, '');
-  let filePath = path.join(__dirname, (safePath === '/' || safePath === '\\' || safePath === '.') ? 'index.html' : safePath);
+  let decodedPath;
+  try {
+    decodedPath = decodeURIComponent(urlPath);
+  } catch {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('400 Bad Request');
+    return;
+  }
+
+  const relativePath = decodedPath === '/' ? 'index.html' : decodedPath.replace(/^[/\\]+/, '');
+  let filePath = path.resolve(__dirname, relativePath);
+  if (filePath !== __dirname && !filePath.startsWith(`${__dirname}${path.sep}`)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('403 Forbidden');
+    return;
+  }
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
@@ -37,16 +51,26 @@ const server = http.createServer((req, res) => {
     const range = req.headers.range;
     if (range && (ext === '.mp4' || ext === '.webm')) {
       const parts = range.replace(/bytes=/, '').split('-');
-      const start = parseInt(parts[0], 10);
-      const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+      const start = Number.parseInt(parts[0], 10);
+      const requestedEnd = Number.parseInt(parts[1], 10);
+      const end = Number.isFinite(requestedEnd)
+        ? Math.min(requestedEnd, stats.size - 1)
+        : stats.size - 1;
+      if (!Number.isFinite(start) || start < 0 || start >= stats.size || end < start) {
+        res.writeHead(416, {
+          'Content-Range': `bytes */${stats.size}`,
+          'Accept-Ranges': 'bytes'
+        });
+        res.end();
+        return;
+      }
       const chunksize = end - start + 1;
 
       res.writeHead(206, {
         'Content-Range': `bytes ${start}-${end}/${stats.size}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
-        'Content-Type': contentType,
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': contentType
       });
       fs.createReadStream(filePath, { start, end }).pipe(res);
       return;
@@ -54,8 +78,7 @@ const server = http.createServer((req, res) => {
 
     res.writeHead(200, {
       'Content-Type': contentType,
-      'Content-Length': stats.size,
-      'Access-Control-Allow-Origin': '*'
+      'Content-Length': stats.size
     });
     fs.createReadStream(filePath).pipe(res);
   });
